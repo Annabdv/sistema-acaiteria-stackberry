@@ -105,6 +105,6 @@ Esta é a stack principal definida para o projeto.
 
 ## Membros da Equipe
 
-* Edgar
-* Anna
-* Randerson
+* Edgar Henrique da Silva
+* Anna Beatriz Alves de Vasconcelos
+* Randerson Ranniery Soares da Silva
