@@ -105,6 +105,6 @@ Esta é a stack principal definida para o projeto.
 
 ## Membros da Equipe
 
-* Edgar Henrique da Silva
-* Anna Beatriz Alves de Vasconcelos
-* Randerson Ranniery Soares da Silva
+| ![Foto](https://github.com/Edgar-sh.png?size=100) | ![Foto](https://github.com/randersonranniery7.png?size=100) | ![Foto](https://github.com/Annabdv.png?size=100) |
+|----------------------------------------------------|-------------------------------------------------------|-----------------------------------------------------|
+| **Edgar Henrique** [@Edgar-sh](https://github.com/Edgar-sh) | **Randerson** [@randersonranniery7](https://github.com/randersonranniery7) | **Anna Beatriz** [@Annabdv](https://github.com/Annabdv) |
