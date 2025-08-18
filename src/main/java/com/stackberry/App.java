@@ -3,6 +3,7 @@ package com.stackberry;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.rendering.template.JavalinThymeleaf;
+import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
@@ -43,11 +44,14 @@ public class App {
         TemplateEngine templateEngine = new TemplateEngine();
 
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateEngine.addDialect(new LayoutDialect()); // Ferramenta que transforma o Thymeleaf em um sistema de templates muito mais profissional.
         templateResolver.setPrefix("/templates/"); // Nossos HTMLs ficam na pasta /templates/
         templateResolver.setSuffix(".html");      // Nossos arquivos terminam com .html
         templateResolver.setCharacterEncoding("UTF-8");
 
         templateEngine.setTemplateResolver(templateResolver);
+
+
         return templateEngine;
     }
 
