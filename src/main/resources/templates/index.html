@@ -1,51 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link rel="stylesheet" href="/styles.css">
-    <link rel="stylesheet" href="/header.css">
-    <link rel="stylesheet" href="/home.css">
-    <link rel="stylesheet" href="/menu.css">
-
-    <title>Home - StackBerry</title>
+    <title>Home</title>
 </head>
 <body>
-
-<header>
-    <nav id="navbar">
-        <img src="/images/StackBerry_Text.png" alt="stackberry logo">
-
-        <ul id="nav_list">
-            <li class="nav-item active"><a href="#home">Home</a></li>
-            <li class="nav-item"><a href="#signup">Cadastro</a></li>
-            <li class="nav-item"><a href="#login">Login</a></li>
-        </ul>
-
-        <button class="btn-default">Faça seu pedido aqui!</button>
-
-        <button id="mobile_btn">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-    </nav>
-
-    <div id="mobile_menu">
-        <ul id="mobile_nav_list">
-            <li class="nav-item"><a href="#home">Home</a></li>
-            <li class="nav-item"><a href="#signup">Cadastro</a></li>
-            <li class="nav-item"><a href="#login">Login</a></li>
-        </ul>
-        <button class="btn-default">Faça seu pedido aqui</button>
-    </div>
-</header>
-
-<main id="content">
-    <!-- home -->
+<main layout:fragment="content">
     <section id="home">
         <div class="shape"></div>
         <div id="cta">
@@ -55,7 +17,8 @@
             </h1>
 
             <h6 class="description">
-                Compilamos os melhores ingredientes e debugamos qualquer rotina cansativa. Cada tigela de açaí é um upgrade de energia, feita sob medida para você.
+                Compilamos os melhores ingredientes e debugamos qualquer rotina cansativa. Cada tigela de açaí é um
+                upgrade de energia, feita sob medida para você.
             </h6>
 
             <div id="cta_buttons">
@@ -75,7 +38,7 @@
         </div>
 
         <div id="banner">
-            <img src="/images/acai2.png" alt="">
+            <img src="/images/acai2.png" alt="Banner Açaí">
         </div>
     </section>
 
@@ -84,10 +47,9 @@
         <h3 class="section-subtitle">Escolha o tamanho e os acompanhamentos</h3>
 
         <div id="dishes">
-
             <div class="dish">
                 <div class="dish-heart"><i class="fa-solid fa-heart"></i></div>
-                <img src="/images/copopequeno.png" class="dish-image" alt="">
+                <img src="/images/copopequeno.png" class="dish-image" alt="Açaí Pequeno">
                 <h3 class="dish-title">Pequeno (150g)</h3>
                 <span class="dish-description">Açaí na medida certa para saborear sozinho.</span>
                 <div class="dish-rate">
@@ -104,13 +66,12 @@
 
             <div class="dish">
                 <div class="dish-heart"><i class="fa-solid fa-heart"></i></div>
-                <img src="/images/combo.png" class="dish-image" alt="">
+                <img src="/images/combo.png" class="dish-image" alt="Açaí Médio">
                 <h3 class="dish-title">Médio (250g)</h3>
                 <span class="dish-description">Mais sabor, mais energia, perfeito para compartilhar.</span>
                 <div class="dish-rate">
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                     <span>(25+)</span>
                 </div>
@@ -122,13 +83,12 @@
 
             <div class="dish">
                 <div class="dish-heart"><i class="fa-solid fa-heart"></i></div>
-                <img src="/images/grandeb.png" class="dish-image" alt="">
+                <img src="/images/grandeb.png" class="dish-image" alt="Açaí Grande">
                 <h3 class="dish-title">Grande (400g)</h3>
                 <span class="dish-description">O clássico açaí completo, com toppings à sua escolha.</span>
                 <div class="dish-rate">
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                     <span>(50+)</span>
                 </div>
@@ -140,12 +100,5 @@
         </div>
     </section>
 </main>
-
-<!-- Rodapé -->
-<footer id="footer">
-    <div class="container">
-        <p>&copy; 2025 StackBerry. Todos os direitos reservados.</p>
-    </div>
-</footer>
 </body>
 </html>

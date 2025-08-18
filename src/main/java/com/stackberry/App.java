@@ -3,6 +3,7 @@ package com.stackberry;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.rendering.template.JavalinThymeleaf;
+import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
@@ -48,6 +49,9 @@ public class App {
         templateResolver.setCharacterEncoding("UTF-8");
 
         templateEngine.setTemplateResolver(templateResolver);
+
+        templateEngine.addDialect(new LayoutDialect());
+
         return templateEngine;
     }
 
