@@ -1,12 +1,151 @@
 <!DOCTYPE html>
-<html lang="pt-r">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>StackBerry</title>
-    <link rel="stylesheet" href="/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="/home.css">
+    <link rel="stylesheet" href="/menu.css">
+
+    <title>Home - StackBerry</title>
 </head>
 <body>
-    <h1>Bem-vindo ao StackBerry</h1>
-    <p>Se você está vendo isso, então deu certo.</p>
+
+<header>
+    <nav id="navbar">
+        <img src="/images/StackBerry_Text.png" alt="stackberry logo">
+
+        <ul id="nav_list">
+            <li class="nav-item active"><a href="#home">Home</a></li>
+            <li class="nav-item"><a href="#signup">Cadastro</a></li>
+            <li class="nav-item"><a href="#login">Login</a></li>
+        </ul>
+
+        <button class="btn-default">Faça seu pedido aqui!</button>
+
+        <button id="mobile_btn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </nav>
+
+    <div id="mobile_menu">
+        <ul id="mobile_nav_list">
+            <li class="nav-item"><a href="#home">Home</a></li>
+            <li class="nav-item"><a href="#signup">Cadastro</a></li>
+            <li class="nav-item"><a href="#login">Login</a></li>
+        </ul>
+        <button class="btn-default">Faça seu pedido aqui</button>
+    </div>
+</header>
+
+<main id="content">
+    <!-- home -->
+    <section id="home">
+        <div class="shape"></div>
+        <div id="cta">
+            <h1 class="title">
+                Do Stack da tecnologia até a tigela de
+                <span>Açaí</span>
+            </h1>
+
+            <h6 class="description">
+                Compilamos os melhores ingredientes e debugamos qualquer rotina cansativa. Cada tigela de açaí é um upgrade de energia, feita sob medida para você.
+            </h6>
+
+            <div id="cta_buttons">
+                <a href="#" class="btn-default">Ver cardápio</a>
+                <a href="tel:+55555555555" id="phone_button">
+                    <button class="btn-default">
+                        <i class="fa-solid fa-phone"></i>
+                    </button>
+                    (011) 4002-8922
+                </a>
+            </div>
+
+            <div class="social-media-buttons">
+                <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div id="banner">
+            <img src="/images/acai2.png" alt="">
+        </div>
+    </section>
+
+    <section id="menu">
+        <h2 class="section-title">Monte do seu jeito</h2>
+        <h3 class="section-subtitle">Escolha o tamanho e os acompanhamentos</h3>
+
+        <div id="dishes">
+
+            <div class="dish">
+                <div class="dish-heart"><i class="fa-solid fa-heart"></i></div>
+                <img src="/images/copopequeno.png" class="dish-image" alt="">
+                <h3 class="dish-title">Pequeno (150g)</h3>
+                <span class="dish-description">Açaí na medida certa para saborear sozinho.</span>
+                <div class="dish-rate">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <span>(37+)</span>
+                </div>
+                <div class="dish-price">
+                    <h4>R$5,00</h4>
+                    <button class="btn-default"><i class="fa-solid fa-basket-shopping"></i></button>
+                </div>
+            </div>
+
+            <div class="dish">
+                <div class="dish-heart"><i class="fa-solid fa-heart"></i></div>
+                <img src="/images/combo.png" class="dish-image" alt="">
+                <h3 class="dish-title">Médio (250g)</h3>
+                <span class="dish-description">Mais sabor, mais energia, perfeito para compartilhar.</span>
+                <div class="dish-rate">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <span>(25+)</span>
+                </div>
+                <div class="dish-price">
+                    <h4>R$10,00</h4>
+                    <button class="btn-default"><i class="fa-solid fa-basket-shopping"></i></button>
+                </div>
+            </div>
+
+            <div class="dish">
+                <div class="dish-heart"><i class="fa-solid fa-heart"></i></div>
+                <img src="/images/grandeb.png" class="dish-image" alt="">
+                <h3 class="dish-title">Grande (400g)</h3>
+                <span class="dish-description">O clássico açaí completo, com toppings à sua escolha.</span>
+                <div class="dish-rate">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <span>(50+)</span>
+                </div>
+                <div class="dish-price">
+                    <h4>R$15,00</h4>
+                    <button class="btn-default"><i class="fa-solid fa-basket-shopping"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Rodapé -->
+<footer id="footer">
+    <div class="container">
+        <p>&copy; 2025 StackBerry. Todos os direitos reservados.</p>
+    </div>
+</footer>
 </body>
 </html>
