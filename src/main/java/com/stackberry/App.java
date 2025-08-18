@@ -50,7 +50,7 @@ public class App {
 
         templateEngine.setTemplateResolver(templateResolver);
 
-        templateEngine.addDialect(new LayoutDialect());
+        templateEngine.addDialect(new LayoutDialect()); // Ferramenta que transforma o Thymeleaf em um sistema de templates muito mais profissional. OLHEM A PAG NO WHATSAPP
 
         return templateEngine;
     }
