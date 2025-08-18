@@ -107,4 +107,4 @@ Esta é a stack principal definida para o projeto.
 
 | ![Foto](https://github.com/Edgar-sh.png?size=100) | ![Foto](https://github.com/randersonranniery7.png?size=100) | ![Foto](https://github.com/Annabdv.png?size=100) |
 |----------------------------------------------------|-------------------------------------------------------|-----------------------------------------------------|
-| **Edgar Henrique da Silva** [@Edgar-sh](https://github.com/Edgar-sh) | **Randerson Ranniery Soares da Silva** [@randersonranniery7](https://github.com/randersonranniery7) | **Anna Beatriz Alves de Vasconcelos** [@Annabdv](https://github.com/Annabdv) |
+| **Edgar Henrique da Silva** [@Edgar-sh](https://github.com/Edgar-sh) | **Randerson Ranniery** [@randersonranniery7](https://github.com/randersonranniery7) | **Anna Beatriz Alves de Vasconcelos** [@Annabdv](https://github.com/Annabdv) |
