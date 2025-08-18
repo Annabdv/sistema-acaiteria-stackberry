@@ -5,6 +5,10 @@
       layout:decorate="~{layout}">
 <head>
     <title>Home</title>
+    <th:block layout:fragment="page-css">
+        <link rel="stylesheet" th:href="@{/styles/home.css}">
+        <link rel="stylesheet" th:href="@{/styles/menu.css}">
+    </th:block>
 </head>
 <body>
 <main layout:fragment="content">

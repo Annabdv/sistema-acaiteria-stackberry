@@ -5,49 +5,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">StackBerry</title>
+
     <link rel="stylesheet" th:href="@{/styles/styles.css}">
-    <link rel="stylesheet" th:href="@{/styles/home.css}">
-    <link rel="stylesheet" th:href="@{/styles/menu.css}">
+    <link rel="stylesheet" th:href="@{/styles/header.css}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <th:block layout:fragment="page-css"></th:block>
 
-    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">StackBerry</title>
 </head>
 <body>
 
 <header>
     <nav id="navbar">
-        <img src="/images/StackBerry_Text.png" alt="stacberry logo">
-
+        <img src="/images/StackBerry_Text.png" alt="stackberry logo">
         <ul id="nav_list">
-            <li class="nav-item active"><a href="#home">Início</a></li>
-            <li class="nav-item"><a href="#menu">Cardápio</a></li>
-            <li class="nav-item"><a href="#">Sobre</a></li>
+            <li class="nav-item active"><a href="/">Início</a></li>
+            <li class="nav-item"><a href="/#menu">Cardápio</a></li>
+            <li class="nav-item"><a th:href="@{/usuarios/cadastrar}">Cadastre-se</a></li>
         </ul>
-
         <button class="btn-default">Peça agora</button>
-
-        <button id="mobile_btn">
-            <i class="fa-solid fa-bars"></i>
-        </button>
+        <button id="mobile_btn"><i class="fa-solid fa-bars"></i></button>
     </nav>
-
     <div id="mobile_menu">
         <ul id="mobile_nav_list">
-            <li class="nav-item"><a href="#home">Início</a></li>
-            <li class="nav-item"><a href="#menu">Cardápio</a></li>
-            <li class="nav-item"><a href="#">Sobre</a></li>
+            <li class="nav-item"><a href="/">Início</a></li>
+            <li class="nav-item"><a href="/#menu">Cardápio</a></li>
+            <li class="nav-item"><a th:href="@{/usuarios/cadastrar}">Cadastre-se</a></li>
         </ul>
         <button class="btn-default">Peça agora</button>
     </div>
 </header>
 
-<main layout:fragment="content">
-</main>
+<main layout:fragment="content"></main>
 
 <footer id="footer">
     <p>Desenvolvido por StackBerry &copy; 2025</p>
 </footer>
+
+
+<th:block layout:fragment="page-script"></th:block>
 
 </body>
 </html>

@@ -44,13 +44,13 @@ public class App {
         TemplateEngine templateEngine = new TemplateEngine();
 
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateEngine.addDialect(new LayoutDialect()); // Ferramenta que transforma o Thymeleaf em um sistema de templates muito mais profissional.
         templateResolver.setPrefix("/templates/"); // Nossos HTMLs ficam na pasta /templates/
         templateResolver.setSuffix(".html");      // Nossos arquivos terminam com .html
         templateResolver.setCharacterEncoding("UTF-8");
 
         templateEngine.setTemplateResolver(templateResolver);
 
-        templateEngine.addDialect(new LayoutDialect()); // Ferramenta que transforma o Thymeleaf em um sistema de templates muito mais profissional. OLHEM A PAG NO WHATSAPP
 
         return templateEngine;
     }
