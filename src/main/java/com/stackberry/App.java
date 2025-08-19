@@ -61,5 +61,9 @@ public class App {
         app.get("/", ctx -> {
             ctx.render("index.html"); // Renderiza o templates/index.html
         });
+        app.get("/usuarios/cadastrar", ctx -> {
+            ctx.render("formulario_signup.html");
+        });
+
     }
 }
