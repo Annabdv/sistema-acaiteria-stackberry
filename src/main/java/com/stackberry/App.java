@@ -64,6 +64,9 @@ public class App {
         app.get("/usuarios/cadastrar", ctx -> {
             ctx.render("formulario_signup.html");
         });
+        app.get("/login", ctx -> {
+            ctx.render("login.html");
+        });
 
     }
 }
