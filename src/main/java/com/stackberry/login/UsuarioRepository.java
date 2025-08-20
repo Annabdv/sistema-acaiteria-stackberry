@@ -20,7 +20,7 @@ public class UsuarioRepository {
 
 
     public UsuarioRepository(){
-
+        carregaUsariosArquivo();
     }
 
     public Usuario salvar(Usuario usuario){
