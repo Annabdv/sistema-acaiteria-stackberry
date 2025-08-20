@@ -8,7 +8,7 @@ public class Usuario {
     private TipoDeUsuario tipoDeUsuario;
 
     public Usuario(String email, String nome, String senha){
-        this.id = this.id = java.util.UUID.randomUUID().toString();
+        this.id = java.util.UUID.randomUUID().toString();
         this.email = email;
         this.nome = nome;
         this.senha = senha;
