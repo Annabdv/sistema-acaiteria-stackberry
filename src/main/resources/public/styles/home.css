@@ -15,6 +15,7 @@
 #cta .title {
     font-size: 3.4rem;
     color: white;
+
 }
 
 #cta .title span {
@@ -70,11 +71,10 @@
     width: 50%;
     height: 85%;
     position: absolute;
-    border-radius: 40% 30% 0% 20%;
+    border-radius: 40% 30% 0% 30%;
     top: 0;
     right: 0;
     z-index: 1;
-    margin-top: -3%
 }
 
 @media screen and (max-width: 1170px) {
