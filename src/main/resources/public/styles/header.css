@@ -15,8 +15,8 @@ header {
 }
 
 #navbar img {
-     width: 190px;
-     height: auto;
+    width: 190px;
+    height: auto;
 }
 
 #nav_logo {
@@ -37,8 +37,8 @@ header {
 }
 
 .nav-item.active a {
-    color: var(--color-neutral-1);
-    border-bottom: 3px solid var(--color-primary-4);
+    color: #230033;
+    border-bottom: 3px solid none;
 }
 
 #mobile_btn {
@@ -46,7 +46,7 @@ header {
 }
 
 #mobile_menu {
-    display: none;
+    display: none; /* mudança */
 }
 
 @media screen and (max-width: 1170px) {
