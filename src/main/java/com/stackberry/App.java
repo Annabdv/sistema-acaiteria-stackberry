@@ -1,5 +1,6 @@
 package com.stackberry;
 
+import com.stackberry.login.UsuarioController;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -57,13 +58,16 @@ public class App {
 
     // Aqui define todas as rotas da aplicação
     private void definirRotas(Javalin app) {
+
+        UsuarioController usuarioController = new UsuarioController();
+
         // Rota de teste para a página inicial
         app.get("/", ctx -> {
             ctx.render("index.html"); // Renderiza o templates/index.html
         });
-        app.get("/usuarios/cadastrar", ctx -> {
-            ctx.render("formulario_signup.html");
-        });
+        app.get("/cadastrar", usuarioController::exibirFormularioCadastro);
+        app.post("/usuarios/cadastrar", usuarioController::processarCadastro);
+
         app.get("/login", ctx -> {
             ctx.render("login.html");
         });
