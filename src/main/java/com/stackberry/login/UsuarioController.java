@@ -38,7 +38,9 @@ public class UsuarioController {
     // Processamento de login --- anna
     public void processarLogin(Context ctx) {
         String email = ctx.formParam("email");
+        if (email == null) email = ctx.formParam("username");
         String senha = ctx.formParam("senha");
+        if (senha == null) senha = ctx.formParam("password");
 
         try {
             Usuario usuario = usuarioService.autenticaUsuario(email, senha);
