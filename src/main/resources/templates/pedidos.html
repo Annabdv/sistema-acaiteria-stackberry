@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
     <title>Pedidos - Cliente</title>
 </head>
 <body>
-<h1>Área do Cliente</h1>
-<p>Aqui o cliente vai montar e acompanhar pedidos.</p>
+<main layout:fragment="content">
+    <h1>Área do Cliente</h1>
+    <p>Aqui o cliente vai montar e acompanhar pedidos.</p>
+</main>
 </body>
 </html>

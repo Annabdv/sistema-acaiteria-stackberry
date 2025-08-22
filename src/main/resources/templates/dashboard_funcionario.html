@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
     <title>Dashboard Funcionário</title>
 </head>
 <body>
+<main layout:fragment="content">
     <h1>Área do Funcionário</h1>
     <p>Aqui o funcionário vai gerenciar os pedidos.</p>
+</main>
 </body>
 </html>

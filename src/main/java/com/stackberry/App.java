@@ -67,8 +67,13 @@ public class App {
             String path = ctx.path();
 
             // rotas publicas
-            boolean rotaPublica = path.equals("/") || path.equals("/login")
-                    || path.equals("/cadastrar") || path.startsWith("/usuarios/cadastrar");
+            boolean rotaPublica = path.equals("/")
+                    || path.equals("/login")
+                    || path.equals("/cadastrar")
+                    || path.startsWith("/usuarios/cadastrar")
+                    || path.startsWith("/styles/")
+                    || path.startsWith("/js/")
+                    || path.startsWith("/images/");
 
             Usuario usuarioLogado = ctx.sessionAttribute("usuarioLogado");
 
@@ -79,13 +84,13 @@ public class App {
                     // acesso por tipo de usuário
                     switch (usuarioLogado.getTipoDeUsuario()) {
                         case CLIENTE:
-                            if (path.equals("/dashboard-funcionario") || path.equals("/dashboard-admin")) {
+                            if (path.equals("/dashboard_funcionario") || path.equals("/dashboard_admin")) {
                                 ctx.redirect("/pedidos");
                             }
                             break;
                         case FUNCIONARIO:
-                            if (path.equals("/dashboard-admin")) {
-                                ctx.redirect("/dashboard-funcionario");
+                            if (path.equals("/dashboard_admin")) {
+                                ctx.redirect("/dashboard_funcionario");
                             }
                             break;
                         case ADMINISTRADOR:
@@ -113,7 +118,7 @@ public class App {
         app.get("/logout", usuarioController::logout);
 
         app.get("/pedidos", ctx -> ctx.render("pedidos.html")); // cliente
-        app.get("/dashboard_funcionario", ctx -> ctx.render("dashboard-funcionario.html")); // funcionário
-        app.get("/dashboard_admin", ctx -> ctx.render("dashboard-admin.html")); // admin
+        app.get("/dashboard_funcionario", ctx -> ctx.render("dashboard_funcionario.html")); // funcionário
+        app.get("/dashboard_admin", ctx -> ctx.render("dashboard_admin.html")); // admin
     }
 }
