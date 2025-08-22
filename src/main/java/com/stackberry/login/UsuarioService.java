@@ -27,4 +27,23 @@ public class UsuarioService {
         Usuario novoUsuario = new Usuario(email, nome, senhaCriptografada);
         return usuarioRepository.salvar(novoUsuario);
     }
+
+    // Autenticaçao de usuario --- anna
+    public Usuario autenticaUsuario(String email, String senha) {
+        if (email == null || senha == null) {
+            throw new IllegalArgumentException("E-mail e senha são dados obrigatorios.");
+        }
+        var usuarioOptional = usuarioRepository.buscarPorEmail(email);
+        if (usuarioOptional.isEmpty()) {
+            throw new IllegalArgumentException("Usuário não encontrado.");
+        }
+
+        Usuario usuario = usuarioOptional.get();
+
+        if (!BCrypt.checkpw(senha, usuario.getSenha())) {
+            throw new IllegalArgumentException("Senha incorreta.");
+        }
+
+        return usuario;
+    }
 }

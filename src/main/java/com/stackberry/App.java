@@ -1,5 +1,6 @@
 package com.stackberry;
 
+import com.stackberry.login.Usuario;
 import com.stackberry.login.UsuarioController;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
@@ -61,16 +62,58 @@ public class App {
 
         UsuarioController usuarioController = new UsuarioController();
 
+        // ----
+        app.before(ctx -> {
+            String path = ctx.path();
+
+            // rotas publicas
+            boolean rotaPublica = path.equals("/") || path.equals("/login")
+                    || path.equals("/cadastrar") || path.startsWith("/usuarios/cadastrar");
+
+            Usuario usuarioLogado = ctx.sessionAttribute("usuarioLogado");
+
+            if (!rotaPublica) {
+                if (usuarioLogado == null) {
+                    ctx.redirect("/login"); // redirect para login
+                } else {
+                    // acesso por tipo de usuário
+                    switch (usuarioLogado.getTipoDeUsuario()) {
+                        case CLIENTE:
+                            if (path.equals("/dashboard-funcionario") || path.equals("/dashboard-admin")) {
+                                ctx.redirect("/pedidos");
+                            }
+                            break;
+                        case FUNCIONARIO:
+                            if (path.equals("/dashboard-admin")) {
+                                ctx.redirect("/dashboard-funcionario");
+                            }
+                            break;
+                        case ADMINISTRADOR:
+                            // não precisa de bloqueio
+                            break;
+                    }
+                }
+            }
+        });
+
         // Rota de teste para a página inicial
         app.get("/", ctx -> {
             ctx.render("index.html"); // Renderiza o templates/index.html
         });
+
+        // cadastro
         app.get("/cadastrar", usuarioController::exibirFormularioCadastro);
         app.post("/usuarios/cadastrar", usuarioController::processarCadastro);
 
-        app.get("/login", ctx -> {
-            ctx.render("login.html");
-        });
+        // login ---
+        app.get("/login", usuarioController::exibirFormularioLogin);
+        app.post("/login", usuarioController::processarLogin); // processa o login
 
+        // logout ---
+        app.get("/logout", usuarioController::logout);
+
+        app.get("/pedidos", ctx -> ctx.render("pedidos.html")); // cliente
+        app.get("/dashboard_funcionario", ctx -> ctx.render("dashboard-funcionario.html")); // funcionário
+        app.get("/dashboard_admin", ctx -> ctx.render("dashboard-admin.html")); // admin
     }
 }
