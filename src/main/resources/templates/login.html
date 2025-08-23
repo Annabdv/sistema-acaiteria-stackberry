@@ -55,6 +55,9 @@
                 <h3 class="card-title text-center mb-4">Bem-vindo de volta</h3>
                 <p class="text-center text-muted mb-4">Entre com sua conta</p>
 
+                <!-- mensagem de erro do controller -->
+                <div th:if="${erro}" class="alert alert-danger" role="alert" th:text="${erro}"></div>
+
                 <!-- Mensagem de erro do Spring Security -->
                 <div th:if="${param.error}" class="alert alert-danger" role="alert">
                     Usuário ou senha inválidos.
