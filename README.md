@@ -23,14 +23,13 @@ Este projeto é um sistema web para gestão de uma açaiteria, desenvolvido com 
 
 ## Visão Geral
 
-O **StackBerry** permitirá que os clientes montem seus açaís de forma personalizada, escolhendo tamanhos e adicionais. Do lado da loja, funcionários poderão gerenciar o fluxo de pedidos em tempo real, enquanto administradores terão controle total sobre o catálogo de produtos e o acesso ao sistema.
+O **StackBerry** permitirá que os clientes montem seus açaís de forma personalizada, escolhendo tamanhos e adicionais. Do lado da loja, enquanto administradores terão controle total sobre o catálogo de produtos e o acesso ao sistema.
 
 ### Níveis de Acesso
 
 O sistema conta com 3 tipos de usuários:
 1.  **Cliente:** Pode se cadastrar, navegar pelo cardápio, montar e finalizar pedidos, além de acompanhar o status de entrega.
-2.  **Funcionário:** Acessa um dashboard para visualizar e gerenciar os pedidos (aceitar, recusar, atualizar status).
-3.  **Administrador:** Possui todas as permissões de um funcionário, com o adicional de poder gerenciar (CRUD) os produtos, adicionais, estoque e usuários do sistema.
+2.  **Administrador:** Possui todas as permissões de um funcionário, com o adicional de poder gerenciar (CRUD) os produtos, adicionais, estoque e usuários do sistema.
 
 ---
 
@@ -44,11 +43,6 @@ Esta é a lista de funcionalidades essenciais para a primeira versão do projeto
 - [ ] Adicionar itens ao carrinho de compras.
 - [ ] Finalizar um pedido.
 - [ ] Acompanhar o status do seu pedido (Ex: `Aceito`, `Em Preparo`, `Pronto para Entrega`).
-
-### 👨‍🍳 Para Funcionários
-- [ ] Realizar login em uma área restrita.
-- [ ] Visualizar um dashboard com a fila de novos pedidos.
-- [ ] Alterar o status de um pedido.
 
 ### 🔑 Para Administradores
 - [ ] Todas as funcionalidades de **Funcionário**.
