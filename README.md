@@ -27,7 +27,7 @@ O **StackBerry** permitirá que os clientes montem seus açaís de forma persona
 
 ### Níveis de Acesso
 
-O sistema conta com 3 tipos de usuários:
+O sistema conta com 2 tipos de usuários:
 1.  **Cliente:** Pode se cadastrar, navegar pelo cardápio, montar e finalizar pedidos, além de acompanhar o status de entrega.
 2.  **Administrador:** Possui todas as permissões de um funcionário, com o adicional de poder gerenciar (CRUD) os produtos, adicionais, estoque e usuários do sistema.
 
