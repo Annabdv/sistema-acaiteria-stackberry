@@ -13,12 +13,12 @@ public class UsuarioService {
     public Usuario cadastrarUsuario(String email, String nome, String senha){
         // Verificando se campos não são nulos
         if(email == null || nome == null || senha == null) {
-            throw new IllegalArgumentException("Nome, email e senha são obrigatorios.");
+            throw new IllegalArgumentException("Nome, email e senha são obrigatorios."); // TODO: Usar ValidacaoException
         }
 
         // Verificando se o email já está sendo usado por outra pessoa.
         if (usuarioRepository.buscarPorEmail(email).isPresent()){
-            throw new IllegalArgumentException("O email informado já está em uso.");
+            throw new IllegalArgumentException("O email informado já está em uso."); // TODO: Usar ValidacaoException
         }
 
         // Criptografando a senha
@@ -31,17 +31,17 @@ public class UsuarioService {
     // Autenticaçao de usuario --- anna
     public Usuario autenticaUsuario(String email, String senha) {
         if (email == null || senha == null) {
-            throw new IllegalArgumentException("E-mail e senha são dados obrigatorios.");
+            throw new IllegalArgumentException("E-mail e senha são dados obrigatorios."); // TODO: Usar ValidacaoException
         }
         var usuarioOptional = usuarioRepository.buscarPorEmail(email);
         if (usuarioOptional.isEmpty()) {
-            throw new IllegalArgumentException("Usuário não encontrado.");
+            throw new IllegalArgumentException("Usuário não encontrado."); // TODO: Usar ValidacaoException
         }
 
         Usuario usuario = usuarioOptional.get();
 
         if (!BCrypt.checkpw(senha, usuario.getSenha())) {
-            throw new IllegalArgumentException("Senha incorreta.");
+            throw new IllegalArgumentException("Senha incorreta."); // TODO: Usar ValidacaoException
         }
 
         return usuario;

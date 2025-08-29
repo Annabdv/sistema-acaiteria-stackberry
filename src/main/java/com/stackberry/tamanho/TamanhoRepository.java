@@ -2,7 +2,6 @@ package com.stackberry.tamanho;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.stackberry.login.Usuario;
 
 import java.io.File;
 import java.util.*;
@@ -80,7 +79,7 @@ public class TamanhoRepository {
         }
         try {
             // Lendo os valores do meu Json.
-            List<Tamanho> tamanhosDoJson = objectMapper.readValue(file, new TypeReference<List<Tamanho>>() {
+            List<Tamanho> tamanhosDoJson = objectMapper.readValue(file, new TypeReference<>() {
             });
             tamanhosDoJson.forEach(tamanho -> tamanhoEmMemoria.put(tamanho.getId(), tamanho)); // Populando minha memória
         } catch (Exception e) {
