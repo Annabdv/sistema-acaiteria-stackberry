@@ -8,7 +8,6 @@ public class Tamanho {
     private BigDecimal preco; // Usando a recomendação do professor para lidar com dinheiro
 
     public Tamanho(String nome, BigDecimal preco) {
-        this.id = java.util.UUID.randomUUID().toString();
         this.nome = nome;
         this.preco = preco;
     }
