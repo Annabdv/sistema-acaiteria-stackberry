@@ -5,9 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stackberry.login.Usuario;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TamanhoRepository {
@@ -20,6 +18,29 @@ public class TamanhoRepository {
 
     public TamanhoRepository(){
         carregarTamanhos();
+    }
+    public List<Tamanho> listarTamanhos(){
+        return new ArrayList<>(tamanhoEmMemoria.values());
+    }
+
+    public boolean removerTamanho(String id){
+        Tamanho tamanhoRemovido = tamanhoEmMemoria.remove(id);
+
+        // Verificando se tamanho foi removido com sucesso.
+        if (tamanhoRemovido != null) {
+            System.out.println(tamanhoRemovido.getNome() + " foi removido."); // TODO: Trocar por logger
+            salvaTudoNoArquivo(); // Salvando as alterações no json.
+            return true;
+        } else {
+            System.out.println("Tamanho com ID " + id + " não foi encontrado."); // TODO: Trocar por logger
+            return false;
+        }
+    }
+
+    public Optional<Tamanho> buscaPorId(String Id){
+        return tamanhoEmMemoria.values().stream()
+                .filter(t -> t.getId()
+                .equals(Id)).findFirst();
     }
 
     public Tamanho salvar(Tamanho tamanho){
