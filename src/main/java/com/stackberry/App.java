@@ -115,8 +115,12 @@ public class App {
         app.get("/api/tamanhos", tamanhoController::listarTamanhos);
 
         // tamanho view
-        app.get("/admin/tamanho", tamanhoController::exibirPaginaDeTamanhos);
-
+        app.get("/admin/tamanhos", tamanhoController::exibirPaginaDeTamanhos);
+        app.get("/admin/tamanhos/novo", tamanhoController::exibirFormularioCadastro);
+        app.post("admin/tamanhos/salvar", tamanhoController::cadastrarTamanhoView);
+        app.get("admin/tamanhos/editar/{id}", tamanhoController::exibirFormularioDeEdicao);
+        app.post("admin/tamanhos/atualizar", tamanhoController::atualizarTamanho);
+        app.post("admin/tamanhos/remover/{id}", tamanhoController::removerTamanho);
         // cadastro
         app.get("/cadastrar", usuarioController::exibirFormularioCadastro);
         app.post("/usuarios/cadastrar", usuarioController::processarCadastro);

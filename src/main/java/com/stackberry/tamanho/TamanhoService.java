@@ -35,6 +35,10 @@ public class TamanhoService {
         return tamanhoRepository.removerTamanho(id);
     }
 
+    public Optional<Tamanho> buscarPorId(String id){
+        return tamanhoRepository.buscaPorId(id);
+    }
+
     // Metodo privado para evitar repeticao de codigo.
     private void validar(Tamanho tamanho) {
         if (tamanho.getPreco() == null || tamanho.getPreco().compareTo(BigDecimal.ZERO) < 0){

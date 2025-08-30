@@ -6,12 +6,13 @@
 <head>
     <title>Gerenciar Tamanhos</title>
 </head>
+
 <body>
 
 <section layout:fragment="content">
-    <div class="container"> <h1>Tamanhos de Açaí Cadastrados</h1>
+    <div class="container"><h1>Tamanhos de Açaí Cadastrados</h1>
 
-        <a th:href="@{/admin/novo}" class="btn-default">Adicionar Novo Tamanho</a>
+        <a th:href="@{/admin/tamanhos/novo}" class="btn-default">Adicionar Novo Tamanho</a>
 
         <hr>
 
@@ -28,8 +29,14 @@
                 <td th:text="${tamanho.nome}">Nome do Tamanho</td>
                 <td th:text="${#numbers.formatCurrency(tamanho.preco)}">R$ 0,00</td>
                 <td class="acoes">
-                    <a href="#" class="btn btn-editar">Editar</a>
-                    <a href="#" class="btn btn-remover">Remover</a>
+                    <a th:href="@{/admin/tamanhos/editar/{id}(id=${tamanho.id})}" class="btn btn-editar">Editar</a>
+
+                    <form th:action="@{/admin/tamanhos/remover/{id}(id=${tamanho.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-remover"
+                                onclick="return confirm('Tem certeza que deseja remover este item?');">
+                            Remover
+                        </button>
+                    </form>
                 </td>
             </tr>
             </tbody>
