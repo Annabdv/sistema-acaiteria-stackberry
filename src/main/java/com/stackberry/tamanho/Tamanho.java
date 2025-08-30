@@ -7,6 +7,9 @@ public class Tamanho {
     private String id;
     private BigDecimal preco; // Usando a recomendação do professor para lidar com dinheiro
 
+    public Tamanho(){
+
+    }
     public Tamanho(String nome, BigDecimal preco) {
         this.nome = nome;
         this.preco = preco;

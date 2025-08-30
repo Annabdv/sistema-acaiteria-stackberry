@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class TamanhoService {
-    TamanhoRepository tamanhoRepository;
+    private final TamanhoRepository tamanhoRepository;
 
-    public TamanhoService(TamanhoRepository tamanhoRepository) {
-        this.tamanhoRepository = tamanhoRepository;
+    public TamanhoService() {
+        this.tamanhoRepository = new TamanhoRepository();
     }
 
     public Tamanho cadastrarTamanho(Tamanho tamanho){

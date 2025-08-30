@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Gerenciar Tamanhos</title>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div class="container"> <h1>Tamanhos de Açaí Cadastrados</h1>
+
+        <a th:href="@{/admin/novo}" class="btn-default">Adicionar Novo Tamanho</a>
+
+        <hr>
+
+        <table th:if="${!tamanhos.isEmpty()}">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th class="acoes">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tamanho : ${tamanhos}">
+                <td th:text="${tamanho.nome}">Nome do Tamanho</td>
+                <td th:text="${#numbers.formatCurrency(tamanho.preco)}">R$ 0,00</td>
+                <td class="acoes">
+                    <a href="#" class="btn btn-editar">Editar</a>
+                    <a href="#" class="btn btn-remover">Remover</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${tamanhos.isEmpty()}">
+            <p>Nenhum tamanho cadastrado ainda.</p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
