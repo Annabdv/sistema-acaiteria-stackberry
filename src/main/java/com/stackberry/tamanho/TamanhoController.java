@@ -14,24 +14,6 @@ public class TamanhoController {
         this.tamanhoService = new TamanhoService();
     }
 
-    // ignore, isso vai ser util para testar via postman
-    public void cadastrarTamanho(Context ctx){
-        Tamanho novoTamanho = ctx.bodyAsClass(Tamanho.class); // Cadastrando novo tamanho com o Json enviado.
-        try {
-            Tamanho tamanhoCadastrado = tamanhoService.cadastrarTamanho(novoTamanho);
-            // retornar json vai ser util para view, serve para comunicar o id gerado.
-            ctx.status(201).json(tamanhoCadastrado); // 201 significa "Created"
-        } catch (ValidacaoException e){
-            ctx.status(400).result(e.getMessage()); // 400 Conteúdo inválido.
-        }
-    }
-
-    // Ignore, isso é pra ser usado via postman
-    public void listarTamanhos(Context ctx){
-        List<Tamanho> tamanhoList = tamanhoService.listarTamanhos();
-        ctx.status(200).json(tamanhoList);
-    }
-
     public void exibirFormularioCadastro(Context ctx){
         Tamanho tamanhoVazio = new Tamanho();
 

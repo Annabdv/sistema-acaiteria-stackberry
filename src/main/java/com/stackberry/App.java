@@ -2,7 +2,6 @@ package com.stackberry;
 
 import com.stackberry.login.Usuario;
 import com.stackberry.login.UsuarioController;
-import com.stackberry.tamanho.Tamanho;
 import com.stackberry.tamanho.TamanhoController;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
@@ -65,62 +64,52 @@ public class App {
         UsuarioController usuarioController = new UsuarioController();
         TamanhoController tamanhoController = new TamanhoController();
 
-        // ----
-//        app.before(ctx -> {
-//            String path = ctx.path();
-//
-//            // rotas publicas
-//            boolean rotaPublica = path.equals("/")
-//                    || path.equals("/login")
-//                    || path.equals("/cadastrar")
-//                    || path.startsWith("/usuarios/cadastrar")
-//                    || path.startsWith("/styles/")
-//                    || path.startsWith("/js/")
-//                    || path.startsWith("/images/");
-//
-//            Usuario usuarioLogado = ctx.sessionAttribute("usuarioLogado");
-//
-//            if (!rotaPublica) {
-//                if (usuarioLogado == null) {
-//                    ctx.redirect("/login"); // redirect para login
-//                } else {
-//                    // acesso por tipo de usuário
-//                    switch (usuarioLogado.getTipoDeUsuario()) {
-//                        case CLIENTE:
-//                            if (path.equals("/dashboard_funcionario") || path.equals("/dashboard_admin")) {
-//                                ctx.redirect("/pedidos");
-//                            }
-//                            break;
-//                        case FUNCIONARIO:
-//                            if (path.equals("/dashboard_admin")) {
-//                                ctx.redirect("/dashboard_funcionario");
-//                            }
-//                            break;
-//                        case ADMINISTRADOR:
-//                            // não precisa de bloqueio
-//                            break;
-//                    }
-//                }
-//            }
-//        }
-//        );
+        //----
+        app.before(ctx -> {
+                    String path = ctx.path();
+
+                    // rotas publicas
+                    boolean rotaPublica = path.equals("/")
+                            || path.equals("/login")
+                            || path.equals("/cadastrar")
+                            || path.startsWith("/usuarios/cadastrar")
+                            || path.startsWith("/styles/")
+                            || path.startsWith("/js/")
+                            || path.startsWith("/images/");
+
+                    Usuario usuarioLogado = ctx.sessionAttribute("usuarioLogado");
+
+                    if (!rotaPublica) {
+                        if (usuarioLogado == null) {
+                            ctx.redirect("/login"); // redirect para login
+                        } else {
+                            // acesso por tipo de usuário
+                            switch (usuarioLogado.getTipoDeUsuario()) {
+                                case CLIENTE:
+                                    if (path.equals("/dashboard_funcionario") || path.equals("/dashboard_admin")) {
+                                        ctx.redirect("/pedidos");
+                                    }
+                                    break;
+                                case FUNCIONARIO:
+                                    if (path.equals("/dashboard_admin")) {
+                                        ctx.redirect("/dashboard_funcionario");
+                                    }
+                                    break;
+                                case ADMINISTRADOR:
+                                    // não precisa de bloqueio
+                                    break;
+                            }
+                        }
+                    }
+                }
+        );
 
         // Rota de teste para a página inicial
         app.get("/", ctx -> {
             ctx.render("index.html"); // Renderiza o templates/index.html
         });
 
-        // tamanho API
-        app.post("/api/tamanhos", tamanhoController::cadastrarTamanho);
-        app.get("/api/tamanhos", tamanhoController::listarTamanhos);
 
-        // tamanho view
-        app.get("/admin/tamanhos", tamanhoController::exibirPaginaDeTamanhos);
-        app.get("/admin/tamanhos/novo", tamanhoController::exibirFormularioCadastro);
-        app.post("admin/tamanhos/salvar", tamanhoController::cadastrarTamanhoView);
-        app.get("admin/tamanhos/editar/{id}", tamanhoController::exibirFormularioDeEdicao);
-        app.post("admin/tamanhos/atualizar", tamanhoController::atualizarTamanho);
-        app.post("admin/tamanhos/remover/{id}", tamanhoController::removerTamanho);
         // cadastro
         app.get("/cadastrar", usuarioController::exibirFormularioCadastro);
         app.post("/usuarios/cadastrar", usuarioController::processarCadastro);
@@ -132,6 +121,14 @@ public class App {
 
         // logout ---
         app.get("/logout", usuarioController::logout);
+
+        // tamanho view
+        app.get("/admin/tamanhos", tamanhoController::exibirPaginaDeTamanhos);
+        app.get("/admin/tamanhos/novo", tamanhoController::exibirFormularioCadastro);
+        app.post("admin/tamanhos/salvar", tamanhoController::cadastrarTamanhoView);
+        app.get("admin/tamanhos/editar/{id}", tamanhoController::exibirFormularioDeEdicao);
+        app.post("admin/tamanhos/atualizar", tamanhoController::atualizarTamanho);
+        app.post("admin/tamanhos/remover/{id}", tamanhoController::removerTamanho);
 
         app.get("/pedidos", ctx -> ctx.render("pedidos.html")); // cliente
         app.get("/dashboard_funcionario", ctx -> ctx.render("dashboard_funcionario.html")); // funcionário
