@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+  <title>Adicionar Novo Tamanho</title>
+</head>
+<body>
+
+<section layout:fragment="content">
+  <div class="container">
+    <h1>Adicionar Novo Tamanho</h1>
+
+    <form th:action="@{/admin/tamanhos/salvar}" method="post">
+      <div>
+        <label for="nome">Nome do Tamanho:</label>
+        <input type="text" id="nome" name="nome" required>
+      </div>
+      <br>
+      <div>
+        <label for="preco">Preço:</label>
+        <input type="number" id="preco" name="preco" step="0.01" required>
+      </div>
+      <br>
+      <button type="submit" class="btn-default">Salvar Tamanho</button>
+      <a th:href="@{/admin/tamanhos}">Cancelar</a>
+    </form>
+  </div>
+</section>
+
+</body>
+</html>
