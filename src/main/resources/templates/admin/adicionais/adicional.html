@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Gerenciar Adicionais</title>
+</head>
+
+<body>
+
+<section layout:fragment="content">
+    <div class="container"><h1>Adicionais Cadastrados</h1>
+
+        <a th:href="@{/admin/adicionais/novo}" class="btn-default">Adicionar Novo Adicional</a>
+
+        <hr>
+
+        <table th:if="${!adicionais.isEmpty()}">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th class="acoes">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="adicional : ${adicionais}">
+                <td th:text="${adicional.nome}">Nome do Adicional</td>
+                <td th:text="${#numbers.formatCurrency(adicional.preco)}">R$ 0,00</td>
+                <td class="acoes">
+                    <a th:href="@{/admin/adicionais/editar/{id}(id=${adicional.id})}" class="btn btn-editar">Editar</a>
+
+                    <form th:action="@{/admin/adicionais/remover/{id}(id=${adicional.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-remover"
+                                onclick="return confirm('Tem certeza que deseja remover este item?');">
+                            Remover
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${adicionais.isEmpty()}">
+            <p>Nenhum adicional cadastrado ainda.</p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

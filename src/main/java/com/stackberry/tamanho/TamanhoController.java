@@ -1,5 +1,6 @@
 package com.stackberry.tamanho;
 
+import com.stackberry.exception.ValidacaoException;
 import io.javalin.http.Context;
 
 import java.math.BigDecimal;
