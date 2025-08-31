@@ -1,5 +1,6 @@
 package com.stackberry;
 
+import com.stackberry.adicional.AdicionalController;
 import com.stackberry.login.Usuario;
 import com.stackberry.login.UsuarioController;
 import com.stackberry.tamanho.TamanhoController;
@@ -63,6 +64,7 @@ public class App {
 
         UsuarioController usuarioController = new UsuarioController();
         TamanhoController tamanhoController = new TamanhoController();
+        AdicionalController adicionalController = new AdicionalController();
 
         //----
         app.before(ctx -> {
@@ -122,13 +124,22 @@ public class App {
         // logout ---
         app.get("/logout", usuarioController::logout);
 
-        // tamanho view
+        // tamanho
         app.get("/admin/tamanhos", tamanhoController::exibirPaginaDeTamanhos);
         app.get("/admin/tamanhos/novo", tamanhoController::exibirFormularioCadastro);
         app.post("admin/tamanhos/salvar", tamanhoController::cadastrarTamanhoView);
         app.get("admin/tamanhos/editar/{id}", tamanhoController::exibirFormularioDeEdicao);
         app.post("admin/tamanhos/atualizar", tamanhoController::atualizarTamanho);
         app.post("admin/tamanhos/remover/{id}", tamanhoController::removerTamanho);
+
+        // adcional
+        app.get("/admin/adicionais", adicionalController::exibirPaginaDeAdicionais);
+        app.get("/admin/adicionais/novo", adicionalController::exibirFormularioCadastro);
+        app.post("/admin/adicionais/salvar", adicionalController::cadastrarAdicional);
+        app.get("/admin/adicionais/editar/{id}", adicionalController::exibirFormularioDeEdicao);
+        app.post("/admin/adicionais/atualizar", adicionalController::atualizarAdicional);
+        app.post("/admin/adicionais/remover/{id}", adicionalController::removerAdicional);
+
 
         app.get("/pedidos", ctx -> ctx.render("pedidos.html")); // cliente
         app.get("/dashboard_funcionario", ctx -> ctx.render("dashboard_funcionario.html")); // funcionário
