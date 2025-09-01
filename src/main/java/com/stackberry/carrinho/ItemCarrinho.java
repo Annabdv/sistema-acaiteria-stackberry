@@ -1,0 +1,59 @@
+package com.stackberry.carrinho;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Objects;
+import java.util.UUID;
+
+public class ItemCarrinho implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private final String id = UUID.randomUUID().toString();
+    private Acai acai;
+    private int quantidade;
+    private BigDecimal precoUnitario;
+
+    public ItemCarrinho(Acai acai, int quantidade, BigDecimal precoUnitario) {
+        this.acai = Objects.requireNonNull(acai);
+        this.quantidade = Math.max(1,quantidade);
+        validaPreco(precoUnitario);
+        this.precoUnitario = precoUnitario;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Acai getAcai() {
+        return acai;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public BigDecimal getPrecoUnitario() {
+        return precoUnitario;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    private static void validaPreco(BigDecimal precoUnitario) {
+        if (precoUnitario == null){
+            throw new IllegalArgumentException("Preço inválido");
+        }
+    }
+
+    public BigDecimal subTotal(){
+        return precoUnitario.multiply(java.math.BigDecimal.valueOf(quantidade));
+    }
+
+    public boolean mesmoProduto(ItemCarrinho outro){
+        if (outro == null){
+           return false;
+        }
+        return this.acai.equals(outro.getAcai());
+    }
+}
