@@ -4,12 +4,42 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Dashboard Administrador</title>
+    <title>Dashboard Admin</title>
+    <link rel="stylesheet" th:href="@{/styles/dashboard.css}">
 </head>
 <body>
+
 <main layout:fragment="content">
-    <h1>Área do Administrador</h1>
-    <p>Aqui o administrador vai gerenciar produtos, usuários e pedidos.</p>
+    <div class="dashboard-wrapper">
+        <div class="dashboard-box">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="user-info">
+                    <img src="/images/user.jpeg" alt="Logo/Foto">
+                    <h3>Nome do Usuário</h3>
+                    <p>Administrador</p>
+                </div>
+
+                <button onclick="loadContent('inicio')">Início</button>
+                <button onclick="loadContent('usuarios')">Usuários</button>
+                <button onclick="loadContent('pedidos')">Pedidos</button>
+                <button onclick="loadContent('tamanho')">Tamanhos</button>
+                <button onclick="loadContent('adicionais')">Adicionais</button>
+            </div>
+
+            <!-- Conteúdo principal -->
+            <div class="main-content">
+                <div class="content-area" id="content-area">
+                    <!-- Conteúdo inicial carregado automaticamente -->
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
+
+<!-- Chamada do JS externo -->
+<th:block layout:fragment="page-script">
+    <script th:src="@{/js/dashboard.js}"></script>
+</th:block>
 </body>
 </html>
