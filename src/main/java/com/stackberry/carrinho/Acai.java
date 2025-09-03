@@ -75,9 +75,6 @@ public class Acai implements Serializable {
         }
 
         public Builder adicionais(List<Adicional> adicinais){
-            if(adicinais == null || adicinais.isEmpty()){
-                throw new IllegalArgumentException("Os adicionais não podem ser nulos/vazios");
-            }
             this.adicionais.addAll(adicinais);
             return this;
         }
