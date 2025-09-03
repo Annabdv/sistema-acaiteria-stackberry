@@ -13,11 +13,11 @@ public class CardapioController {
     private final AdicionalService adicionalService = new AdicionalService();
 
     public void mostrarCardapio(Context ctx) {
-        // Buscar tamanhos e adicionais para exibir no cardápio
+
         List<Tamanho> tamanhos = tamanhoService.listarTamanhos();
         List<Adicional> adicionais = adicionalService.listarAdicionais();
 
-        // Passar para o template
+
         ctx.render("cardapio.html", java.util.Map.of(
                 "tamanhos", tamanhos,
                 "adicionais", adicionais

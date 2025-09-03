@@ -17,7 +17,7 @@ public class CarrinhoController {
     private final TamanhoService tamanhoService = new TamanhoService();
     private final AdicionalService adicionalService = new AdicionalService();
 
-    // POST /carrinho/adicionar
+
     public void adicionarAoCarrinho(Context ctx) {
         Carrinho carrinho = ctx.sessionAttribute("carrinho");
         if (carrinho == null) {
@@ -83,11 +83,8 @@ public class CarrinhoController {
 
         ctx.sessionAttribute("carrinho", carrinho);
 
-        ctx.redirect("/carrinho"); // Redireciona para ver o carrinho após adicionar
+        ctx.redirect("/carrinho");
     }
-
-
-    // ---------- Métodos auxiliares atualizados ----------
 
     private Tamanho mapToTamanho(String id) {
         return tamanhoService.buscarPorId(id)
@@ -103,7 +100,7 @@ public class CarrinhoController {
     }
 
     private BigDecimal calculaPreco(Tamanho tamanho, List<Adicional> adicionais) {
-        BigDecimal base = tamanho.getPreco(); // Usa preço real
+        BigDecimal base = tamanho.getPreco();
 
         BigDecimal somaAdicionais = adicionais.stream()
                 .map(Adicional::getPreco)
