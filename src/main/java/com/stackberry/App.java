@@ -1,6 +1,8 @@
 package com.stackberry;
 
 import com.stackberry.adicional.AdicionalController;
+import com.stackberry.cardapio.CardapioController;
+import com.stackberry.carrinho.CarrinhoController;
 import com.stackberry.login.Usuario;
 import com.stackberry.login.UsuarioController;
 import com.stackberry.tamanho.TamanhoController;
@@ -65,6 +67,8 @@ public class App {
         UsuarioController usuarioController = new UsuarioController();
         TamanhoController tamanhoController = new TamanhoController();
         AdicionalController adicionalController = new AdicionalController();
+        CarrinhoController carrinhoController = new CarrinhoController();
+        CardapioController cardapioController = new CardapioController();
 
         //----
         app.before(ctx -> {
@@ -140,6 +144,12 @@ public class App {
         app.post("/admin/adicionais/atualizar", adicionalController::atualizarAdicional);
         app.post("/admin/adicionais/remover/{id}", adicionalController::removerAdicional);
 
+        //cardapio e carrinho
+        app.get("/cardapio", cardapioController:: mostrarCardapio);
+        app.post("/carrinho/adicionar", carrinhoController::adicionarAoCarrinho);
+        app.get("/carrinho", carrinhoController::verCarrinho);
+        app.post("/carrinho/remover", carrinhoController::removerItem);
+        app.post("/carrinho/atualizar", carrinhoController::atualizarQuantidade);
 
         app.get("/pedidos", ctx -> ctx.render("pedidos.html")); // cliente
         app.get("/dashboard_funcionario", ctx -> ctx.render("dashboard_funcionario.html")); // funcionário

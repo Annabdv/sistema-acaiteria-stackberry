@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Cardápio - Açaí</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          crossorigin="anonymous"/>
+    <style>
+        body {
+            background-color: rebeccapurple;
+            color: white;
+        }
+        .btn-purple {
+            background-color: white;
+            color: rebeccapurple;
+            border: none;
+        }
+        .btn-purple:hover {
+            background-color: #fff3;
+        }
+    </style>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container py-5">
+        <h2 class="mb-4">Cardápio de Açaí</h2>
+
+        <form th:action="@{/carrinho/adicionar}" method="post">
+
+            <div class="mb-3">
+                <label for="tamanho" class="form-label">Selecione o Tamanho</label>
+                <select name="tamanhoId" id="tamanho" class="form-select" required>
+                    <option value="" disabled selected>Escolha um tamanho</option>
+                    <option th:each="t : ${tamanhos}"
+                            th:value="${t.id}"
+                            th:text="${t.nome + ' - ' + #numbers.formatCurrency(t.preco)}">
+                        Médio - R$ 0,00
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="adicionais" class="form-label">Adicionais</label>
+                <select name="adicionaisIds" id="adicionais" class="form-select" multiple>
+                    <option th:each="adicional : ${adicionais}"
+                            th:value="${adicional.id}"
+                            th:text="${adicional.nome + ' (' + #numbers.formatCurrency(adicional.preco) + ')'}">
+                        Mel - R$ 0,00
+                    </option>
+                </select>
+                <small class="form-text text-light">Segure CTRL (ou Command no Mac) para selecionar mais de um.</small>
+            </div>
+
+
+            <div class="mb-3" style="max-width: 100px;">
+                <label for="quantidade" class="form-label">Quantidade</label>
+                <input type="number" min="1" value="1" name="quantidade" id="quantidade" class="form-control" required/>
+            </div>
+
+            <button type="submit" class="btn btn-purple w-100">Adicionar ao Carrinho</button>
+        </form>
+
+        <div class="mt-4">
+            <a href="/carrinho" class="btn btn-outline-light">Ver Carrinho</a>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+</body>
+</html>
