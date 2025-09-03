@@ -15,6 +15,8 @@ function loadContent(section) {
     const contentArea = document.getElementById('content-area');
 
     switch(section) {
+
+        // pag de inicio da dashboard (stats)
         case 'inicio':
             contentArea.innerHTML = `
                 <div id="inicio">
@@ -34,6 +36,7 @@ function loadContent(section) {
             atualizarUsuarios();
             break;
 
+        // pag de lista de usuarios
         case 'usuarios':
             contentArea.innerHTML = `
                 <h2>Usuários Cadastrados</h2>
@@ -78,10 +81,12 @@ function loadContent(section) {
                 });
             break;
 
+        // pag de lista de pedidos
         case 'pedidos':
             contentArea.innerHTML = '<h2>Pedidos</h2><p>Lista de pedidos feitos...</p>';
             break;
 
+        // pag de gerenciar tamanhos
         case 'tamanho':
             contentArea.innerHTML = `
                 <h2>Tamanhos de Açaí Cadastrados</h2>
@@ -125,8 +130,48 @@ function loadContent(section) {
                 });
             break;
 
+        // pag de gerenciar adicionais
         case 'adicionais':
-            contentArea.innerHTML = '<h2>Adicionais</h2><p>Gerenciar itens adicionais...</p>';
+            contentArea.innerHTML = `
+                 <h2>Gerenciar Adicionais</h2>
+                 <a href="/admin/adicionais/novo" class="btn-default">Adicionar Novo Adicional</a>
+                 <hr>
+                 <div id="tamanho-list"><p>Carregando...</p></div>
+            `;
+
+            fetch('/admin/api/adicionais')
+                .then(res => res.json())
+                .then(adicionais => {
+                    const listDiv = document.getElementById('adicional-list');
+
+                    if (!adicionais || adicionais.length === 0) {
+                        listDiv.innerHTML = '<p>Nenhum adicional cadastrado ainda.</p>';
+                        return;
+                    }
+
+                    let html = '<table border="1" cellpadding="8" cellspacing="0">';
+                    html += '<thead><tr><th>Nome</th><th>Preço</th><th>Ações</th></tr></thead><tbody>';
+
+                    tamanhos.forEach(t => {
+                        html += `
+                            <tr>
+                                <td>${t.nome}</td>
+                                <td>R$ ${Number(t.preco).toFixed(2)}</td>
+                                <td>
+                                    <a href="/admin/adicionais/editar/${t.id}" class="btn btn-editar">Editar</a>
+                                    <a href="/admin/adicionais/remover/${t.id}" class="btn btn-remover">Remover</a>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    html += '</tbody></table>';
+                    listDiv.innerHTML = html;
+                })
+                .catch(err => {
+                    document.getElementById('adicional-list').innerHTML = '<p>Erro ao carregar adicionais.</p>';
+                    console.error(err);
+                });
             break;
     }
 }
