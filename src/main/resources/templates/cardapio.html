@@ -33,26 +33,28 @@
 
             <div class="mb-3">
                 <label for="tamanho" class="form-label">Selecione o Tamanho</label>
-                <select name="tamanho" id="tamanho" class="form-select" required>
+                <select name="tamanhoId" id="tamanho" class="form-select" required>
                     <option value="" disabled selected>Escolha um tamanho</option>
                     <option th:each="t : ${tamanhos}"
                             th:value="${t.id}"
-                            th:text="${t.nome + ' - R$ ' + #numbers.formatDecimal(t.preco, 2, 'COMMA')}">
+                            th:text="${t.nome + ' - ' + #numbers.formatCurrency(t.preco)}">
                         Médio - R$ 0,00
                     </option>
                 </select>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Adicionais</label>
-                <div th:each="adicional : ${adicionais}" class="form-check">
-                    <input class="form-check-input" type="checkbox" th:id="'adicional-' + ${adicional.id}" name="adicionais" th:value="${adicional.id}"/>
-                    <label class="form-check-label" th:for="'adicional-' + ${adicional.id}"
-                           th:text="${adicional.nome + ' (R$ ' + #numbers.formatDecimal(adicional.preco, 2, 'COMMA') + ')'}">
+                <label for="adicionais" class="form-label">Adicionais</label>
+                <select name="adicionaisIds" id="adicionais" class="form-select" multiple>
+                    <option th:each="adicional : ${adicionais}"
+                            th:value="${adicional.id}"
+                            th:text="${adicional.nome + ' (' + #numbers.formatCurrency(adicional.preco) + ')'}">
                         Mel - R$ 0,00
-                    </label>
-                </div>
+                    </option>
+                </select>
+                <small class="form-text text-light">Segure CTRL (ou Command no Mac) para selecionar mais de um.</small>
             </div>
+
 
             <div class="mb-3" style="max-width: 100px;">
                 <label for="quantidade" class="form-label">Quantidade</label>
