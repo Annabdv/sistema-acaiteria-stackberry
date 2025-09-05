@@ -111,6 +111,28 @@ main {
 
 }
 
+.cliente-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.cliente-button button {
+    color: white;              /* cor do texto */
+    background-color: #230033; /* fundo */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.cliente-button button:hover {
+    background-color: #679F3A;
+    color: white;
+}
+
 .stats button .stat-number {
     color: white;
     font-size: 18px;

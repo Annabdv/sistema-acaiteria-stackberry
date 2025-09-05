@@ -1,6 +1,8 @@
 package com.stackberry.login;
 import io.javalin.http.Context;
 
+import java.util.Map;
+
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
@@ -48,9 +50,8 @@ public class UsuarioController {
 
             // Redirect por tipo de usuario
             switch (usuario.getTipoDeUsuario()) {
-                case CLIENTE -> ctx.redirect("/pedidos");
-                case FUNCIONARIO -> ctx.redirect("/dashboard_funcionario");
-                case ADMINISTRADOR -> ctx.redirect("/dashboard_admin");
+                case CLIENTE -> ctx.redirect("/cardapio");
+                case ADMINISTRADOR -> ctx.redirect("/admin/dashboard_admin");
             }
         } catch (Exception e) {
             ctx.attribute("erro", e.getMessage());
@@ -64,4 +65,28 @@ public class UsuarioController {
         ctx.req().getSession().invalidate();
         ctx.redirect("/login");
     }
+
+    // lista de usuários em JSON
+    public void listarUsuarios(Context ctx) {
+        usuarioService.recarregarUsuarios(); // cria esse método no service se ainda não existir
+        ctx.json(usuarioService.buscarTodos());
+    }
+
+    public void totalUsuarios(Context ctx) {
+        int total = usuarioService.buscarTodos().size();
+        ctx.json(Map.of("total", total));
+    }
+
+    public void removerUsuario(Context ctx) {
+        String id = ctx.pathParam("id");
+        boolean removed = usuarioService.desativarUsuario(id);
+
+        if (removed) {
+            ctx.json(Map.of("mensagem", "Usuário removido com sucesso!"));
+        } else {
+            ctx.status(404).json(Map.of("mensagem", "Usuário não encontrado."));
+        }
+    }
+
+
 }
