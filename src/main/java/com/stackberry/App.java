@@ -151,8 +151,19 @@ public class App {
         app.post("/carrinho/remover", carrinhoController::removerItem);
         app.post("/carrinho/atualizar", carrinhoController::atualizarQuantidade);
 
+        // TODO: ADICIONE LÓGICA DE CONTROLLER PARA DASHBOARD.
         app.get("/pedidos", ctx -> ctx.render("pedidos.html")); // cliente
         app.get("/dashboard_funcionario", ctx -> ctx.render("dashboard_funcionario.html")); // funcionário
-        app.get("/dashboard_admin", ctx -> ctx.render("dashboard_admin.html")); // admin
+        app.get("/dashboard_admin", ctx -> {
+            Usuario usuarioLogado = ctx.sessionAttribute("usuarioLogado"); // Pego usario logado na sessão
+
+            ctx.attribute("usuario", usuarioLogado); // Basicamente um Map para usar no html.
+
+            ctx.render("dashboard_admin.html");
+
+                });
+//
+//
+//        } // admin
     }
 }
