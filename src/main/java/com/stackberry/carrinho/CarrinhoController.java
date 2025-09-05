@@ -2,6 +2,9 @@ package com.stackberry.carrinho;
 
 import com.stackberry.adicional.Adicional;
 import com.stackberry.adicional.AdicionalService;
+import com.stackberry.login.Usuario;
+import com.stackberry.pedido.Pedido;
+import com.stackberry.pedido.PedidoRepository;
 import com.stackberry.tamanho.Tamanho;
 import com.stackberry.tamanho.TamanhoService;
 import io.javalin.http.Context;
@@ -16,7 +19,7 @@ public class CarrinhoController {
 
     private final TamanhoService tamanhoService = new TamanhoService();
     private final AdicionalService adicionalService = new AdicionalService();
-
+    private final PedidoRepository pedidoRepository = new PedidoRepository();
 
     public void adicionarAoCarrinho(Context ctx) {
         Carrinho carrinho = ctx.sessionAttribute("carrinho");
@@ -141,6 +144,36 @@ public class CarrinhoController {
             ctx.sessionAttribute("carrinho", carrinho);
         }
         ctx.redirect("/carrinho");
+    }
+
+    // finalização de compra
+
+    public void finalizarCompra(Context ctx) {
+        Carrinho carrinho = ctx.sessionAttribute("carrinho");
+        Usuario usuario = ctx.sessionAttribute("usuarioLogado");
+
+        if (usuario == null) {
+            ctx.status(400).result("Usuário não logado");
+            return;
+        }
+        if (carrinho == null || carrinho.getItensNoCarrinho().isEmpty()) {
+            ctx.status(400).result("Carrinho vazio");
+            return;
+        }
+
+        Pedido pedido = new Pedido(carrinho.getItensNoCarrinho(), usuario);
+        pedidoRepository.salvar(pedido); // Salva acumulando no JSON
+
+        carrinho.clear();
+        ctx.sessionAttribute("carrinho", carrinho);
+
+        // redireciona para a página de sucesso
+        ctx.redirect("/pedido/sucesso");
+    }
+
+    // pag de sucesso do pedido
+    public void verSucesso(Context ctx) {
+        ctx.render("pedidoSucesso.html");
     }
 
 }

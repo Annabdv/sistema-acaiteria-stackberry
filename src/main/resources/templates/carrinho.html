@@ -80,7 +80,9 @@
                 </tfoot>
             </table>
             <a href="/cardapio" class="btn btn-outline-light">Continuar Comprando</a>
-            <a href="#" class="btn btn-purple">Finalizar Compra</a>
+            <form th:action="@{/carrinho/finalizarCompra}" method="post">
+                <button type="submit" class="btn btn-purple">Finalizar Compra</button>
+            </form>
         </div>
     </div>
 </main>

@@ -158,5 +158,10 @@ public class App {
         app.get("/pedidos", ctx -> ctx.render("cardapio.html")); // cliente
 
         app.get("/admin/dashboard_admin", dashboardController:: exibirDashboard);
+
+        // pedido
+        app.post("/carrinho/finalizarCompra", carrinhoController::finalizarCompra);
+
+        app.get("/pedido/sucesso", carrinhoController::verSucesso);
     }
 }

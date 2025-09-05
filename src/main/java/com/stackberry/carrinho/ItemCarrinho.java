@@ -20,6 +20,9 @@ public class ItemCarrinho implements Serializable {
         this.precoUnitario = precoUnitario;
     }
 
+    public ItemCarrinho() {
+    }
+
     public String getId() {
         return id;
     }

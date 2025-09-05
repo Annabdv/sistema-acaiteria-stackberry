@@ -20,6 +20,9 @@ public class Acai implements Serializable {
         this.adicionais = builder.adicionais;
     }
 
+    public Acai() {
+    }
+
     public Tamanho getTamanho() {
         return tamanho;
     }
