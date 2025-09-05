@@ -47,7 +47,6 @@ Esta é a lista de funcionalidades essenciais para a primeira versão do projeto
 ### 🔑 Para Administradores
 - [ ] Todas as funcionalidades de **Funcionário**.
 - [ ] Gerenciar (criar, editar, deletar) produtos, como tamanhos de açaí e acompanhamentos.
-- [ ] Marcar um item como "indisponível" no cardápio.
 - [ ] Visualizar um dashboard com dados de vendas e pedidos.
 
 ---
