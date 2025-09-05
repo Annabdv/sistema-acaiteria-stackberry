@@ -34,7 +34,8 @@ public class UsuarioRepository {
                 .findFirst();
     }
 
-    private void carregaUsariosArquivo() {
+
+    public void carregaUsariosArquivo() {
         File file = new File(FILE_PATH);
         if(!file.exists() || file.length() == 0){
             return; // Começa com a memória vazia se o arquivo não existir.
@@ -60,5 +61,60 @@ public class UsuarioRepository {
         } catch (Exception e) {
             System.err.println("Ocorreu um erro ao tentar salvar usuários:" + e.getMessage());
         }
+    }
+
+    //adições para a dashboard
+
+    // busca email em usuarios ativos
+    public Optional<Usuario> buscarAtivoPorEmail(String email) {
+        return usuariosEmMemoria.values().stream()
+                .filter(u -> u.getEmail().equalsIgnoreCase(email))
+                .filter(Usuario::isAtivo)
+                .findFirst();
+    }
+
+    public Collection<Usuario> buscarTodosUsuarios() {
+        return usuariosEmMemoria.values();
+    }
+
+    // desativa user
+    public boolean desativarUsuarioPorId(String id) {
+        Usuario usuario = usuariosEmMemoria.get(id);
+        if (usuario != null) {
+            usuario.setAtivo(false);
+            salvarTudoNoArquivo();
+            return true;
+        }
+        return false;
+    }
+
+    public Map<String, Usuario> carregandoUsuarios() {
+        Map<String, Usuario> usuariosMap = new ConcurrentHashMap<>();
+        File file = new File(FILE_PATH);
+        if (!file.exists() || file.length() == 0) {
+            return usuariosMap; // vazio
+        }
+        try {
+            List<Usuario> usuariosDoArquivo = objectMapper.readValue(file, new TypeReference<List<Usuario>>() {});
+            usuariosDoArquivo.forEach(usuario -> usuariosMap.put(usuario.getId(), usuario));
+        } catch (Exception e) {
+            System.err.println("Ocorreu um erro ao tentar carregar usuários:" + e.getMessage());
+        }
+        return usuariosMap;
+    }
+
+    private void recarregarDoArquivo() {
+        Map<String, Usuario> carregados = carregandoUsuarios();
+        usuariosEmMemoria.clear();
+        usuariosEmMemoria.putAll(carregados);
+    }
+
+    public boolean emailEmUso(String email) {
+        for (Usuario usuario: usuariosEmMemoria.values()) {
+            if (usuario.getEmail().equalsIgnoreCase(email) && usuario.isAtivo()) {
+                return true; // email já está em uso por um usuário ativo
+            }
+        }
+        return false;
     }
 }

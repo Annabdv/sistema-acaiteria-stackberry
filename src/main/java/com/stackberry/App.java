@@ -6,6 +6,7 @@ import com.stackberry.carrinho.CarrinhoController;
 import com.stackberry.login.Usuario;
 import com.stackberry.login.UsuarioController;
 import com.stackberry.tamanho.TamanhoController;
+import com.stackberry.admin.DashboardController;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -69,6 +70,7 @@ public class App {
         AdicionalController adicionalController = new AdicionalController();
         CarrinhoController carrinhoController = new CarrinhoController();
         CardapioController cardapioController = new CardapioController();
+        DashboardController dashboardController = new DashboardController();
 
         //----
         app.before(ctx -> {
@@ -92,13 +94,8 @@ public class App {
                             // acesso por tipo de usuário
                             switch (usuarioLogado.getTipoDeUsuario()) {
                                 case CLIENTE:
-                                    if (path.equals("/dashboard_funcionario") || path.equals("/dashboard_admin")) {
-                                        ctx.redirect("/pedidos");
-                                    }
-                                    break;
-                                case FUNCIONARIO:
-                                    if (path.equals("/dashboard_admin")) {
-                                        ctx.redirect("/dashboard_funcionario");
+                                    if (path.startsWith("/admin")) {
+                                        ctx.redirect("/cardapio");
                                     }
                                     break;
                                 case ADMINISTRADOR:
@@ -151,19 +148,15 @@ public class App {
         app.post("/carrinho/remover", carrinhoController::removerItem);
         app.post("/carrinho/atualizar", carrinhoController::atualizarQuantidade);
 
+        // usuario
+
+        app.get("/admin/api/usuarios", usuarioController::listarUsuarios);
+        app.get("/admin/totalUsuarios", usuarioController::totalUsuarios);
+        app.delete("/admin/api/usuarios/{id}", usuarioController::removerUsuario);
+
         // TODO: ADICIONE LÓGICA DE CONTROLLER PARA DASHBOARD.
-        app.get("/pedidos", ctx -> ctx.render("pedidos.html")); // cliente
-        app.get("/dashboard_funcionario", ctx -> ctx.render("dashboard_funcionario.html")); // funcionário
-        app.get("/dashboard_admin", ctx -> {
-            Usuario usuarioLogado = ctx.sessionAttribute("usuarioLogado"); // Pego usario logado na sessão
+        app.get("/pedidos", ctx -> ctx.render("cardapio.html")); // cliente
 
-            ctx.attribute("usuario", usuarioLogado); // Basicamente um Map para usar no html.
-
-            ctx.render("dashboard_admin.html");
-
-                });
-//
-//
-//        } // admin
+        app.get("/admin/dashboard_admin", dashboardController:: exibirDashboard);
     }
 }

@@ -6,6 +6,8 @@ public class Usuario {
     private String nome;
     private String senha;
     private TipoDeUsuario tipoDeUsuario;
+    private boolean ativo; // para a ativação de user
+    private String status;
 
     public Usuario(String email, String nome, String senha){
         this.id = java.util.UUID.randomUUID().toString(); // TODO: Troca lógica, fazer o ID ser gerado pelo repository
@@ -13,6 +15,7 @@ public class Usuario {
         this.nome = nome;
         this.senha = senha;
         tipoDeUsuario = TipoDeUsuario.CLIENTE;
+        this.ativo = true; // por padrao, o usuario novo começa ativo
     }
     // Construtor vazio
     public Usuario(){}
@@ -50,5 +53,15 @@ public class Usuario {
         this.tipoDeUsuario = tipoDeUsuario;
     }
 
+    public boolean isAtivo() {
+        return ativo;
+    }
 
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public String getStatus() {
+        return ativo ? "Ativo" : "Desativado";
+    }
 }
