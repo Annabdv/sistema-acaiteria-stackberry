@@ -16,7 +16,7 @@
             <div class="sidebar">
                 <div class="user-info">
                     <img src="/images/user.jpeg" alt="Logo/Foto">
-                    <h3>Nome do Usuário</h3>
+                    <h3 th:if="${usuario}" th:text="${usuario.getNome()}"> </h3>
                     <p>Administrador</p>
                 </div>
 
