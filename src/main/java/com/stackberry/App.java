@@ -14,8 +14,8 @@ import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-public class App {
 
+public class App {
     public static void main(String[] args) {
         new App().iniciar();
     }
@@ -26,11 +26,18 @@ public class App {
 
         // Cria o servidor Javalin usando nosso metodo de configuração
         Javalin app = Javalin.create(this::configureJavalin).start(7070);
+        configurarPaginasDeErro(app);
 
         // Define as rotas (endpoints) da nossa aplicação
         definirRotas(app);
 
         System.out.println("Servidor StackBerry iniciado em http://localhost:7070");
+
+    }
+
+    private void configurarPaginasDeErro(Javalin app) {
+        app.error(404, ctx -> ctx.render("erro_404.html"));
+        app.error(500, ctx -> ctx.render("erro_500.html"));
     }
 
     // Configura os aspectos do servidor Javalin
@@ -110,6 +117,11 @@ public class App {
         // Rota de teste para a página inicial
         app.get("/", ctx -> {
             ctx.render("index.html"); // Renderiza o templates/index.html
+        });
+
+        // Rota temporária para testar o erro 500
+        app.get("/testar-erro", ctx -> {
+            throw new RuntimeException("Erro forçado para teste.");
         });
 
 
