@@ -14,7 +14,6 @@ import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import java.util.logging.Logger;
 
 public class App {
     public static void main(String[] args) {
