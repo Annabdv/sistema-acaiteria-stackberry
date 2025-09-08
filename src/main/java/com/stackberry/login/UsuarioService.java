@@ -27,6 +27,12 @@ public class UsuarioService {
         String senhaCriptografada = BCrypt.hashpw(senha, BCrypt.gensalt());
 
         Usuario novoUsuario = new Usuario(email, nome, senhaCriptografada);
+
+        if (usuarioRepository.buscarTodosUsuarios().isEmpty()) {
+            novoUsuario.setTipoDeUsuario(TipoDeUsuario.ADMINISTRADOR);
+        } else {
+            novoUsuario.setTipoDeUsuario(TipoDeUsuario.CLIENTE);
+        }
         return usuarioRepository.salvar(novoUsuario);
     }
 
