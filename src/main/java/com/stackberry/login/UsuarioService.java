@@ -60,6 +60,19 @@ public class UsuarioService {
         return usuario;
     }
 
+    public boolean promoverParaAdmin(String emailUsuario) {
+        var usuarioOpt = usuarioRepository.buscarPorEmail(emailUsuario);
+        if (usuarioOpt.isEmpty()) {
+            return false; // usuário não existe
+        }
+
+        Usuario usuario = usuarioOpt.get();
+        usuario.setTipoDeUsuario(TipoDeUsuario.ADMINISTRADOR);
+        usuarioRepository.salvar(usuario); // persiste a alteração
+        return true;
+    }
+
+
     public Collection<Usuario> buscarTodos() {
         return usuarioRepository.buscarTodosUsuarios();
     }
