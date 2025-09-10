@@ -144,20 +144,7 @@ function loadContent(section) {
     }
 }
 
-// Desativar usuário
-function excluirUsuario(id) {
-    if (!confirm('Tem certeza que deseja remover este usuário?')) return;
-
-    fetch(`/admin/api/usuarios/${id}`, { method: 'DELETE' })
-        .then(res => res.json())
-        .then(data => {
-            alert(data.mensagem);
-            loadContent('usuarios');
-            atualizarUsuarios();
-        })
-        .catch(err => console.error(err));
-}
-
+// Promove o usuário para administrador
 async function promoverUsuario(id) {
     if (!confirm('Tem certeza que deseja promover este usuário?')) return;
     console.log('Promovendo id:', id);
@@ -191,7 +178,19 @@ async function promoverUsuario(id) {
     }
 }
 
+// Desativar usuário
+function excluirUsuario(id) {
+    if (!confirm('Tem certeza que deseja remover este usuário?')) return;
 
+    fetch(`/admin/api/usuarios/${id}`, { method: 'DELETE' })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.mensagem);
+            loadContent('usuarios');
+            atualizarUsuarios();
+        })
+        .catch(err => console.error(err));
+}
 
 // Carrega aba inicial automaticamente
 window.addEventListener('DOMContentLoaded', () => {
