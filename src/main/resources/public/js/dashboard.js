@@ -40,7 +40,7 @@ function loadContent(section) {
                     usuarios.sort((a, b) => a.nome.localeCompare(b.nome));
 
                     let html = '<table border="1" cellpadding="8" cellspacing="0">';
-                    html += '<thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>Status</th><th>Remover</th></tr></thead><tbody>';
+                    html += '<thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>Status</th><th>Remover</th><th>Promover</th></tr></thead><tbody>';
 
                     usuarios.forEach(u => {
                         html += `<tr>
@@ -50,6 +50,9 @@ function loadContent(section) {
                             <td>${u.status}</td>
                             <td>
                                 <button onclick="excluirUsuario('${u.id}')"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                            <td>
+                                <button onclick="promoverUsuario('${u.id}')"><i class="fa-solid fa-arrow-up"></i></button>
                             </td>
                         </tr>`;
                     });
@@ -154,6 +157,41 @@ function excluirUsuario(id) {
         })
         .catch(err => console.error(err));
 }
+
+async function promoverUsuario(id) {
+    if (!confirm('Tem certeza que deseja promover este usuário?')) return;
+    console.log('Promovendo id:', id);
+
+    try {
+        const res = await fetch(`/admin/api/usuarios/${id}/promover`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        });
+
+        if (!res.ok) {
+            const text = await res.text();
+            throw new Error(`${res.status} ${res.statusText} - ${text}`);
+        }
+
+        if (res.status === 204) {
+            alert('Usuário promovido com sucesso.');
+        } else {
+            const text = await res.text();
+            let data;
+            try { data = JSON.parse(text); } catch { data = { mensagem: text || 'Sucesso' }; }
+            alert(data.mensagem || 'Usuário promovido com sucesso.');
+        }
+
+        loadContent('usuarios');
+        atualizarUsuarios();
+    } catch (e) {
+        console.error(e);
+        alert('Erro ao promover usuário: ' + e.message);
+    }
+}
+
+
 
 // Carrega aba inicial automaticamente
 window.addEventListener('DOMContentLoaded', () => {
