@@ -34,10 +34,8 @@ public class UsuarioRepository {
                 .findFirst();
     }
 
-    public Optional<Usuario> buscarPorId(String id){
-        return usuariosEmMemoria.values().stream()
-                .filter(u -> u.getId().equalsIgnoreCase(id))
-                .findFirst();
+    public Optional<Usuario> buscarPorId(String id) {
+        return Optional.ofNullable(usuariosEmMemoria.get(id));
     }
 
 
