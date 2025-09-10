@@ -60,9 +60,9 @@ public class UsuarioController {
     }
 
     public void promoverUsuarioParaAdmin(Context ctx) {
-        String email = ctx.pathParam("email");
+        String id = ctx.pathParam("id");
 
-        boolean sucesso = usuarioService.promoverParaAdmin(email);
+        boolean sucesso = usuarioService.promoverParaAdmin(id);
 
         if (sucesso) {
             ctx.json(Map.of("mensagem", "Usuário promovido para ADMIN com sucesso!"));

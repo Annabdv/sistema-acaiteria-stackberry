@@ -60,8 +60,8 @@ public class UsuarioService {
         return usuario;
     }
 
-    public boolean promoverParaAdmin(String emailUsuario) {
-        var usuarioOpt = usuarioRepository.buscarPorEmail(emailUsuario);
+    public boolean promoverParaAdmin(String idUsuario) {
+        var usuarioOpt = usuarioRepository.buscarPorId(idUsuario);
         if (usuarioOpt.isEmpty()) {
             return false; // usuário não existe
         }
