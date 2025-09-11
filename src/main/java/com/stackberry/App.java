@@ -94,6 +94,8 @@ public class App {
 
                     Usuario usuarioLogado = ctx.sessionAttribute("usuarioLogado");
 
+                    ctx.attribute("usuario", usuarioLogado); // Envio o usuario logado usando o handler
+
                     if (!rotaPublica) {
                         if (usuarioLogado == null) {
                             ctx.redirect("/login"); // redirect para login

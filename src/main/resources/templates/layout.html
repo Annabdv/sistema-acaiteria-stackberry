@@ -23,18 +23,51 @@
         <ul id="nav_list">
             <li class="nav-item active"><a href="/">Início</a></li>
             <li class="nav-item"><a href="/#menu">Cardápio</a></li>
-            <li class="nav-item"><a th:href="@{/cadastrar}">Cadastre-se</a></li>
+
+            <li class="nav-item" th:if="${usuario != null and usuario.tipoDeUsuario.name() == 'ADMINISTRADOR'}">
+                <a th:href="@{/admin/dashboard_admin}">Dashboard</a>
+            </li>
+
+            <li class="nav-item" th:if="${usuario == null}">
+                <a th:href="@{/cadastrar}">Cadastre-se</a>
+            </li>
         </ul>
-        <button class="btn-default" onclick="window.location.href='/login'">Fazer login</button>
+
+        <div class="navbar-buttons">
+            <button class="btn-default" th:if="${usuario != null}" onclick="window.location.href='/carrinho'">
+                <i class="fa-solid fa-cart-shopping"></i> Carrinho
+            </button>
+
+            <button class="btn-default" th:if="${usuario != null}" onclick="window.location.href='/logout'">Sair</button>
+
+            <button class="btn-default" th:if="${usuario == null}" onclick="window.location.href='/login'">Fazer login</button>
+        </div>
+
         <button id="mobile_btn"><i class="fa-solid fa-bars"></i></button>
     </nav>
     <div id="mobile_menu">
         <ul id="mobile_nav_list">
             <li class="nav-item"><a href="/">Início</a></li>
             <li class="nav-item"><a href="/#menu">Cardápio</a></li>
-            <li class="nav-item"><a th:href="@{/cadastrar}">Cadastre-se</a></li>
+
+            <li class="nav-item" th:if="${usuario != null and usuario.tipoDeUsuario.name() == 'ADMINISTRADOR'}">
+                <a th:href="@{/admin/dashboard_admin}">Dashboard</a>
+            </li>
+
+            <li class="nav-item" th:if="${usuario == null}">
+                <a th:href="@{/cadastrar}">Cadastre-se</a>
+            </li>
         </ul>
-        <button class="btn-default" onclick="window.location.href='/login'">Fazer login</button>
+
+        <div class="navbar-buttons">
+            <button class="btn-default" th:if="${usuario != null}" onclick="window.location.href='/carrinho'">
+                <i class="fa-solid fa-cart-shopping"></i> Carrinho
+            </button>
+
+            <button class="btn-default" th:if="${usuario != null}" onclick="window.location.href='/logout'">Sair</button>
+
+            <button class="btn-default" th:if="${usuario == null}" onclick="window.location.href='/login'">Fazer login</button>
+        </div>
     </div>
 </header>
 
@@ -43,7 +76,6 @@
 <footer id="footer">
     <p>Desenvolvido por StackBerry &copy; 2025</p>
 </footer>
-
 
 <th:block layout:fragment="page-script"></th:block>
 
