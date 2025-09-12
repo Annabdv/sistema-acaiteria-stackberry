@@ -8,6 +8,22 @@ function atualizarUsuarios() {
         });
 }
 
+
+// atualiza número de pedidos
+function atualizarPedidos() {
+    fetch('/admin/totalPedidos')
+        .then(res => res.json())
+        .then(data => {
+            const span = document.getElementById('pedidos-feitos');
+            if(span) span.textContent = data.total;
+        });
+}
+
+function atualizarUsuariosEPedidos() {
+    atualizarUsuarios();
+    atualizarPedidos();
+}
+
 // Carrega conteúdo das abas
 function loadContent(section) {
     const contentArea = document.getElementById('content-area');
@@ -66,9 +82,79 @@ function loadContent(section) {
                 });
             break;
 
-        case 'pedido':
-            contentArea.innerHTML = '<h2>Pedidos</h2><p>Lista de pedidos feitos...</p>';
-        break;
+        case 'pedidos':
+                    contentArea.innerHTML = `
+                        <h2>Pedidos</h2>
+                        <div id="pedido-list" style="max-height: 400px; overflow-y: auto;">
+                            <table border="1" cellpadding="8" cellspacing="0" id="pedido-table">
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Cliente</th>
+                                        <th>Itens</th>
+                                        <th>Valor Total</th>
+                                        <th>Status</th>
+                                        <th>Finalizar</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pedido-tbody">
+                                    <tr><td colspan="7">Carregando...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+
+                    function atualizarPedidosTabela() {
+                        fetch('/admin/api/pedidos')
+                            .then(res => res.json())
+                            .then(pedidos => {
+                                const tbody = document.getElementById('pedido-tbody');
+                                if (!pedidos || pedidos.length === 0) {
+                                    tbody.innerHTML = '<tr><td colspan="7">Nenhum pedido encontrado.</td></tr>';
+                                    return;
+                                }
+
+                                pedidos.sort((a, b) => new Date(b.dataHora) - new Date(a.dataHora));
+
+                                const html = pedidos.map(p => {
+                                    const itensHtml = p.itens.map(i => {
+                                        const tamanho = i.acai.tamanho.nome;
+                                        const adicionais = (i.acai.adicionais || []).map(a => a.nome).join(', ');
+                                        const adicionaisStr = adicionais ? ` (${adicionais})` : '';
+                                        return `${tamanho}${adicionaisStr} x${i.quantidade}`;
+                                    }).join('<br>');
+
+                                    return `
+                                        <tr>
+                                            <td>${p.dataHoraFormatada}</td>
+                                            <td>${p.usuarioNome}</td>
+                                            <td>${itensHtml}</td>
+                                            <td>R$ ${Number(p.valorTotal).toFixed(2)}</td>
+                                            <td>${p.status}</td>
+                                            <td>
+                                                ${p.realizado ? '' : `<button class="btn btn-status" onclick="alterarStatusPedido('${p.id}')">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </button>`}
+                                            </td>
+                                        </tr>
+                                    `;
+                                }).join('');
+
+                                tbody.innerHTML = html;
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                document.getElementById('pedido-tbody').innerHTML =
+                                    '<tr><td colspan="7">Erro ao carregar pedidos.</td></tr>';
+                            });
+                    }
+
+                    atualizarPedidosTabela();
+
+                    if (intervaloPedidos) clearInterval(intervaloPedidos);
+
+                    intervaloPedidos = setInterval(atualizarPedidosTabela, 5000);
+                    break;
 
         case 'tamanho':
             contentArea.innerHTML = `
@@ -190,6 +276,28 @@ function excluirUsuario(id) {
             atualizarUsuarios();
         })
         .catch(err => console.error(err));
+}
+
+// marcar statusss
+function alterarStatusPedido(id, status) {
+     if (status === "Concluído") {
+            alert("Pedido já concluído");
+            return; // não envia requisição
+     }
+
+    if (!confirm("Deseja alterar o status deste pedido?")) return;
+
+    fetch(`/admin/api/pedidos/${id}/status`, { method: 'PUT' })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.mensagem || "Status atualizado com sucesso!");
+            loadContent('pedidos'); // recarrega a lista
+            atualizarPedidos(); // atualiza o contador
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Erro ao alterar status do pedido.");
+        });
 }
 
 // Carrega aba inicial automaticamente
