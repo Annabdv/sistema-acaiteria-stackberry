@@ -30,6 +30,12 @@ header {
     gap: 48px;
 }
 
+.navbar-buttons {
+    display: flex;         /* Alinha os botões em linha */
+    align-items: center;
+    gap: 15px;
+}
+
 .nav-item a {
     text-decoration: none;
     color: #230033;
