@@ -173,19 +173,19 @@ main {
 }
 
 #usuarios-list td {
-    background-color: white;
+    background-color: #f3e6ff;
 }
 
-.btn-icon {
+.btn -icon {
     background: none;
     border: none;
     cursor: pointer;
-    color: white;
+    color:  #f3e6ff;
     font-size: 1.1em;
     padding: 5px;
 }
 
-.btn-icon:hover {
+.btn -icon:hover {
     transform: scale(1.2);
     transition: transform 0.2s ease;
 }
@@ -214,7 +214,7 @@ main {
 }
 
 #pedido-table td {
-    background-color: white;
+    background-color:  #f3e6ff;
 }
 
 @media (max-width: 768px) {

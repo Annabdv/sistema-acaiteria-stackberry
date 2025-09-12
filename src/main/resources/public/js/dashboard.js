@@ -24,6 +24,8 @@ function atualizarUsuariosEPedidos() {
     atualizarPedidos();
 }
 
+let intervaloPedidos;
+
 // Carrega conteúdo das abas
 function loadContent(section) {
     const contentArea = document.getElementById('content-area');
@@ -42,7 +44,7 @@ function loadContent(section) {
                     </div>
                 </div>
             `;
-            atualizarUsuarios();
+            atualizarUsuariosEPedidos();
             break;
 
         case 'usuarios':
@@ -56,13 +58,13 @@ function loadContent(section) {
                     usuarios.sort((a, b) => a.nome.localeCompare(b.nome));
 
                     let html = '<table border="1" cellpadding="8" cellspacing="0">';
-                    html += '<thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>Status</th><th>Remover</th><th>Promover</th></tr></thead><tbody>';
+                    html += '<thead><tr><th>Nome</th><th>Email</th><th>Tipo</th><th>Status</th><th>Remover</th><th>Promover</th></tr></thead><tbody>';
 
                     usuarios.forEach(u => {
                         html += `<tr>
-                            <td>${u.id}</td>
                             <td>${u.nome}</td>
                             <td>${u.email}</td>
+                            <td>${u.tipoDeUsuario}</td>
                             <td>${u.status}</td>
                             <td>
                                 <button onclick="excluirUsuario('${u.id}')"><i class="fa-solid fa-trash"></i></button>
@@ -266,7 +268,7 @@ async function promoverUsuario(id) {
 
 // Desativar usuário
 function excluirUsuario(id) {
-    if (!confirm('Tem certeza que deseja remover este usuário?')) return;
+     if (!confirm('Tem certeza que deseja remover este usuário?')) return;
 
     fetch(`/admin/api/usuarios/${id}`, { method: 'DELETE' })
         .then(res => res.json())
@@ -278,25 +280,43 @@ function excluirUsuario(id) {
         .catch(err => console.error(err));
 }
 
-// marcar statusss
 function alterarStatusPedido(id, status) {
-     if (status === "Concluído") {
-            alert("Pedido já concluído");
-            return; // não envia requisição
-     }
+    if (status === "Concluído") {
+        alert("Pedido já concluído");
+        return;
+    }
 
     if (!confirm("Deseja alterar o status deste pedido?")) return;
 
     fetch(`/admin/api/pedidos/${id}/status`, { method: 'PUT' })
-        .then(res => res.json())
-        .then(data => {
+        .then(async res => {
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(`${res.status} ${res.statusText} - ${text}`);
+            }
+
+            if (res.status === 204) {
+                alert("Status atualizado com sucesso!");
+                return;
+            }
+
+            const text = await res.text();
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch {
+                data = { mensagem: text || "Status atualizado com sucesso!" };
+            }
+
             alert(data.mensagem || "Status atualizado com sucesso!");
-            loadContent('pedidos'); // recarrega a lista
-            atualizarPedidos(); // atualiza o contador
+        })
+        .then(() => {
+            loadContent("pedidos");
+            atualizarPedidos();
         })
         .catch(err => {
             console.error(err);
-            alert("Erro ao alterar status do pedido.");
+            alert("Erro ao alterar status do pedido: " + err.message);
         });
 }
 
