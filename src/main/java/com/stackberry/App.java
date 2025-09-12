@@ -165,6 +165,7 @@ public class App {
         app.get("/admin/api/usuarios", usuarioController::listarUsuarios);
         app.get("/admin/totalUsuarios", usuarioController::totalUsuarios);
         app.delete("/admin/api/usuarios/{id}", usuarioController::removerUsuario);
+        app.put("/admin/api/usuarios/{id}/promover", usuarioController::promoverUsuarioParaAdmin);
 
         // TODO: ADICIONE LÓGICA DE CONTROLLER PARA DASHBOARD.
         app.get("/pedidos", ctx -> ctx.render("cardapio.html")); // cliente

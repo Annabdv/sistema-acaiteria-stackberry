@@ -34,6 +34,10 @@ public class UsuarioRepository {
                 .findFirst();
     }
 
+    public Optional<Usuario> buscarPorId(String id) {
+        return Optional.ofNullable(usuariosEmMemoria.get(id));
+    }
+
 
     public void carregaUsariosArquivo() {
         File file = new File(FILE_PATH);

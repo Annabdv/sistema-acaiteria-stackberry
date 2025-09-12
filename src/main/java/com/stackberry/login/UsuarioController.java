@@ -59,6 +59,19 @@ public class UsuarioController {
         }
     }
 
+    public void promoverUsuarioParaAdmin(Context ctx) {
+        String id = ctx.pathParam("id");
+
+        boolean sucesso = usuarioService.promoverParaAdmin(id);
+
+        if (sucesso) {
+            ctx.json(Map.of("mensagem", "Usuário promovido para ADMIN com sucesso!"));
+        } else {
+            ctx.status(404).json(Map.of("mensagem", "Usuário não encontrado."));
+        }
+    }
+
+
     // Logout --- anna
     public void logout(Context ctx) {
         ctx.sessionAttribute("usuarioLogado", null);
