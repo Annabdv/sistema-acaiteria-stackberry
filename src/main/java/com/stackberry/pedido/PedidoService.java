@@ -2,6 +2,7 @@ package com.stackberry.pedido;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class PedidoService {
@@ -28,7 +29,7 @@ public class PedidoService {
         pedidoRepository.recarregarDoArquivo();
         return pedidoRepository.buscarTodos()
                 .stream()
-                .filter(p -> p.getId().equals(id))
+                .filter(p -> Objects.equals(p.getId(), id)) // corrigindo
                 .findFirst();
     }
 
