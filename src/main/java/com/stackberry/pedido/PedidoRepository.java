@@ -21,7 +21,6 @@ public class PedidoRepository {
     }
 
     public synchronized Pedido salvar(Pedido pedido) {
-        // adiciona no mapa
         pedidosEmMemoria.put(pedido.getId(), pedido);
         salvarTudoNoArquivo();
         return pedido;
@@ -31,7 +30,6 @@ public class PedidoRepository {
         return new ArrayList<>(pedidosEmMemoria.values());
     }
 
-    // busca pedido por user
     public List<Pedido> buscarPorUsuario(String usuarioId) {
         return pedidosEmMemoria.values().stream()
                 .filter(p -> p.getUsuarioId() != null && p.getUsuarioId().equals(usuarioId))
@@ -57,5 +55,25 @@ public class PedidoRepository {
         } catch (Exception e) {
             System.err.println("Erro ao salvar pedidos: " + e.getMessage());
         }
+    }
+
+    public Map<String, Pedido> carregandoPedidos() {
+        Map<String, Pedido> pedidosMap = new ConcurrentHashMap<>();
+        File file = new File(FILE_PATH);
+        if (!file.exists() || file.length() == 0) return pedidosMap;
+
+        try {
+            List<Pedido> pedidosDoArquivo = objectMapper.readValue(file, new TypeReference<List<Pedido>>() {});
+            pedidosDoArquivo.forEach(p -> pedidosMap.put(p.getId(), p));
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar pedidos: " + e.getMessage());
+        }
+        return pedidosMap;
+    }
+
+    public synchronized void recarregarDoArquivo() {
+        Map<String, Pedido> carregados = carregandoPedidos();
+        pedidosEmMemoria.clear();
+        pedidosEmMemoria.putAll(carregados);
     }
 }

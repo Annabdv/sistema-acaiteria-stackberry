@@ -5,6 +5,7 @@ import com.stackberry.cardapio.CardapioController;
 import com.stackberry.carrinho.CarrinhoController;
 import com.stackberry.login.Usuario;
 import com.stackberry.login.UsuarioController;
+import com.stackberry.pedido.PedidoController;
 import com.stackberry.tamanho.TamanhoController;
 import com.stackberry.admin.DashboardController;
 import io.javalin.Javalin;
@@ -78,6 +79,8 @@ public class App {
         CarrinhoController carrinhoController = new CarrinhoController();
         CardapioController cardapioController = new CardapioController();
         DashboardController dashboardController = new DashboardController();
+        PedidoController pedidoController = new PedidoController();
+
 
         //----
         app.before(ctx -> {
@@ -178,5 +181,9 @@ public class App {
         app.post("/carrinho/finalizarCompra", carrinhoController::finalizarCompra);
 
         app.get("/pedido/sucesso", carrinhoController::verSucesso);
+
+        app.get("/admin/api/pedidos", pedidoController::listarPedidos);
+        app.get("/admin/totalPedidos", pedidoController::totalPedidos);
+        app.put("/admin/api/pedidos/{id}/status", pedidoController::alterarStatus);
     }
 }
