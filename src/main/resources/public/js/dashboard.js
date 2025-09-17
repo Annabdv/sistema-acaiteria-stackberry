@@ -196,36 +196,55 @@ function loadContent(section) {
 
         case 'adicionais':
             contentArea.innerHTML = `
-                <h2>Gerenciar Adicionais</h2>
-                <a href="/admin/adicionais/novo" class="btn-default">Adicionar Novo Adicional</a>
-                <hr>
-                <div id="adicional-list"><p>Carregando...</p></div>
+                 <h2>Gerenciar Adicionais</h2>
+                 <a href="/admin/adicionais/novo" class="btn-default">Adicionar Novo Adicional</a>
+                 <hr>
+                 <div id="usuarios-list"><p>Carregando...</p></div> 
             `;
+
             fetch('/admin/api/adicionais')
                 .then(res => res.json())
                 .then(adicionais => {
-                    const listDiv = document.getElementById('adicional-list');
-                    if (!adicionais || adicionais.length === 0) return listDiv.innerHTML = '<p>Nenhum adicional cadastrado ainda.</p>';
+                    const listDiv = document.getElementById('usuarios-list'); // E aqui também
 
-                    let html = '<table border="1" cellpadding="8" cellspacing="0">';
-                    html += '<thead><tr><th>Nome</th><th>Preço</th><th>Ações</th></tr></thead><tbody>';
+
+                    // Verifica se a lista de adicionais está vazia
+                    if (!adicionais || adicionais.length === 0) {
+                        listDiv.innerHTML = '<p>Nenhum adicional cadastrado ainda.</p>';
+                        return;
+                    }
+
+                    // Constrói a tabela HTML dinamicamente
+                    let html = '<table class="table table-striped">'; // Usando classes do Bootstrap para um visual melhor
+                    html += '<thead><tr><th>Nome</th><th>Preço</th><th class="acoes">Ações</th></tr></thead><tbody>';
 
                     adicionais.forEach(a => {
-                        html += `<tr>
-                            <td>${a.nome}</td>
-                            <td>R$ ${Number(a.preco).toFixed(2)}</td>
-                            <td>
-                                <a href="/admin/adicionais/editar/${a.id}" class="btn btn-editar">Editar</a>
-                                <a href="/admin/adicionais/remover/${a.id}" class="btn btn-remover">Remover</a>
-                            </td>
-                        </tr>`;
+                        // Formata o preço para ter sempre duas casas decimais
+                        const precoFormatado = Number(a.preco).toFixed(2).replace('.', ',');
+
+                        html += `
+                            <tr>
+                                <td>${a.nome}</td>
+                                <td>R$ ${precoFormatado}</td>
+                                <td class="acoes">
+                                    <a href="/admin/adicionais/editar/${a.id}" class="btn btn-editar">Editar</a>
+                                    
+                                    <button onclick="removerAdicional('${a.id}')" class="btn btn-remover">
+                                        Remover
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
                     });
 
                     html += '</tbody></table>';
+
+                    //  Insere a tabela pronta na página
                     listDiv.innerHTML = html;
                 })
                 .catch(err => {
-                    document.getElementById('adicional-list').innerHTML = '<p>Erro ao carregar adicionais.</p>';
+                    // Trata possíveis erros de rede
+                    document.getElementById('usuarios-list').innerHTML = '<p>Erro ao carregar adicionais.</p>';
                     console.error(err);
                 });
             break;
@@ -324,3 +343,26 @@ function alterarStatusPedido(id, status) {
 window.addEventListener('DOMContentLoaded', () => {
     loadContent('inicio');
 });
+
+function removerAdicional(id) {
+    if (!confirm('Tem certeza que deseja remover este adicional?')) {
+        return;
+    }
+    fetch(`/admin/api/adicionais/${id}`, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Falha ao remover o adicional. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(data.mensagem);
+            loadContent('adicionais');
+        })
+        .catch(error => {
+            alert('Ocorreu um erro ao tentar remover o adicional.');
+            console.error('Erro:', error);
+        });
+}
