@@ -149,13 +149,14 @@ public class App {
         app.get("admin/tamanhos/editar/{id}", tamanhoController::exibirFormularioDeEdicao);
         app.post("admin/tamanhos/atualizar", tamanhoController::atualizarTamanho);
         app.post("admin/tamanhos/remover/{id}", tamanhoController::removerTamanho);
+        app.get("/admin/api/tamanhos", tamanhoController::listarTamanhoApi);
 
         // adcional
         app.get("/admin/adicionais", adicionalController::exibirPaginaDeAdicionais);
         app.get("/admin/adicionais/novo", adicionalController::exibirFormularioCadastro);
         app.post("/admin/adicionais/salvar", adicionalController::cadastrarAdicional);
         app.get("/admin/adicionais/editar/{id}", adicionalController::exibirFormularioDeEdicao);
-            app.post("/admin/adicionais/atualizar", adicionalController::atualizarAdicional);
+        app.post("/admin/adicionais/atualizar", adicionalController::atualizarAdicional);
         app.post("/admin/adicionais/remover/{id}", adicionalController::removerAdicional);
         app.delete("/admin/api/adicionais/{id}", adicionalController::removerAdicionalApi);
         app.get("/admin/api/adicionais", adicionalController::listarAdicionaisApi);

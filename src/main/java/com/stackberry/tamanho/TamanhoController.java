@@ -46,6 +46,11 @@ public class TamanhoController {
         ctx.render("admin/tamanhos/tamanho.html", modelo); // Mostro a página e passo o modelo.
     }
 
+    public void listarTamanhoApi(Context ctx){
+        List<Tamanho> tamanhoList = tamanhoService.listarTamanhos();
+        ctx.json(tamanhoList);
+    }
+
    public void exibirFormularioDeEdicao(Context ctx){
 
         String id = ctx.pathParam("id"); // Recebe do tamanho.html
@@ -75,6 +80,17 @@ public class TamanhoController {
         String id = ctx.pathParam("id");
         tamanhoService.removerTamanho(id);
         ctx.redirect("/admin/tamanhos");
+   }
+
+   public void removerTamanhoApi(Context ctx){
+        String id = ctx.pathParam("id");
+
+      try {
+          tamanhoService.removerTamanho(id);
+          ctx.status(200).json(Map.of("mensagem", "Tamanho removido com sucesso"));
+      } catch (Exception e) {
+          ctx.status(500).json(Map.of("mensage", "Erro ao remover taamnho") + e.getMessage());
+      }
    }
 
 

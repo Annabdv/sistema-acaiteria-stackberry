@@ -169,26 +169,38 @@ function loadContent(section) {
                 .then(res => res.json())
                 .then(tamanhos => {
                     const listDiv = document.getElementById('tamanho-list');
-                    if (!tamanhos || tamanhos.length === 0) return listDiv.innerHTML = '<p>Nenhum tamanho cadastrado ainda.</p>';
 
-                    let html = '<table border="1" cellpadding="8" cellspacing="0">';
-                    html += '<thead><tr><th>Nome</th><th>Preço</th><th>Ações</th></tr></thead><tbody>';
+                    if (!tamanhos || tamanhos.length === 0) {
+                        listDiv.innerHTML = '<p>Nenhum tamanho cadastrado ainda.</p>';
+                        return;
+                    }
+
+                    let html = '<table class="table table-striped">';
+                    html += '<thead><tr><th>Nome</th><th>Preço</th><th class="acoes">Ações</th></tr></thead><tbody>';
 
                     tamanhos.forEach(t => {
-                        html += `<tr>
-                            <td>${t.nome}</td>
-                            <td>R$ ${Number(t.preco).toFixed(2)}</td>
-                            <td>
-                                <a href="/admin/tamanhos/editar/${t.id}" class="btn btn-editar">Editar</a>
-                                <a href="/admin/tamanhos/remover/${t.id}" class="btn btn-remover">Remover</a>
-                            </td>
-                        </tr>`;
+                        const precoFormatado = Number(t.preco).toFixed(2).replace('.', ',');
+                        html += `
+                            <tr>
+                                <td>${t.nome}</td>
+                                <td>R$ ${precoFormatado}</td>
+                                <td class="acoes">
+                                    <a href="/admin/tamanhos/editar/${t.id}" class="btn btn-editar">Editar</a>
+                                    
+                                    <button onclick="removerTamanho('${t.id}')" class="btn btn-remover">
+                                        Remover
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
                     });
 
                     html += '</tbody></table>';
+
                     listDiv.innerHTML = html;
                 })
                 .catch(err => {
+                    // CORREÇÃO 3: Atualizando o elemento correto em caso de erro
                     document.getElementById('tamanho-list').innerHTML = '<p>Erro ao carregar tamanhos.</p>';
                     console.error(err);
                 });
@@ -199,13 +211,13 @@ function loadContent(section) {
                  <h2>Gerenciar Adicionais</h2>
                  <a href="/admin/adicionais/novo" class="btn-default">Adicionar Novo Adicional</a>
                  <hr>
-                 <div id="usuarios-list"><p>Carregando...</p></div> 
+                 <div id="adicional-list"><p>Carregando...</p></div> 
             `;
 
             fetch('/admin/api/adicionais')
                 .then(res => res.json())
                 .then(adicionais => {
-                    const listDiv = document.getElementById('usuarios-list'); // E aqui também
+                    const listDiv = document.getElementById('adicional-list');
 
 
                     // Verifica se a lista de adicionais está vazia
@@ -244,7 +256,7 @@ function loadContent(section) {
                 })
                 .catch(err => {
                     // Trata possíveis erros de rede
-                    document.getElementById('usuarios-list').innerHTML = '<p>Erro ao carregar adicionais.</p>';
+                    document.getElementById('adicional-list').innerHTML = '<p>Erro ao carregar adicionais.</p>';
                     console.error(err);
                 });
             break;
