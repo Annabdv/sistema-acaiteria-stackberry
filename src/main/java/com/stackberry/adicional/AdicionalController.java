@@ -27,7 +27,7 @@ public class AdicionalController {
         Adicional adicionalDoFormulario = new Adicional(nome, preco);
         try {
             adicionalService.cadastrarAdicional(adicionalDoFormulario);
-            ctx.redirect("/admin/adicionais");
+            ctx.redirect("/admin/dashboard_admin");
         }catch (ValidacaoException e) {
             ctx.status(400).result("Erro de validação: " + e.getMessage());
         }
@@ -37,6 +37,11 @@ public class AdicionalController {
         List<Adicional> adicionalList = adicionalService.listarAdicionais();
         Map<String, Object> modelo = Map.of("adicionais", adicionalList);
         ctx.render("admin/adicionais/adicional.html", modelo);
+    }
+
+    public void listarAdicionaisApi(Context ctx){
+        List<Adicional> adicionalList = adicionalService.listarAdicionais();
+        ctx.json(adicionalList);
     }
 
     public void exibirFormularioDeEdicao(Context ctx){
@@ -56,7 +61,7 @@ public class AdicionalController {
         BigDecimal preco = new BigDecimal(ctx.formParam("preco"));
         Adicional adicionalAtualizado = new Adicional(nome, preco);
         adicionalService.atualizarAdicional(id, adicionalAtualizado);
-        ctx.redirect("/admin/adicionais");
+        ctx.redirect("/admin/dashboard_admin");
     }
 
     public void removerAdicional(Context ctx){
@@ -64,4 +69,16 @@ public class AdicionalController {
         adicionalService.removerAdicional(id);
         ctx.redirect("/admin/adicionais");
     }
+
+    public void removerAdicionalApi(Context ctx) {
+        String id = ctx.pathParam("id");
+        try {
+            adicionalService.removerAdicional(id);
+            ctx.status(200).json(Map.of("mensagem", "Adicional removido com sucesso!"));
+
+        } catch (Exception e) {
+            ctx.status(500).json(Map.of("mensagem", "Erro ao remover o adicional: " + e.getMessage()));
+        }
+    }
+
 }
