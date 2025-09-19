@@ -149,6 +149,7 @@ public class App {
         app.get("admin/tamanhos/editar/{id}", tamanhoController::exibirFormularioDeEdicao);
         app.post("admin/tamanhos/atualizar", tamanhoController::atualizarTamanho);
         app.post("admin/tamanhos/remover/{id}", tamanhoController::removerTamanho);
+        app.delete("/admin/api/tamanhos/{id}", tamanhoController::removerTamanhoApi);
         app.get("/admin/api/tamanhos", tamanhoController::listarTamanhoApi);
 
         // adcional

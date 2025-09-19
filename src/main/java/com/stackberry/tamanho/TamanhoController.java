@@ -30,7 +30,7 @@ public class TamanhoController {
 
         try {
             tamanhoService.cadastrarTamanho(tamanhoDoFormulario);
-            ctx.redirect("/admin/tamanhos");
+            ctx.redirect("/admin/dashboard_admin");
         }catch (ValidacaoException e) {
             ctx.status(400).result("Erro de validação: " + e.getMessage());
         }
@@ -73,7 +73,7 @@ public class TamanhoController {
 
         Tamanho tamanhoAtualizado = new Tamanho(nome, preco);
         tamanhoService.atualizarTamanho(id, tamanhoAtualizado);
-        ctx.redirect("/admin/tamanhos");
+        ctx.redirect("/admin/dashboard_admin");
    }
 
    public void removerTamanho(Context ctx){

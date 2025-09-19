@@ -200,7 +200,6 @@ function loadContent(section) {
                     listDiv.innerHTML = html;
                 })
                 .catch(err => {
-                    // CORREÇÃO 3: Atualizando o elemento correto em caso de erro
                     document.getElementById('tamanho-list').innerHTML = '<p>Erro ao carregar tamanhos.</p>';
                     console.error(err);
                 });
@@ -375,6 +374,25 @@ function removerAdicional(id) {
         })
         .catch(error => {
             alert('Ocorreu um erro ao tentar remover o adicional.');
+            console.error('Erro:', error);
+        });
+}
+
+function removerTamanho(id) {
+    if (!confirm('Tem certeza que deseja remover este tamanho?')) {
+        return;
+    }
+
+    fetch(`/admin/api/tamanhos/${id}`, {
+        method: 'DELETE'
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.mensagem);
+            loadContent('tamanho');
+        })
+        .catch(error => {
+            alert('Ocorreu um erro ao tentar remover o tamanho.');
             console.error('Erro:', error);
         });
 }
