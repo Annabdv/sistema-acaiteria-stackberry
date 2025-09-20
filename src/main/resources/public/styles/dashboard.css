@@ -176,6 +176,57 @@ main {
     background-color: #f3e6ff;
 }
 
+#tamanho-list {
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#tamanho-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tamanho-list th, #usuarios-list td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+#tamanho-list th {
+    background-color: #230033;
+    color: white;
+}
+
+#tamanho-list td {
+    background-color: #f3e6ff;
+}
+#adicional-list {
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#adicional-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#adicional-list th, #usuarios-list td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+#adicional-list th {
+    background-color: #230033;
+    color: white;
+}
+
+#adicional-list td {
+    background-color: #f3e6ff;
+}
+
 .btn -icon {
     background: none;
     border: none;

@@ -30,7 +30,7 @@ public class TamanhoController {
 
         try {
             tamanhoService.cadastrarTamanho(tamanhoDoFormulario);
-            ctx.redirect("/admin/tamanhos");
+            ctx.redirect("/admin/dashboard_admin");
         }catch (ValidacaoException e) {
             ctx.status(400).result("Erro de validação: " + e.getMessage());
         }
@@ -44,6 +44,11 @@ public class TamanhoController {
         // Faço um modelo para ser usando pelo th:each lá no "tamanho.html"
         Map<String, Object> modelo = Map.of("tamanhos", tamanhoList);
         ctx.render("admin/tamanhos/tamanho.html", modelo); // Mostro a página e passo o modelo.
+    }
+
+    public void listarTamanhoApi(Context ctx){
+        List<Tamanho> tamanhoList = tamanhoService.listarTamanhos();
+        ctx.json(tamanhoList);
     }
 
    public void exibirFormularioDeEdicao(Context ctx){
@@ -68,13 +73,24 @@ public class TamanhoController {
 
         Tamanho tamanhoAtualizado = new Tamanho(nome, preco);
         tamanhoService.atualizarTamanho(id, tamanhoAtualizado);
-        ctx.redirect("/admin/tamanhos");
+        ctx.redirect("/admin/dashboard_admin");
    }
 
    public void removerTamanho(Context ctx){
         String id = ctx.pathParam("id");
         tamanhoService.removerTamanho(id);
         ctx.redirect("/admin/tamanhos");
+   }
+
+   public void removerTamanhoApi(Context ctx){
+        String id = ctx.pathParam("id");
+
+      try {
+          tamanhoService.removerTamanho(id);
+          ctx.status(200).json(Map.of("mensagem", "Tamanho removido com sucesso"));
+      } catch (Exception e) {
+          ctx.status(500).json(Map.of("mensage", "Erro ao remover taamnho") + e.getMessage());
+      }
    }
 
 
