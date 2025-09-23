@@ -59,9 +59,11 @@ public class UsuarioRepository {
         try {
 
             List<Usuario> listaParaSalvar = new ArrayList<>(usuariosEmMemoria.values());
+            File file = new File(FILE_PATH);
+            file.getParentFile().mkdirs();
 
             // salvando meus usuarios de forma "Legivel"
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_PATH), listaParaSalvar);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, listaParaSalvar);
         } catch (Exception e) {
             System.err.println("Ocorreu um erro ao tentar salvar usuários:" + e.getMessage());
         }
