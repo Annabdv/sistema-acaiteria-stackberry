@@ -10,6 +10,8 @@ import com.stackberry.tamanho.TamanhoService;
 import io.javalin.http.Context;
 
 import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -149,6 +151,10 @@ public class CarrinhoController {
     // finalização de compra
 
     public void finalizarCompra(Context ctx) {
+
+        final String numeroWhatsapp = ""; // TODO: Add lógica de adicionar número de whatsapp.
+        final String WHATSAPP_BASE_URL = "https://wa.me/";
+
         Carrinho carrinho = ctx.sessionAttribute("carrinho");
         Usuario usuario = ctx.sessionAttribute("usuarioLogado");
 
@@ -162,14 +168,30 @@ public class CarrinhoController {
         }
 
         Pedido pedido = new Pedido(carrinho.getItensNoCarrinho(), usuario);
-        pedidoRepository.salvar(pedido); // Salva acumulando no JSON
+        pedidoRepository.salvar(pedido);
 
         carrinho.clear();
         ctx.sessionAttribute("carrinho", carrinho);
 
-        // redireciona para a página de sucesso
-        ctx.redirect("/pedido/sucesso");
+        try {
+            // mensagem formatada para o WhatsApp
+            String mensagem = pedido.toWhatsAppMessage();
+
+            // codificando a mensagem
+            String mensagemCodificada = URLEncoder.encode(mensagem, StandardCharsets.UTF_8);
+
+            String urlCompleta = WHATSAPP_BASE_URL + numeroWhatsapp + "?text=" + mensagemCodificada;
+
+            // Redirecionando para a mensagem
+            ctx.redirect(urlCompleta);
+
+        } catch (Exception e) {
+            // Se houver um erro na codificação, redireciona para uma página de sucesso simples
+            e.printStackTrace();
+            ctx.redirect("/pedido/sucesso");
+        }
     }
+
 
     // pag de sucesso do pedido
     public void verSucesso(Context ctx) {
