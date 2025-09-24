@@ -2,6 +2,7 @@ package com.stackberry.carrinho;
 
 import com.stackberry.adicional.Adicional;
 import com.stackberry.adicional.AdicionalService;
+import com.stackberry.config.ConfigLoader;
 import com.stackberry.login.Usuario;
 import com.stackberry.pedido.Pedido;
 import com.stackberry.pedido.PedidoRepository;
@@ -152,7 +153,7 @@ public class CarrinhoController {
 
     public void finalizarCompra(Context ctx) {
 
-        final String numeroWhatsapp = ""; // TODO: Add lógica de adicionar número de whatsapp.
+        final String numeroWhatsapp = ConfigLoader.getProperty("whatsapp.numero");
         final String WHATSAPP_BASE_URL = "https://wa.me/";
 
         Carrinho carrinho = ctx.sessionAttribute("carrinho");
