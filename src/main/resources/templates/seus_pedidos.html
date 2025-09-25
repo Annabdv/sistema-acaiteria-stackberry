@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>StackBerry - Meus Pedidos</title>
+    <link rel="stylesheet" th:href="@{/styles/seus_pedidos.css}">
+
+
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div class="container mt-5">
+
+        <div class="text-center mb-4">
+            <h1>Meus Pedidos</h1>
+        </div>
+
+        <div id="pedidos-list" class="mb-4">
+            <div class="table-responsive">
+                <table class="align-middle">
+                    <thead>
+                    <tr>
+                        <th scope="col">Data/Hora</th>
+                        <th scope="col">Itens</th>
+                        <th scope="col">Valor Total</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tabela-pedidos-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="mensagem-sem-pedidos" style="display: none;">
+            <p>Nenhum pedido por aqui ainda.</p>
+            <a href="/cardapio" class="btn btn-purple">Montar um Açaí</a>
+        </div>
+
+        <hr class="separador-suave">
+
+        <div class="text-center mt-4">
+            <a href="/cardapio" class="btn btn-purple">Voltar para o Cardápio</a>
+        </div>
+
+    </div>
+
+    <script th:src="@{/js/seus_pedidos.js}" defer></script>
+</section>
+
+</body>
+</html>
