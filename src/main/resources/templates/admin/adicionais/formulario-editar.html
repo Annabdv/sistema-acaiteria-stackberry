@@ -5,28 +5,33 @@
       layout:decorate="~{layout.html}">
 <head>
     <title>Editar Adicional</title>
+    <th:block layout:fragment="page-css">
+        <link rel="stylesheet" th:href="@{/styles/formulario.css}">
+    </th:block>
 </head>
 <body>
 
 <section layout:fragment="content">
-    <div class="container">
+    <div class="form-wrapper">
         <h1>Editar Adicional</h1>
 
-        <form action="/admin/adicionais/atualizar" method="post">
+        <form th:action="@{/admin/adicionais/atualizar}" method="post">
             <input type="hidden" name="id" th:value="${adicional.id}" />
 
-            <div>
+            <div class="form-group">
                 <label for="nome">Nome do Adicional:</label>
-                <input type="text" id="nome" name="nome" th:value="${adicional.nome}" required>
+                <input type="text" class="form-control" id="nome" name="nome" th:value="${adicional.nome}" required>
             </div>
-            <br>
-            <div>
+
+            <div class="form-group">
                 <label for="preco">Preço:</label>
-                <input type="number" id="preco" name="preco" th:value="${adicional.preco}" step="0.01" required>
+                <input type="number" class="form-control" id="preco" name="preco" th:value="${adicional.preco}" step="0.01" required>
             </div>
-            <br>
-            <button type="submit" class="btn-default">Salvar Alterações</button>
-            <a th:href="@{/admin/dashboard_admin}">Cancelar</a>
+
+            <div class="form-actions">
+                <a th:href="@{/admin/dashboard_admin}" class="btn-cancel">Cancelar</a>
+                <button type="submit" class="btn-default">Salvar Alterações</button>
+            </div>
         </form>
     </div>
 </section>
