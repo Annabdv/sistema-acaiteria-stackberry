@@ -2,6 +2,7 @@ package com.stackberry.carrinho;
 
 import com.stackberry.adicional.Adicional;
 import com.stackberry.adicional.AdicionalService;
+import com.stackberry.config.ConfigLoader;
 import com.stackberry.login.Usuario;
 import com.stackberry.pedido.Pedido;
 import com.stackberry.pedido.PedidoRepository;
@@ -10,9 +11,9 @@ import com.stackberry.tamanho.TamanhoService;
 import io.javalin.http.Context;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CarrinhoController {
@@ -162,18 +163,45 @@ public class CarrinhoController {
         }
 
         Pedido pedido = new Pedido(carrinho.getItensNoCarrinho(), usuario);
-        pedidoRepository.salvar(pedido); // Salva acumulando no JSON
+        pedidoRepository.salvar(pedido);
 
         carrinho.clear();
         ctx.sessionAttribute("carrinho", carrinho);
 
-        // redireciona para a página de sucesso
-        ctx.redirect("/pedido/sucesso");
+        try {
+            ctx.redirect("/pedido/sucesso?pedidoId=" + pedido.getId());
+        } catch (Exception e) {
+            System.err.println("Erro ao codificar a URL do WhatsApp: " + e.getMessage());
+            throw new RuntimeException("Não foi possível gerar o link do WhatsApp. Por favor, tente novamente.", e);
+        }
     }
+
 
     // pag de sucesso do pedido
     public void verSucesso(Context ctx) {
-        ctx.render("pedidoSucesso.html");
-    }
+        String pedidoId = ctx.queryParam("pedidoId");
+        Pedido pedidoRealizado = pedidoRepository.buscarPorId(pedidoId).orElse(null);
 
+        Map<String, Object> model = new HashMap<>();
+        model.put("pedido", pedidoRealizado);
+
+        if (pedidoRealizado != null) {
+            try {
+                String numeroWhatsapp = ConfigLoader.getProperty("whatsapp.numero");
+                final String WHATSAPP_BASE_URL = "https://wa.me/";
+
+                String mensagem = pedidoRealizado.toWhatsAppMessage();
+                String mensagemCodificada = URLEncoder.encode(mensagem, StandardCharsets.UTF_8);
+
+                String urlCompleta = WHATSAPP_BASE_URL + numeroWhatsapp + "?text=" + mensagemCodificada;
+
+                model.put("whatsappUrl", urlCompleta);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                model.put("whatsappUrl", null);
+            }
+        }
+        ctx.render("pedidoSucesso.html", model);
+    }
 }

@@ -87,4 +87,35 @@ public class Pedido {
 
     public void setStatus(String concluído) {
     }
+
+    public String toWhatsAppMessage() {
+        StringBuilder sb = new StringBuilder();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        sb.append("*Novo Pedido StackBerry!*").append("\n\n");
+        sb.append("*Cliente:* ").append(this.usuarioNome).append("\n");
+        sb.append("*Data:* ").append(this.dataHora.format(formatter)).append("\n");
+        sb.append("----------------------------").append("\n");
+        sb.append("*ITENS:*").append("\n");
+
+        if (this.itens != null && !this.itens.isEmpty()) {
+            for (ItemCarrinho item : this.itens) {
+                // Monta a descrição do item
+                String descricaoItem = item.getAcai().getTamanho().getNome();
+                if (item.getAcai().getAdicionais() != null && !item.getAcai().getAdicionais().isEmpty()) {
+                    String adicionaisStr = item.getAcai().getAdicionais().stream()
+                            .map(adicional -> adicional.getNome())
+                            .collect(Collectors.joining(", "));
+                    descricaoItem += " (" + adicionaisStr + ")";
+                }
+
+                sb.append(String.format("- %dx %s", item.getQuantidade(), descricaoItem)).append("\n");
+            }
+        }
+
+        sb.append("----------------------------").append("\n");
+        sb.append(String.format("*VALOR TOTAL: R$ %.2f*", this.valorTotal));
+
+        return sb.toString();
+    }
 }
