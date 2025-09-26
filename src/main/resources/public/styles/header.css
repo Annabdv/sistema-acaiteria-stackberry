@@ -1,9 +1,9 @@
 header {
     width: 100%;
-    padding: 28px 8%;
+    padding: 10px 8%;
     position: sticky;
     top: 0;
-    background-color: var(--color-primary-1);
+    background-color: rebeccapurple;
     z-index: 3;
 }
 

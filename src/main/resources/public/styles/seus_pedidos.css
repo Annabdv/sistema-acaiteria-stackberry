@@ -72,3 +72,19 @@ hr.separador-suave {
     width: 80%;
     margin: 40px auto;
 }
+
+.btn-cancelar-pedido {
+    background-color: #c0392b;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancelar-pedido:hover {
+    background-color: #a93226;
+}
