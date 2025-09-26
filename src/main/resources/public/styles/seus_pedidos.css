@@ -1,0 +1,74 @@
+#pedidos-list {
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#pedidos-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#pedidos-list th, #pedidos-list td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+#pedidos-list th {
+    background-color: #230033;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+#pedidos-list td {
+    background-color: #f3e6ff;
+}
+
+.btn-purple {
+    background-color: #679F3A;
+    color: #230033;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.btn-purple:hover {
+    background-color: #fff3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#mensagem-sem-pedidos {
+    background-color: #FFFFFF;
+    border: 1px solid #EAEAEA;
+    border-radius: 12px;
+    padding: 40px 20px;
+    margin-top: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#mensagem-sem-pedidos p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+hr.separador-suave {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 80%;
+    margin: 40px auto;
+}

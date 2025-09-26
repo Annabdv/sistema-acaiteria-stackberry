@@ -51,4 +51,13 @@ public class PedidoService {
         pedidoRepository.recarregarDoArquivo();
         return pedidoRepository.buscarTodos().size();
     }
+
+    // buscando pedidos por usuario
+    public List<Pedido> buscarPorUsuarioOrdenados(String usuarioId) {
+        pedidoRepository.recarregarDoArquivo();
+        return pedidoRepository.buscarPorUsuario(usuarioId)
+                .stream()
+                .sorted(Comparator.comparing(Pedido::getDataHora).reversed())
+                .toList();
+    }
 }
