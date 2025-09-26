@@ -23,22 +23,39 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                min-height: calc(100vh - 150px); /* Ajusta a altura para centralizar verticalmente */
-            }
-
-            /* Estiliza o "card" do formulário */
-            .card {
-                width: 100%;
-                max-width: 450px; /* Largura máxima do formulário */
-                border-radius: 15px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                border: none;
+                min-height: calc(100vh - 150px);
             }
 
             .btn-primary {
                 background-color: purple !important;
                 border-color: purple !important;
             }
+
+            .card {
+                width: 100%;
+                max-width: 450px;
+                border-radius: 15px;
+                border: none;
+                background-color: #fff; /* fundo branco para destacar */
+                box-shadow: 0 0 40px rgba(0, 0, 0, 0.6); /* sombra bem destacada */
+                transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+            }
+
+            .card:hover {
+                box-shadow: 0 0 55px rgba(0, 0, 0, 0.8);
+                transform: translateY(-5px); /* efeito de levantar no hover */
+            }
+
+            /* link "Faça login" em preto */
+            .card a {
+                color: #000 !important;
+                text-decoration: none;
+            }
+
+            .card a:hover {
+                text-decoration: underline;
+            }
+
 
         </style>
     </th:block>
