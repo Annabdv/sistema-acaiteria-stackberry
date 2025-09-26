@@ -21,8 +21,7 @@ public class Pedido {
     private String usuarioId;
     private String usuarioNome;
     private String usuarioEmail;
-    private boolean realizado;
-    private String status;
+    private StatusPedido status;
     private LocalDateTime dataHora;
 
     public Pedido() {
@@ -46,47 +45,31 @@ public class Pedido {
         this.usuarioId = usuario.getId();
         this.usuarioNome = usuario.getNome();
         this.usuarioEmail = usuario.getEmail();
-        this.realizado = false;
         this.dataHora = LocalDateTime.now();
+        // --- MUDANÇA 2: Definindo o status inicial com o Enum ---
+        this.status = StatusPedido.EM_PREPARO;
     }
 
     public String getDataHoraFormatada() {
         return this.dataHora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
+    public StatusPedido getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusPedido status) {
+        this.status = status;
+    }
+
     public String getId() { return id; }
     public List<ItemCarrinho> getItens() { return itens; }
     public BigDecimal getValorTotal() { return valorTotal; }
+    public String getUsuarioId() { return usuarioId; }
+    public String getUsuarioNome() { return usuarioNome; }
+    public String getUsuarioEmail() { return usuarioEmail; }
+    public LocalDateTime getDataHora() { return dataHora; }
 
-    public String getUsuarioId() {
-        return usuarioId;
-    }
-
-    public String getUsuarioNome() {
-        return usuarioNome;
-    }
-
-    public String getUsuarioEmail() {
-        return usuarioEmail;
-    }
-
-    public boolean isRealizado() {
-        return realizado;
-    }
-
-    public void setRealizado(boolean realizado) {
-        this.realizado = realizado;
-    }
-
-    public LocalDateTime getDataHora() {
-        return dataHora; }
-
-    public String getStatus() {
-        return realizado ? "Concluído" : "Não concluído";
-    }
-
-    public void setStatus(String concluído) {
-    }
 
     public String toWhatsAppMessage() {
         StringBuilder sb = new StringBuilder();
@@ -100,7 +83,6 @@ public class Pedido {
 
         if (this.itens != null && !this.itens.isEmpty()) {
             for (ItemCarrinho item : this.itens) {
-                // Monta a descrição do item
                 String descricaoItem = item.getAcai().getTamanho().getNome();
                 if (item.getAcai().getAdicionais() != null && !item.getAcai().getAdicionais().isEmpty()) {
                     String adicionaisStr = item.getAcai().getAdicionais().stream()
@@ -108,7 +90,6 @@ public class Pedido {
                             .collect(Collectors.joining(", "));
                     descricaoItem += " (" + adicionaisStr + ")";
                 }
-
                 sb.append(String.format("- %dx %s", item.getQuantidade(), descricaoItem)).append("\n");
             }
         }

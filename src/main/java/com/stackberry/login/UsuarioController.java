@@ -76,7 +76,7 @@ public class UsuarioController {
     public void logout(Context ctx) {
         ctx.sessionAttribute("usuarioLogado", null);
         ctx.req().getSession().invalidate();
-        ctx.redirect("/login");
+        ctx.redirect("/");
     }
 
     // lista de usuários em JSON

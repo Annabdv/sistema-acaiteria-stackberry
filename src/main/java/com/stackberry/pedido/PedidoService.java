@@ -10,7 +10,7 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
 
     public PedidoService() {
-        this.pedidoRepository = new PedidoRepository();
+        this.pedidoRepository = PedidoRepository.getInstance();
     }
 
     public Pedido salvar(Pedido pedido) {
@@ -18,7 +18,6 @@ public class PedidoService {
     }
 
     public List<Pedido> buscarTodosOrdenados() {
-        pedidoRepository.recarregarDoArquivo(); // garante dados atualizados
         return pedidoRepository.buscarTodos()
                 .stream()
                 .sorted(Comparator.comparing(Pedido::getDataHora).reversed())
@@ -26,35 +25,47 @@ public class PedidoService {
     }
 
     public Optional<Pedido> buscarPorId(String id) {
-        pedidoRepository.recarregarDoArquivo();
-        return pedidoRepository.buscarTodos()
-                .stream()
-                .filter(p -> Objects.equals(p.getId(), id)) // corrigindo
-                .findFirst();
+        return pedidoRepository.buscarPorId(id);
     }
 
-    public boolean alternarStatus(String id) {
-        pedidoRepository.recarregarDoArquivo();
+    public boolean marcarComoEntregue(String id) {
         Optional<Pedido> optPedido = buscarPorId(id);
-        if (optPedido.isEmpty()) return false;
+        if (optPedido.isEmpty()) {
+            return false;
+        }
 
         Pedido pedido = optPedido.get();
-        if (!pedido.isRealizado()) {
-            pedido.setRealizado(true);
-            salvar(pedido);
+        if (pedido.getStatus() == StatusPedido.EM_PREPARO) {
+            pedido.setStatus(StatusPedido.ENTREGUE);
+            pedidoRepository.salvar(pedido);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cancelarPedido(String id) {
+        Optional<Pedido> optPedido = buscarPorId(id);
+        if (optPedido.isEmpty()) {
+            return false;
+        }
+
+        Pedido pedido = optPedido.get();
+        if (pedido.getStatus() == StatusPedido.EM_PREPARO) {
+            pedido.setStatus(StatusPedido.CANCELADO);
+            pedidoRepository.salvar(pedido);
+
             return true;
         }
         return false;
     }
 
     public int contarPedidos() {
-        pedidoRepository.recarregarDoArquivo();
+        // A LINHA "recarregarDoArquivo()" FOI REMOVIDA DAQUI
         return pedidoRepository.buscarTodos().size();
     }
 
-    // buscando pedidos por usuario
     public List<Pedido> buscarPorUsuarioOrdenados(String usuarioId) {
-        pedidoRepository.recarregarDoArquivo();
+        // A LINHA "recarregarDoArquivo()" FOI REMOVIDA DAQUI
         return pedidoRepository.buscarPorUsuario(usuarioId)
                 .stream()
                 .sorted(Comparator.comparing(Pedido::getDataHora).reversed())
