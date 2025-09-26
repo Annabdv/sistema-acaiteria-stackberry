@@ -3,6 +3,7 @@ package com.stackberry.pedido;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.stackberry.login.Usuario;
 
 import java.io.File;
 import java.util.*;
@@ -28,6 +29,10 @@ public class PedidoRepository {
 
     public List<Pedido> buscarTodos() {
         return new ArrayList<>(pedidosEmMemoria.values());
+    }
+
+    public Optional<Pedido> buscarPorId(String id) {
+        return Optional.ofNullable(this.pedidosEmMemoria.get(id));
     }
 
     public List<Pedido> buscarPorUsuario(String usuarioId) {

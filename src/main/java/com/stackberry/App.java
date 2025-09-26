@@ -3,6 +3,7 @@ package com.stackberry;
 import com.stackberry.adicional.AdicionalController;
 import com.stackberry.cardapio.CardapioController;
 import com.stackberry.carrinho.CarrinhoController;
+import com.stackberry.login.TipoDeUsuario;
 import com.stackberry.login.Usuario;
 import com.stackberry.login.UsuarioController;
 import com.stackberry.pedido.PedidoController;
@@ -14,6 +15,7 @@ import io.javalin.rendering.template.JavalinThymeleaf;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import java.util.List;
 
 
 public class App {
@@ -84,40 +86,26 @@ public class App {
 
         //----
         app.before(ctx -> {
-                    String path = ctx.path();
+            Usuario usuarioLogado = ctx.sessionAttribute("usuarioLogado");
+            ctx.attribute("usuario", usuarioLogado);
 
-                    // rotas publicas
-                    boolean rotaPublica = path.equals("/")
-                            || path.equals("/login")
-                            || path.equals("/cadastrar")
-                            || path.startsWith("/usuarios/cadastrar")
-                            || path.startsWith("/styles/")
-                            || path.startsWith("/js/")
-                            || path.startsWith("/images/");
+            String path = ctx.path();
 
-                    Usuario usuarioLogado = ctx.sessionAttribute("usuarioLogado");
+            List<String> rotasPublicas = List.of("/", "/login", "/cadastrar", "/usuarios/cadastrar");
 
-                    ctx.attribute("usuario", usuarioLogado); // Envio o usuario logado usando o handler
+            if (!rotasPublicas.contains(path) && !path.startsWith("/styles") && !path.startsWith("/js") && !path.startsWith("/images")) {
 
-                    if (!rotaPublica) {
-                        if (usuarioLogado == null) {
-                            ctx.redirect("/login"); // redirect para login
-                        } else {
-                            // acesso por tipo de usuário
-                            switch (usuarioLogado.getTipoDeUsuario()) {
-                                case CLIENTE:
-                                    if (path.startsWith("/admin")) {
-                                        ctx.redirect("/cardapio");
-                                    }
-                                    break;
-                                case ADMINISTRADOR:
-                                    // não precisa de bloqueio
-                                    break;
-                            }
-                        }
-                    }
+                if (usuarioLogado == null) {
+                    ctx.redirect("/login");
+                    return;
                 }
-        );
+
+                if (path.startsWith("/admin") && usuarioLogado.getTipoDeUsuario() != TipoDeUsuario.ADMINISTRADOR) {
+                    ctx.redirect("/cardapio");
+                    return;
+                }
+            }
+        });
 
         // Rota de teste para a página inicial
         app.get("/", ctx -> {
