@@ -22,7 +22,7 @@
         <img src="/images/StackBerry_Text.png" alt="stackberry logo">
         <ul id="nav_list">
             <li class="nav-item active"><a href="/">Início</a></li>
-            <li class="nav-item"><a href="/#menu">Cardápio</a></li>
+            <li class="nav-item"><a href="/cardapio">Cardápio</a></li>
 
             <li class="nav-item" th:if="${usuario != null and usuario.tipoDeUsuario.name() == 'ADMINISTRADOR'}">
                 <a th:href="@{/admin/dashboard_admin}">Dashboard</a>
@@ -52,7 +52,7 @@
     <div id="mobile_menu">
         <ul id="mobile_nav_list">
             <li class="nav-item"><a href="/">Início</a></li>
-            <li class="nav-item"><a href="/#menu">Cardápio</a></li>
+            <li class="nav-item"><a href="/cardapio">Cardápio</a></li>
 
             <li class="nav-item" th:if="${usuario != null and usuario.tipoDeUsuario.name() == 'ADMINISTRADOR'}">
                 <a th:href="@{/admin/dashboard_admin}">Dashboard</a>
