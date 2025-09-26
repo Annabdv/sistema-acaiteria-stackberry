@@ -13,8 +13,10 @@
 }
 
 #cta .title {
-    font-size: 3.4rem;
+    font-size: 3.8rem;
     color: white;
+    width: 98%;
+
 
 }
 
@@ -54,16 +56,23 @@
 #banner {
     display: flex;
     align-items: start;
-    justify-content: end;
-    width: -10%;
+    justify-content: flex-end;
+    width: 62%;
     z-index: 2;
-    margin-top: -3%;
 
 }
 
+/* imagem homepage */
 #banner img {
-    height: 76%;
+    height: 87%;
+    align-items: start;
+    justify-content: end;
     width: fit-content;
+    position: relative;
+    right: 0;
+    top: 20px;
+    margin-top: -80px;
+
 }
 
 .shape {
@@ -71,10 +80,11 @@
     width: 50%;
     height: 85%;
     position: absolute;
-    border-radius: 40% 30% 0% 30%;
+    border-radius: 30% 30% 30% 30%;
     top: 0;
     right: 0;
     z-index: 1;
+
 }
 
 @media screen and (max-width: 1170px) {

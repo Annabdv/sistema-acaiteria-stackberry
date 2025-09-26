@@ -29,236 +29,282 @@ let intervaloPedidos;
 // Carrega conteúdo das abas
 function loadContent(section) {
     const contentArea = document.getElementById('content-area');
+    if (intervaloPedidos) clearInterval(intervaloPedidos);
 
     switch(section) {
-        case 'inicio':
-            contentArea.innerHTML = `
-                <div id="inicio">
-                    <h1>Área administrativa</h1>
-                    <div class="stats">
-                        <button>Usuários Registrados <span class="stat-number" id="usuarios-logados">0</span></button>
-                        <button>Pedidos Feitos <span class="stat-number" id="pedidos-feitos">0</span></button>
+            case 'inicio':
+                contentArea.innerHTML = `
+                    <div id="inicio">
+                        <h1>Área administrativa</h1>
+                        <div class="stats">
+                            <button>Usuários Registrados <span class="stat-number" id="usuarios-logados">0</span></button>
+                            <button>Pedidos Feitos <span class="stat-number" id="pedidos-feitos">0</span></button>
+                        </div>
+                        <div class="cliente-button">
+                            <button onclick="window.location.href='/cardapio'">Área do Cliente</button>
+                        </div>
                     </div>
-                    <div class="cliente-button">
-                        <button onclick="window.location.href='/cardapio'">Área do Cliente</button>
-                    </div>
-                </div>
-            `;
-            atualizarUsuariosEPedidos();
-            break;
+                `;
+                atualizarUsuariosEPedidos();
+                break;
 
-        case 'usuarios':
-            contentArea.innerHTML = `<h2>Usuários Cadastrados</h2><div id="usuarios-list"><p>Carregando...</p></div>`;
-            fetch('/admin/api/usuarios')
-                .then(res => res.json())
-                .then(usuarios => {
-                    const listDiv = document.getElementById('usuarios-list');
-                    if (!usuarios || usuarios.length === 0) return listDiv.innerHTML = '<p>Nenhum usuário cadastrado.</p>';
+            case 'usuarios':
+                            contentArea.innerHTML = `
+                                <h2>Usuários Cadastrados</h2>
+                                <hr>
+                                <div id="usuarios-list"><p>Carregando...</p></div>
+                            `;
+                            fetch('/admin/api/usuarios')
+                                .then(res => res.json())
+                                .then(usuarios => {
+                                    const listDiv = document.getElementById('usuarios-list');
+                                    if (!usuarios || usuarios.length === 0) return listDiv.innerHTML = '<p>Nenhum usuário cadastrado.</p>';
 
-                    usuarios.sort((a, b) => a.nome.localeCompare(b.nome));
+                                    usuarios.sort((a, b) => a.nome.localeCompare(b.nome));
 
-                    let html = '<table border="1" cellpadding="8" cellspacing="0">';
-                    html += '<thead><tr><th>Nome</th><th>Email</th><th>Tipo</th><th>Status</th><th>Remover</th><th>Promover</th></tr></thead><tbody>';
+                                     let tableRows = '';
+                                    usuarios.forEach(u => {
+                                        tableRows += `<tr>
+                                            <td>${u.nome}</td>
+                                            <td>${u.email}</td>
+                                            <td>${u.tipoDeUsuario}</td>
+                                            <td>${u.status}</td>
+                                            <td>
+                                                <button onclick="excluirUsuario('${u.id}')"><i class="fa-solid fa-trash"></i></button>
+                                            </td>
+                                            <td>
+                                                <button onclick="promoverUsuario('${u.id}')"><i class="fa-solid fa-arrow-up"></i></button>
+                                            </td>
+                                        </tr>`;
+                                    });
 
-                    usuarios.forEach(u => {
-                        html += `<tr>
-                            <td>${u.nome}</td>
-                            <td>${u.email}</td>
-                            <td>${u.tipoDeUsuario}</td>
-                            <td>${u.status}</td>
-                            <td>
-                                <button onclick="excluirUsuario('${u.id}')"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                            <td>
-                                <button onclick="promoverUsuario('${u.id}')"><i class="fa-solid fa-arrow-up"></i></button>
+                                    const tableHTML = `
+                                        <div class="table-responsive">
+                                            <table border="1" cellpadding="8" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nome</th>
+                                                        <th>Email</th>
+                                                        <th>Tipo</th>
+                                                        <th>Status</th>
+                                                        <th>Remover</th>
+                                                        <th>Promover</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    ${tableRows}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    `;
+                                    listDiv.innerHTML = tableHTML;
+                                })
+                                .catch(err => {
+                                    document.getElementById('usuarios-list').innerHTML = '<p>Erro ao carregar usuários.</p>';
+                                    console.error(err);
+                                });
+                            break;
+
+            case 'pedidos':
+                            contentArea.innerHTML = `
+                                <h2>Pedidos</h2>
+                                <hr>
+                                <div id="pedido-list">
+                                    <div class="table-responsive">
+                                        <table id="pedido-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Cliente</th>
+                                                    <th>Itens</th>
+                                                    <th>Valor Total</th>
+                                                    <th>Status</th>
+                                                    <th>Finalizar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="pedido-tbody">
+                                                <tr><td colspan="6">Carregando...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            `;
+
+                            function atualizarPedidosTabela() {
+                                fetch('/admin/api/pedidos')
+                                    .then(res => res.json())
+                                    .then(pedidos => {
+                                        const tbody = document.getElementById('pedido-tbody');
+                                        if (!tbody) return;
+
+                                        if (!pedidos || pedidos.length === 0) {
+                                            tbody.innerHTML = '<tr><td colspan="6">Nenhum pedido encontrado.</td></tr>';
+                                            return;
+                                        }
+
+                                        pedidos.sort((a, b) => new Date(b.dataHora) - new Date(a.dataHora));
+
+                                        const html = pedidos.map(p => {
+                                            const itensHtml = p.itens.map(i => {
+                                                const tamanho = i.acai.tamanho.nome;
+                                                const adicionais = (i.acai.adicionais || []).map(a => a.nome).join(', ');
+                                                const adicionaisStr = adicionais ? ` (${adicionais})` : '';
+                                                return `${tamanho}${adicionaisStr} x${i.quantidade}`;
+                                            }).join('<br>');
+
+                                            let statusBadge;
+                                            let acaoCell;
+
+                                            switch (p.status) {
+                                                case "ENTREGUE":
+                                                    statusBadge = '<span class="badge bg-success">Entregue</span>';
+                                                    acaoCell = '<td></td>';
+                                                    break;
+                                                case "CANCELADO":
+                                                    statusBadge = '<span class="badge bg-danger">Cancelado</span>';
+                                                    acaoCell = '<td></td>';
+                                                    break;
+                                                case "EM_PREPARO":
+                                                default:
+                                                    statusBadge = '<span class="badge bg-warning text-dark">Em Preparo</span>';
+                                                    acaoCell = `<td><button class="btn btn-success btn-sm" onclick="alterarStatusPedido('${p.id}')"><i class="fa-solid fa-check"></i></button></td>`;
+                                                    break;
+                                            }
+
+                                            return `
+                                                <tr>
+                                                    <td>${p.dataHoraFormatada}</td>
+                                                    <td>${p.usuarioNome}</td>
+                                                    <td>${itensHtml}</td>
+                                                    <td>R$ ${Number(p.valorTotal).toFixed(2)}</td>
+                                                    <td>${statusBadge}</td>
+                                                    ${acaoCell}
+                                                </tr>
+                                            `;
+                                        }).join('');
+
+                                        tbody.innerHTML = html;
+                                    })
+                                    .catch(err => {
+                                        console.error(err);
+                                        const tbody = document.getElementById('pedido-tbody');
+                                        if (tbody) {
+                                            tbody.innerHTML = '<tr><td colspan="6">Erro ao carregar pedidos.</td></tr>';
+                                        }
+                                    });
+                            }
+
+                            atualizarPedidosTabela();
+                            intervaloPedidos = setInterval(atualizarPedidosTabela, 5000);
+                            break;
+
+
+    case 'tamanho':
+        contentArea.innerHTML = `
+            <h2>Tamanhos de Açaí Cadastrados</h2>
+            <a href="/admin/tamanhos/novo" class="btn-default">Adicionar Novo Tamanho</a>
+            <hr>
+            <div id="tamanho-list"><p>Carregando...</p></div>
+        `;
+        fetch('/admin/api/tamanhos')
+            .then(res => res.json())
+            .then(tamanhos => {
+                const listDiv = document.getElementById('tamanho-list');
+                if (!tamanhos || tamanhos.length === 0) {
+                    return listDiv.innerHTML = '<p>Nenhum tamanho cadastrado ainda.</p>';
+                }
+
+                let tableRows = '';
+                tamanhos.forEach(t => {
+                    const precoFormatado = Number(t.preco).toFixed(2).replace('.', ',');
+                    tableRows += `
+                        <tr>
+                            <td>${t.nome}</td>
+                            <td>R$ ${precoFormatado}</td>
+                            <td class="acoes">
+                                <a href="/admin/tamanhos/editar/${t.id}" class="btn btn-editar">Editar</a>
+                                <button onclick="removerTamanho('${t.id}')" class="btn btn-remover">Remover</button>
                             </td>
                         </tr>`;
-                    });
-
-                    html += '</tbody></table>';
-                    listDiv.innerHTML = html;
-                })
-                .catch(err => {
-                    document.getElementById('usuarios-list').innerHTML = '<p>Erro ao carregar usuários.</p>';
-                    console.error(err);
                 });
-            break;
 
-        case 'pedidos':
-                    contentArea.innerHTML = `
-                        <h2>Pedidos</h2>
-                        <div id="pedido-list" style="max-height: 400px; overflow-y: auto;">
-                            <table border="1" cellpadding="8" cellspacing="0" id="pedido-table">
-                                <thead>
-                                    <tr>
-                                        <th>Data</th>
-                                        <th>Cliente</th>
-                                        <th>Itens</th>
-                                        <th>Valor Total</th>
-                                        <th>Status</th>
-                                        <th>Finalizar</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="pedido-tbody">
-                                    <tr><td colspan="7">Carregando...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    `;
-
-                    function atualizarPedidosTabela() {
-                        fetch('/admin/api/pedidos')
-                            .then(res => res.json())
-                            .then(pedidos => {
-                                const tbody = document.getElementById('pedido-tbody');
-                                if (!pedidos || pedidos.length === 0) {
-                                    tbody.innerHTML = '<tr><td colspan="7">Nenhum pedido encontrado.</td></tr>';
-                                    return;
-                                }
-
-                                pedidos.sort((a, b) => new Date(b.dataHora) - new Date(a.dataHora));
-
-                                const html = pedidos.map(p => {
-                                    const itensHtml = p.itens.map(i => {
-                                        const tamanho = i.acai.tamanho.nome;
-                                        const adicionais = (i.acai.adicionais || []).map(a => a.nome).join(', ');
-                                        const adicionaisStr = adicionais ? ` (${adicionais})` : '';
-                                        return `${tamanho}${adicionaisStr} x${i.quantidade}`;
-                                    }).join('<br>');
-
-                                    return `
-                                        <tr>
-                                            <td>${p.dataHoraFormatada}</td>
-                                            <td>${p.usuarioNome}</td>
-                                            <td>${itensHtml}</td>
-                                            <td>R$ ${Number(p.valorTotal).toFixed(2)}</td>
-                                            <td>${p.status}</td>
-                                            <td>
-                                                ${p.realizado ? '' : `<button class="btn btn-status" onclick="alterarStatusPedido('${p.id}')">
-                                                    <i class="fa-solid fa-check"></i>
-                                                </button>`}
-                                            </td>
-                                        </tr>
-                                    `;
-                                }).join('');
-
-                                tbody.innerHTML = html;
-                            })
-                            .catch(err => {
-                                console.error(err);
-                                document.getElementById('pedido-tbody').innerHTML =
-                                    '<tr><td colspan="7">Erro ao carregar pedidos.</td></tr>';
-                            });
-                    }
-
-                    atualizarPedidosTabela();
-
-                    if (intervaloPedidos) clearInterval(intervaloPedidos);
-
-                    intervaloPedidos = setInterval(atualizarPedidosTabela, 5000);
-                    break;
-
-        case 'tamanho':
-            contentArea.innerHTML = `
-                <h2>Tamanhos de Açaí Cadastrados</h2>
-                <a href="/admin/tamanhos/novo" class="btn-default">Adicionar Novo Tamanho</a>
-                <hr>
-                <div id="tamanho-list"><p>Carregando...</p></div>
-            `;
-            fetch('/admin/api/tamanhos')
-                .then(res => res.json())
-                .then(tamanhos => {
-                    const listDiv = document.getElementById('tamanho-list');
-
-                    if (!tamanhos || tamanhos.length === 0) {
-                        listDiv.innerHTML = '<p>Nenhum tamanho cadastrado ainda.</p>';
-                        return;
-                    }
-
-                    let html = '<table class="table table-striped">';
-                    html += '<thead><tr><th>Nome</th><th>Preço</th><th class="acoes">Ações</th></tr></thead><tbody>';
-
-                    tamanhos.forEach(t => {
-                        const precoFormatado = Number(t.preco).toFixed(2).replace('.', ',');
-                        html += `
-                            <tr>
-                                <td>${t.nome}</td>
-                                <td>R$ ${precoFormatado}</td>
-                                <td class="acoes">
-                                    <a href="/admin/tamanhos/editar/${t.id}" class="btn btn-editar">Editar</a>
-                                    
-                                    <button onclick="removerTamanho('${t.id}')" class="btn btn-remover">
-                                        Remover
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-
-                    html += '</tbody></table>';
-
-                    listDiv.innerHTML = html;
-                })
-                .catch(err => {
-                    document.getElementById('tamanho-list').innerHTML = '<p>Erro ao carregar tamanhos.</p>';
-                    console.error(err);
-                });
-            break;
+                const tableHTML = `
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Preço</th>
+                                    <th class="acoes">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${tableRows}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                listDiv.innerHTML = tableHTML;
+            })
+            .catch(err => {
+                document.getElementById('tamanho-list').innerHTML = '<p>Erro ao carregar tamanhos.</p>';
+                console.error(err);
+            });
+        break;
 
         case 'adicionais':
             contentArea.innerHTML = `
                  <h2>Gerenciar Adicionais</h2>
                  <a href="/admin/adicionais/novo" class="btn-default">Adicionar Novo Adicional</a>
                  <hr>
-                 <div id="adicional-list"><p>Carregando...</p></div> 
+                 <div id="adicional-list"><p>Carregando...</p></div>
             `;
-
             fetch('/admin/api/adicionais')
                 .then(res => res.json())
                 .then(adicionais => {
                     const listDiv = document.getElementById('adicional-list');
-
-
-                    // Verifica se a lista de adicionais está vazia
                     if (!adicionais || adicionais.length === 0) {
-                        listDiv.innerHTML = '<p>Nenhum adicional cadastrado ainda.</p>';
-                        return;
+                        return listDiv.innerHTML = '<p>Nenhum adicional cadastrado ainda.</p>';
                     }
 
-                    // Constrói a tabela HTML dinamicamente
-                    let html = '<table class="table table-striped">'; // Usando classes do Bootstrap para um visual melhor
-                    html += '<thead><tr><th>Nome</th><th>Preço</th><th class="acoes">Ações</th></tr></thead><tbody>';
-
+                    let tableRows = '';
                     adicionais.forEach(a => {
-                        // Formata o preço para ter sempre duas casas decimais
                         const precoFormatado = Number(a.preco).toFixed(2).replace('.', ',');
-
-                        html += `
+                        tableRows += `
                             <tr>
                                 <td>${a.nome}</td>
                                 <td>R$ ${precoFormatado}</td>
                                 <td class="acoes">
                                     <a href="/admin/adicionais/editar/${a.id}" class="btn btn-editar">Editar</a>
-                                    
-                                    <button onclick="removerAdicional('${a.id}')" class="btn btn-remover">
-                                        Remover
-                                    </button>
+                                    <button onclick="removerAdicional('${a.id}')" class="btn btn-remover">Remover</button>
                                 </td>
-                            </tr>
-                        `;
+                            </tr>`;
                     });
 
-                    html += '</tbody></table>';
-
-                    //  Insere a tabela pronta na página
-                    listDiv.innerHTML = html;
+                    const tableHTML = `
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Preço</th>
+                                        <th class="acoes">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${tableRows}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                    listDiv.innerHTML = tableHTML;
                 })
                 .catch(err => {
-                    // Trata possíveis erros de rede
                     document.getElementById('adicional-list').innerHTML = '<p>Erro ao carregar adicionais.</p>';
                     console.error(err);
                 });
             break;
+
     }
 }
 
@@ -310,13 +356,10 @@ function excluirUsuario(id) {
         .catch(err => console.error(err));
 }
 
-function alterarStatusPedido(id, status) {
-    if (status === "Concluído") {
-        alert("Pedido já concluído");
+function alterarStatusPedido(id) {
+    if (!confirm("Marcar este pedido como 'Entregue'?")) {
         return;
     }
-
-    if (!confirm("Deseja alterar o status deste pedido?")) return;
 
     fetch(`/admin/api/pedidos/${id}/status`, { method: 'PUT' })
         .then(async res => {
@@ -324,23 +367,6 @@ function alterarStatusPedido(id, status) {
                 const text = await res.text();
                 throw new Error(`${res.status} ${res.statusText} - ${text}`);
             }
-
-            if (res.status === 204) {
-                alert("Status atualizado com sucesso!");
-                return;
-            }
-
-            const text = await res.text();
-            let data;
-            try {
-                data = JSON.parse(text);
-            } catch {
-                data = { mensagem: text || "Status atualizado com sucesso!" };
-            }
-
-            alert(data.mensagem || "Status atualizado com sucesso!");
-        })
-        .then(() => {
             loadContent("pedidos");
             atualizarPedidos();
         })

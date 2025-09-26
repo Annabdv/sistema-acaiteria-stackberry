@@ -164,7 +164,7 @@ public class App {
         app.delete("/admin/api/usuarios/{id}", usuarioController::removerUsuario);
         app.put("/admin/api/usuarios/{id}/promover", usuarioController::promoverUsuarioParaAdmin);
 
-        // TODO: ADICIONE LÓGICA DE CONTROLLER PARA DASHBOARD.
+        // TODO: ADICIONE LÓGICA DE CONTROLLER PARA DASHBOARD
         app.get("/pedidos", ctx -> ctx.render("cardapio.html")); // cliente
 
         app.get("/admin/dashboard_admin", dashboardController:: exibirDashboard);
@@ -176,9 +176,12 @@ public class App {
 
         app.get("/admin/api/pedidos", pedidoController::listarPedidos);
         app.get("/admin/totalPedidos", pedidoController::totalPedidos);
-        app.put("/admin/api/pedidos/{id}/status", pedidoController::alterarStatus);
+
+        app.put("/admin/api/pedidos/{id}/status", pedidoController::marcarComoEntregue);
+        app.delete("/api/pedidos/{id}/cancelar", pedidoController::cancelarPedido);
+        app.get("/api/meus-pedidos", pedidoController::listarPedidosDoUsuarioLogado);
+
 
         app.get("/meus-pedidos", pedidoController::exibirPaginaMeusPedidos);
-        app.get("/api/meus-pedidos", pedidoController::listarPedidosDoUsuarioLogado);
     }
 }

@@ -21,10 +21,8 @@ async function carregarPedidos() {
             pedidos.forEach(pedido => {
                 const itensFormatados = pedido.itens.map(item => {
                     const tamanho = item.acai.tamanho.nome;
-
                     const adicionais = (item.acai.adicionais || []).map(adicional => adicional.nome).join(', ');
                     const adicionaisStr = adicionais ? ` (com ${adicionais})` : '';
-
                     return `${item.quantidade}x ${tamanho}${adicionaisStr}`;
                 }).join('<br>');
 
@@ -33,9 +31,24 @@ async function carregarPedidos() {
                     currency: 'BRL'
                 }).format(pedido.valorTotal);
 
-                const statusBadge = pedido.realizado
-                    ? '<span class="badge bg-success">Concluído</span>'
-                    : '<span class="badge bg-warning text-dark">Em Preparo</span>';
+                let statusBadge;
+                let acaoCell;
+
+                switch (pedido.status) {
+                    case "ENTREGUE":
+                        statusBadge = '<span class="badge bg-success">Entregue</span>';
+                        acaoCell = '<td></td>';
+                        break;
+                    case "CANCELADO":
+                        statusBadge = '<span class="badge bg-danger">Cancelado</span>';
+                        acaoCell = '<td></td>';
+                        break;
+                    case "EM_PREPARO":
+                    default:
+                        statusBadge = '<span class="badge bg-warning text-dark">Em Preparo</span>';
+                        acaoCell = `<td><button class="btn-cancelar-pedido" onclick="cancelarPedido('${pedido.id}')">Cancelar</button></td>`; // <-- MUDANÇA AQUI
+                        break;
+                }
 
                 const linha = `
                     <tr>
@@ -43,6 +56,7 @@ async function carregarPedidos() {
                         <td>${itensFormatados}</td>
                         <td>${valorFormatado}</td>
                         <td>${statusBadge}</td>
+                        ${acaoCell}
                     </tr>
                 `;
                 tabelaBody.innerHTML += linha;
@@ -52,3 +66,29 @@ async function carregarPedidos() {
         console.error('Erro:', error);
     }
 }
+
+async function cancelarPedido(pedidoId) {
+    if (!confirm('Tem certeza que deseja cancelar este pedido?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/pedidos/${pedidoId}/cancelar`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            const erro = await response.json();
+            throw new Error(erro.mensagem || 'Não foi possível cancelar o pedido.');
+        }
+
+        alert('Pedido cancelado com sucesso!');
+        carregarPedidos();
+
+    } catch (error) {
+        console.error('Erro ao cancelar pedido:', error);
+        alert(error.message);
+    }
+}
+
+//

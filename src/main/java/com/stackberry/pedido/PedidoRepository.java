@@ -12,13 +12,19 @@ import java.util.stream.Collectors;
 
 public class PedidoRepository {
 
+    private static final PedidoRepository INSTANCE = new PedidoRepository();
+
     private static final String FILE_PATH = "src/main/resources/json/Pedidos.json";
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     private final Map<String, Pedido> pedidosEmMemoria = new ConcurrentHashMap<>();
 
-    public PedidoRepository() {
+    private PedidoRepository() {
         carregarPedidosArquivo();
+    }
+
+    public static PedidoRepository getInstance() {
+        return INSTANCE;
     }
 
     public synchronized Pedido salvar(Pedido pedido) {

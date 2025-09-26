@@ -1,9 +1,11 @@
 package com.stackberry.pedido;
+
 import com.stackberry.login.Usuario;
 import io.javalin.http.Context;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class PedidoController {
     private final PedidoService pedidoService;
@@ -12,25 +14,52 @@ public class PedidoController {
         this.pedidoService = new PedidoService();
     }
 
-    // lista todos os pedidos em JSON
     public void listarPedidos(Context ctx) {
         ctx.json(pedidoService.buscarTodosOrdenados());
     }
 
-    // retorna total de pedidos
     public void totalPedidos(Context ctx) {
         ctx.json(Map.of("total", pedidoService.contarPedidos()));
     }
 
-    // alternar status do pedido
-    public void alterarStatus(Context ctx) {
+    public void marcarComoEntregue(Context ctx) {
         String id = ctx.pathParam("id");
-        boolean updated = pedidoService.alternarStatus(id);
+        boolean atualizado = pedidoService.marcarComoEntregue(id);
 
-        if (updated) {
-            ctx.json(Map.of("mensagem", "Status do pedido atualizado com sucesso!"));
+        if (atualizado) {
+            ctx.json(Map.of("mensagem", "Status do pedido atualizado para ENTREGUE!"));
         } else {
+            ctx.status(404).json(Map.of("mensagem", "Pedido não encontrado ou não pôde ser atualizado."));
+        }
+    }
+
+    public void cancelarPedido(Context ctx) {
+        Usuario usuarioLogado = ctx.sessionAttribute("usuarioLogado");
+        if (usuarioLogado == null) {
+            ctx.status(401).json(Map.of("mensagem", "Você precisa estar logado para cancelar um pedido."));
+            return;
+        }
+
+        String pedidoId = ctx.pathParam("id");
+        Optional<Pedido> optPedido = pedidoService.buscarPorId(pedidoId);
+
+        if (optPedido.isEmpty()) {
             ctx.status(404).json(Map.of("mensagem", "Pedido não encontrado."));
+            return;
+        }
+
+        Pedido pedido = optPedido.get();
+        if (!pedido.getUsuarioId().equals(usuarioLogado.getId())) {
+            ctx.status(403).json(Map.of("mensagem", "Você não tem permissão para cancelar este pedido."));
+            return;
+        }
+
+        boolean cancelado = pedidoService.cancelarPedido(pedidoId);
+
+        if (cancelado) {
+            ctx.json(Map.of("mensagem", "Pedido cancelado com sucesso."));
+        } else {
+            ctx.status(400).json(Map.of("mensagem", "Este pedido não pode mais ser cancelado."));
         }
     }
 
