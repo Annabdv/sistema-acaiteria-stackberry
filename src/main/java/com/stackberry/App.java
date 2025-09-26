@@ -189,5 +189,8 @@ public class App {
         app.get("/admin/api/pedidos", pedidoController::listarPedidos);
         app.get("/admin/totalPedidos", pedidoController::totalPedidos);
         app.put("/admin/api/pedidos/{id}/status", pedidoController::alterarStatus);
+
+        app.get("/meus-pedidos", pedidoController::exibirPaginaMeusPedidos);
+        app.get("/api/meus-pedidos", pedidoController::listarPedidosDoUsuarioLogado);
     }
 }
