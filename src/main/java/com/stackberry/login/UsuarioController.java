@@ -32,12 +32,12 @@ public class UsuarioController {
         }
     }
 
-    // Mostrar página de login --- anna
+    // Mostrar página de login
     public void exibirFormularioLogin(Context ctx) {
         ctx.render("login.html");
     }
 
-    // Processamento de login --- anna
+    // Processamento de login
     public void processarLogin(Context ctx) {
         String email = ctx.formParam("email");
         if (email == null) email = ctx.formParam("username");
@@ -72,7 +72,7 @@ public class UsuarioController {
     }
 
 
-    // Logout --- anna
+    // Logout
     public void logout(Context ctx) {
         ctx.sessionAttribute("usuarioLogado", null);
         ctx.req().getSession().invalidate();

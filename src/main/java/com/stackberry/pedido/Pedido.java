@@ -46,7 +46,6 @@ public class Pedido {
         this.usuarioNome = usuario.getNome();
         this.usuarioEmail = usuario.getEmail();
         this.dataHora = LocalDateTime.now();
-        // --- MUDANÇA 2: Definindo o status inicial com o Enum ---
         this.status = StatusPedido.EM_PREPARO;
     }
 

@@ -60,12 +60,10 @@ public class PedidoService {
     }
 
     public int contarPedidos() {
-        // A LINHA "recarregarDoArquivo()" FOI REMOVIDA DAQUI
         return pedidoRepository.buscarTodos().size();
     }
 
     public List<Pedido> buscarPorUsuarioOrdenados(String usuarioId) {
-        // A LINHA "recarregarDoArquivo()" FOI REMOVIDA DAQUI
         return pedidoRepository.buscarPorUsuario(usuarioId)
                 .stream()
                 .sorted(Comparator.comparing(Pedido::getDataHora).reversed())

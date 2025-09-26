@@ -152,27 +152,24 @@ function loadContent(section) {
                                                 return `${tamanho}${adicionaisStr} x${i.quantidade}`;
                                             }).join('<br>');
 
-                                            // --- INÍCIO DA LÓGICA DE STATUS ATUALIZADA ---
                                             let statusBadge;
                                             let acaoCell;
 
                                             switch (p.status) {
                                                 case "ENTREGUE":
                                                     statusBadge = '<span class="badge bg-success">Entregue</span>';
-                                                    acaoCell = '<td></td>'; // Sem ação
+                                                    acaoCell = '<td></td>';
                                                     break;
                                                 case "CANCELADO":
                                                     statusBadge = '<span class="badge bg-danger">Cancelado</span>';
-                                                    acaoCell = '<td></td>'; // Sem ação
+                                                    acaoCell = '<td></td>';
                                                     break;
                                                 case "EM_PREPARO":
                                                 default:
                                                     statusBadge = '<span class="badge bg-warning text-dark">Em Preparo</span>';
-                                                    // Apenas pedidos "EM_PREPARO" podem ser finalizados
                                                     acaoCell = `<td><button class="btn btn-success btn-sm" onclick="alterarStatusPedido('${p.id}')"><i class="fa-solid fa-check"></i></button></td>`;
                                                     break;
                                             }
-                                            // --- FIM DA LÓGICA DE STATUS ATUALIZADA ---
 
                                             return `
                                                 <tr>

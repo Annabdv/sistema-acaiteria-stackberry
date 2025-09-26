@@ -19,12 +19,10 @@ public class PedidoRepository {
 
     private final Map<String, Pedido> pedidosEmMemoria = new ConcurrentHashMap<>();
 
-    // 2. O construtor agora é PRIVADO, para que ninguém de fora possa criar novas instâncias
     private PedidoRepository() {
         carregarPedidosArquivo();
     }
 
-    // 3. Método público para que todos possam pegar a MESMA instância
     public static PedidoRepository getInstance() {
         return INSTANCE;
     }
