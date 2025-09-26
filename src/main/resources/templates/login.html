@@ -41,6 +41,30 @@
                 font-size: 0.9rem;
                 text-align: center;
             }
+            .form-footer a {
+                color: #000 !important;
+                text-decoration: none;
+            }
+
+            .form-footer a:hover {
+                text-decoration: underline;
+            }
+            .card {
+                width: 100%;
+                max-width: 450px;
+                border-radius: 15px;
+                border: none;
+                background-color: #fff;
+                box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+                transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+            }
+
+            .card:hover {
+                box-shadow: 0 0 55px rgba(0, 0, 0, 0.8); /* sombra mais forte no hover */
+                transform: translateY(-5px);
+            }
+
+
         </style>
     </th:block>
 </head>
@@ -85,7 +109,6 @@
                 </form>
 
                 <div class="form-footer">
-                    <p><a th:href="@{/esqueci-senha}">Esqueceu a senha?</a></p>
                     <p>Não tem uma conta? <a th:href="@{/cadastrar}">Cadastre-se</a></p>
                 </div>
 
