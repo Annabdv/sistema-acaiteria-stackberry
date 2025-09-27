@@ -22,11 +22,18 @@
         .btn-purple:hover {
             background-color: #fff3;
         }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+
     </style>
 </head>
 <body>
 <main layout:fragment="content">
-    <div class="container py-5">
+    <div class="container py-5 text-center">
         <h2 class="mb-4">Seu Carrinho</h2>
 
         <div th:if="${#lists.isEmpty(carrinho.itensNoCarrinho)}">
