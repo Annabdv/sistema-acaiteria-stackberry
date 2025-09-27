@@ -9,7 +9,7 @@ public class AdicionalService {
     private final AdicionalRepository adicionalRepository;
 
     public AdicionalService() {
-        this.adicionalRepository = new AdicionalRepository();
+        this.adicionalRepository = AdicionalRepository.getInstance();
     }
 
     public Adicional cadastrarAdicional(Adicional adicional){

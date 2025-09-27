@@ -10,13 +10,18 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TamanhoRepository {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final String FILE_PATH = "src/main/resources/json/Tamanhos.json";
+    private static final TamanhoRepository INSTANCE = new TamanhoRepository();
 
     // Usando novamente o ConcurrentHashMap, para lidar com multiplas operações.
     // Salva os tamanhos de açai na memória do nosso aplicativo web.
     private final Map<String, Tamanho> tamanhoEmMemoria = new ConcurrentHashMap<>();
 
-    public TamanhoRepository() {
+    private TamanhoRepository() {
         carregarTamanhos();
+    }
+
+    public static TamanhoRepository getInstance() {
+        return INSTANCE;
     }
 
     public boolean atualizarTamanho(String id, Tamanho tamanhoAtualizado) {
