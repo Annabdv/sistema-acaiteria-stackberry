@@ -42,11 +42,13 @@ Esta é a lista de funcionalidades essenciais para a primeira versão do projeto
 - [ ] Montar um açaí personalizado.
 - [ ] Adicionar itens ao carrinho de compras.
 - [ ] Finalizar um pedido.
-- [ ] Acompanhar o status do seu pedido (Ex: `Em Preparo`, `Entregue`, `Cancelado`).
+- [ ] Cancelar um pedido.
+- [ ] Acompanhar o status do seu pedido (Ex: `Em Preparo`, `Entregue`).
 
 ### 🔑 Para Administradores
 - [ ] Todas as funcionalidades de **Funcionário**.
 - [ ] Gerenciar (criar, editar, deletar) produtos, como tamanhos de açaí e acompanhamentos.
+- [ ] Finalizar os pedidos, alterando o status para "Entregue".
 - [ ] Visualizar um dashboard com dados de vendas e pedidos.
 
 ---
