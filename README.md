@@ -60,7 +60,7 @@ Esta é a stack principal definida para o projeto.
 * **Linguagem:** Java
 * **Framework Backend:** [Javalin](https://javalin.io/)
 * **Template Engine (View):** [Thymeleaf](https://www.thymeleaf.org/)
-* **Estilização:** HTML5/CSS3 (com possível uso de [Bootstrap](https://getbootstrap.com/))
+* **Interface e Scripts:** HTML5, CSS3 e JavaScript (com possível uso de [Bootstrap](https://getbootstrap.com/))
 * **Banco de Dados:** (A ser definido)
 * **Build Tool:** [Maven](https://maven.apache.org/)
 
