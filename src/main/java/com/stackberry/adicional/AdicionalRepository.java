@@ -11,9 +11,14 @@ public class AdicionalRepository {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final String FILE_PATH = "src/main/resources/json/Adicionais.json";
     private final Map<String, Adicional> adicionalEmMemoria = new ConcurrentHashMap<>();
+    private static final AdicionalRepository INSTANCE = new AdicionalRepository();
 
-    public AdicionalRepository() {
+    private AdicionalRepository() {
         carregarAdicionais();
+    }
+
+    public static AdicionalRepository getInstance() {
+        return INSTANCE;
     }
 
     public boolean atualizarAdicional(String id, Adicional adicionalAtualizado) {

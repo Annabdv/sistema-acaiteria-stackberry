@@ -10,7 +10,7 @@ public class TamanhoService {
     private final TamanhoRepository tamanhoRepository;
 
     public TamanhoService() {
-        this.tamanhoRepository = new TamanhoRepository();
+        this.tamanhoRepository = TamanhoRepository.getInstance();
     }
 
     public Tamanho cadastrarTamanho(Tamanho tamanho){
