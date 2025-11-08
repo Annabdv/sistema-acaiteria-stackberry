@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Editar Adicional</title>
+    <th:block layout:fragment="page-css">
+        <link rel="stylesheet" th:href="@{/styles/formulario.css}">
+    </th:block>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div class="form-wrapper">
+        <h1>Editar Adicional</h1>
+
+        <form th:action="@{/admin/adicionais/atualizar}" method="post">
+            <input type="hidden" name="id" th:value="${adicional.id}" />
+
+            <div class="form-group">
+                <label for="nome">Nome do Adicional:</label>
+                <input type="text" class="form-control" id="nome" name="nome" th:value="${adicional.nome}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="preco">Preço:</label>
+                <input type="number" class="form-control" id="preco" name="preco" th:value="${adicional.preco}" step="0.01" required>
+            </div>
+
+            <div class="form-actions">
+                <a th:href="@{/admin/dashboard_admin}" class="btn-cancel">Cancelar</a>
+                <button type="submit" class="btn-default">Salvar Alterações</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>

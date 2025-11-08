@@ -1,0 +1,13 @@
+[ {
+  "nome" : "Cobertura Morango",
+  "id" : "c6cc5146-74ad-49e8-b885-690168db500c",
+  "preco" : 0.30
+}, {
+  "nome" : "Banana",
+  "id" : "3216d965-3d25-4781-9c8a-648f5495d352",
+  "preco" : 0.50
+}, {
+  "nome" : "Morango",
+  "id" : "db86d050-4ead-4da5-80c5-4b67280b5378",
+  "preco" : 0.9
+} ]

@@ -1,0 +1,32 @@
+[ {
+  "id" : "15344492-e1bb-4681-ac5a-aebdb6f0b9c5",
+  "itens" : [ {
+    "id" : "9b503d79-ae89-429b-a4f2-09bcb8c1fe90",
+    "acai" : {
+      "tamanho" : {
+        "nome" : "Medio",
+        "id" : "c1ede2e2-d04e-4f49-ae6f-64bb51db3aa0",
+        "preco" : 6
+      },
+      "preco" : 6.80,
+      "adicionais" : [ {
+        "nome" : "Cobertura Morango",
+        "id" : "c6cc5146-74ad-49e8-b885-690168db500c",
+        "preco" : 0.30
+      }, {
+        "nome" : "Banana",
+        "id" : "3216d965-3d25-4781-9c8a-648f5495d352",
+        "preco" : 0.50
+      } ]
+    },
+    "quantidade" : 2,
+    "precoUnitario" : 6.80
+  } ],
+  "valorTotal" : 13.60,
+  "usuarioId" : "5195af82-eeab-46a8-b51e-a1350c2531dd",
+  "usuarioNome" : "rodrigo",
+  "usuarioEmail" : "rodrigo@gmail.com",
+  "status" : "EM_PREPARO",
+  "dataHora" : [ 2025, 10, 7, 15, 32, 3, 726651432 ],
+  "dataHoraFormatada" : "07/10/2025 15:32"
+} ]

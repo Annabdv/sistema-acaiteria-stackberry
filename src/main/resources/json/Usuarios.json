@@ -1,0 +1,17 @@
+[ {
+  "id" : "a9319cbc-5d31-4dac-a958-9b5267937243",
+  "email" : "teste@gmail.com",
+  "nome" : "Edgar",
+  "senha" : "$2a$10$LOFJkVianiH1LsIcFIhD9.jEedttUmervnIHQkQYOE6cwZAu820cm",
+  "tipoDeUsuario" : "ADMINISTRADOR",
+  "ativo" : true,
+  "status" : "Ativo"
+}, {
+  "id" : "5195af82-eeab-46a8-b51e-a1350c2531dd",
+  "email" : "rodrigo@gmail.com",
+  "nome" : "rodrigo",
+  "senha" : "$2a$10$zFWws8GccBXTMQNlxmPhweJ3XAkky6Y.PB.8J2kTJgp.ySK6RdsLG",
+  "tipoDeUsuario" : "CLIENTE",
+  "ativo" : true,
+  "status" : "Ativo"
+} ]
