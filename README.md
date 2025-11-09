@@ -2,7 +2,7 @@
   <img src="./assets/StackBerry_Text.png" alt="Logo do StackBerry" width="300">
 </p>
 
-# StackBerry - Sistema de Gerenciamento para Açaiteria
+# StackBerry - Sistema de  para Açaiteria
 
 *Do Stack de Tecnologia à Tigela de Açaí.*
 
