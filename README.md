@@ -2,7 +2,7 @@
   <img src="./assets/StackBerry_Text.png" alt="Logo do StackBerry" width="300">
 </p>
 
-# StackBerry - Sistema de  para Açaiteria
+# StackBerry - Sistema de Gerenciamento para Açaiteria
 
 *Do Stack de Tecnologia à Tigela de Açaí.*
 
@@ -99,7 +99,6 @@ Esta é a stack principal definida para o projeto.
 ---
 
 ## Membros da Equipe
-
-| ![Foto](https://github.com/Edgar-sh.png?size=100) | ![Foto](https://github.com/randersonranniery7.png?size=100) | ![Foto](https://github.com/Annabdv.png?size=100) |
-|----------------------------------------------------|-------------------------------------------------------|-----------------------------------------------------|
-| **Edgar Henrique da Silva** [@Edgar-sh](https://github.com/Edgar-sh) | **Randerson Ranniery Soares** [@randersonranniery7](https://github.com/randersonranniery7) | **Anna Beatriz Alves de Vasconcelos** [@Annabdv](https://github.com/Annabdv) |
+* Edgar Henrique da Silva [@Edgar-sh](https://github.com/Edgar-sh) 
+* Randerson Ranniery Soares [@randersonranniery7](https://github.com/randersonranniery7) 
+* Anna Beatriz Alves de Vasconcelos [@Annabdv](https://github.com/Annabdv) 
