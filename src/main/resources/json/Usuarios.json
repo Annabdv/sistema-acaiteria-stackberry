@@ -1,4 +1,12 @@
 [ {
+  "id" : "4a353196-6001-419e-b9e2-ebf952b7fd35",
+  "email" : "bea@email.com",
+  "nome" : "Anna",
+  "senha" : "$2a$10$bpvkGJcIXjT9TFojJex3lOUE25v6VOLlWGoWuPu0RMYb.jnI91Num",
+  "tipoDeUsuario" : "CLIENTE",
+  "ativo" : true,
+  "status" : "Ativo"
+}, {
   "id" : "a9319cbc-5d31-4dac-a958-9b5267937243",
   "email" : "teste@gmail.com",
   "nome" : "Edgar",

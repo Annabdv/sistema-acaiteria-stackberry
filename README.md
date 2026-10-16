@@ -6,99 +6,104 @@
 
 *Do Stack de Tecnologia à Tigela de Açaí.*
 
-Este projeto é um sistema web para gestão de uma açaiteria, desenvolvido com Java, Javalin e Thymeleaf. O objetivo é criar uma plataforma funcional que atenda tanto aos clientes que desejam fazer pedidos online quanto aos administradores e funcionários que gerenciam a operação da loja.
+---
+
+## 🎓 Contexto Acadêmico & Histórico do Projeto
+
+- **Origem Acadêmica:** Realizei este projeto para a disciplina de **Análise e Projeto de Sistemas (APS)** na **UFPB Campus IV** (Universidade Federal da Paraíba).
+- **Refatoração Visual:** Houve **refatoração completa do visual e da experiência de pedidos** por **Anna Vasconcelos** ([@Annabdv](https://github.com/Annabdv)), incluindo design system moderno, customizador interativo de tigelas, resumo de pedidos em tempo real e visual glassmorphism.
+- **Nota sobre o Repositório:** O atual projeto neste repositório **não conta com os outros integrantes da disciplina por ter sido perdido ao final da disciplina** (após a exclusão do repositório original da turma). O código foi recuperado e mantido neste repositório próprio como dona do projeto.
 
 ---
 
-## Sumário
+## 📌 Sumário
 
 * [Visão Geral](#visão-geral)
-* [Funcionalidades Planejadas (MVP)](#funcionalidades-planejadas-mvp)
-* [Tecnologias](#tecnologias)
+* [Tecnologias Utilizadas](#tecnologias-utilizadas)
+* [Funcionalidades](#funcionalidades)
 * [Design e Identidade Visual](#design-e-identidade-visual)
 * [Como Executar o Projeto](#como-executar-o-projeto)
-* [Membros da Equipe](#membros-da-equipe)
+* [Autoria](#autoria)
 
 ---
 
-## Visão Geral
+## 📖 Visão Geral
 
-O **StackBerry** permitirá que os clientes montem seus açaís de forma personalizada, escolhendo tamanhos e adicionais. Do lado da loja, enquanto administradores terão controle total sobre o catálogo de produtos e o acesso ao sistema.
+O **StackBerry** é um sistema web para gestão completa de uma açaiteria. Ele permite que os clientes personalizem suas tigelas de açaí escolhendo tamanhos e acompanhamentos (com cálculo dinâmico de preços), adicionem ao carrinho e façam seus pedidos com encaminhamento direto para o WhatsApp. Do lado administrativo, o sistema oferece controle sobre catálogo de produtos, adicionais e acompanhamento de pedidos.
 
 ### Níveis de Acesso
-
-O sistema conta com 2 tipos de usuários:
-1.  **Cliente:** Pode se cadastrar, navegar pelo cardápio, montar e finalizar pedidos, além de acompanhar o status de entrega.
-2.  **Administrador:** Possui todas as permissões de um funcionário, com o adicional de poder gerenciar (CRUD) os produtos, adicionais, estoque e usuários do sistema.
+1. **Cliente:** Navegar pelo cardápio, montar tigelas personalizadas, gerenciar carrinho, finalizar pedidos e acompanhar o status em tempo real.
+2. **Administrador:** Acesso a dashboard de controle, gerenciamento de produtos (tamanhos e adicionais), controle de pedidos e usuários.
 
 ---
 
-## Funcionalidades Planejadas (MVP)
+## 🛠️ Tecnologias Utilizadas
 
-Esta é a lista de funcionalidades essenciais para a primeira versão do projeto.
+Este projeto utiliza estritamente o stack definido originalmente, sem adição de linguagens ou frameworks externos:
+
+* **Linguagem:** Java 21 (LTS)
+* **Framework Backend:** [Javalin](https://javalin.io/) (6.7.0)
+* **Template Engine:** [Thymeleaf](https://www.thymeleaf.org/) com Layout Dialect
+* **Frontend & Estilização:** HTML5 semântico, Vanilla CSS3 (Design System Glassmorphism) e JavaScript / jQuery
+* **Persistência:** Arquivos JSON estruturados
+* **Build Tool:** [Apache Maven](https://maven.apache.org/)
+
+---
+
+## ✨ Funcionalidades Principais
 
 ### 👤 Para Clientes
-- [ ] Visualizar o cardápio com produtos, tamanhos e adicionais disponíveis.
-- [ ] Montar um açaí personalizado.
-- [ ] Adicionar itens ao carrinho de compras.
-- [ ] Finalizar um pedido.
-- [ ] Cancelar um pedido.
-- [ ] Acompanhar o status do seu pedido (Ex: `Em Preparo`, `Entregue`).
+- [x] **Cardápio Interativo:** Escolha visual de tamanhos (Pequeno, Médio, Grande) com ícones e cartões de destaque.
+- [x] **Seleção de Adicionais:** Acompanhamentos organizados em chips interativos (frutas, coberturas, cremes).
+- [x] **Resumo em Tempo Real:** Cálculo dinâmico do subtotal da tigela conforme opções e quantidades são marcadas.
+- [x] **Carrinho de Compras:** Ajuste de quantidades, remoção de itens e cálculo do total da sacola.
+- [x] **Finalização e Integração WhatsApp:** Confirmação do pedido com envio dos detalhes prontos para o WhatsApp do estabelecimento.
+- [x] **Meus Pedidos:** Acompanhamento do histórico e status de cada pedido (`Em Preparo`, `Entregue`, `Cancelado`).
 
 ### 🔑 Para Administradores
-- [ ] Todas as funcionalidades de **Funcionário**.
-- [ ] Gerenciar (criar, editar, deletar) produtos, como tamanhos de açaí e acompanhamentos.
-- [ ] Finalizar os pedidos, alterando o status para "Entregue".
-- [ ] Visualizar um dashboard com dados de vendas e pedidos.
+- [x] Painel de Dashboard com métricas de pedidos e vendas.
+- [x] Gerenciamento de tamanhos de açaí e adicionais.
+- [x] Atualização de status dos pedidos em preparo ou entregues.
 
 ---
 
-## Tecnologias
+## 🎨 Design e Identidade Visual
 
-Esta é a stack principal definida para o projeto.
-
-* **Linguagem:** Java
-* **Framework Backend:** [Javalin](https://javalin.io/)
-* **Template Engine (View):** [Thymeleaf](https://www.thymeleaf.org/)
-* **Interface e Scripts:** HTML5, CSS3 e JavaScript (com possível uso de [Bootstrap](https://getbootstrap.com/))
-* **Banco de Dados:** (A ser definido)
-* **Build Tool:** [Maven](https://maven.apache.org/)
-
----
-
-## Design e Identidade Visual
-
-* **Nome:** StackBerry
 * **Paleta de Cores:**
-    * 💜 Roxo
-    * 💚 Verde
-    * 🤍 Branco
+  - 💜 **Roxo Açaí Profundo:** Gradientes modernos (`#120224`, `#1e0638`, `#8b5cf6`)
+  - 💚 **Verde Folha Fresca:** Destaques e confirmações de compra (`#22c55e`, `#16a34a`)
+  - 🤍 **Branco e Vidro Fosco:** Efeitos translúcidos de glassmorphism com tipografia nítida
+* **Tipografia:** Google Fonts ([Outfit](https://fonts.google.com/specimen/Outfit) para títulos marcantes e [Poppins](https://fonts.google.com/specimen/Poppins) para leitura limpa)
 
 ---
 
-## Como Executar o Projeto
+## 🚀 Como Executar o Projeto
 
-*Instruções preliminares. Serão detalhadas após a criação da estrutura do projeto.*
+### Pré-requisitos
+* Java JDK 21 instalado no computador.
 
-**Pré-requisitos:**
-* Java JDK (versão a definir)
-* Maven ou Gradle
+### Executando no Windows (Modo Rápido)
+Dê um duplo clique no script:
+```text
+iniciar.bat
+```
+Ele iniciará o servidor Javalin e abrirá seu navegador automaticamente em `http://localhost:7070`.
 
-**Passos:**
-1.  Clone o repositório:
-    ```bash
-    git clone [URL-DO-REPOSITORIO]
-    ```
-2.  Navegue até a pasta do projeto e execute o comando de build/run.
-    ```bash
-    # Exemplo futuro
-    mvn compile exec:java
-    ```
-3.  Acesse `http://localhost:7070` (ou a porta configurada) no seu navegador.
+### Executando via Terminal
+```bash
+# 1. Navegue até a pasta do projeto
+cd StackBerry_Sistema_De_Gerenciamento_Para_Acaiterias
+
+# 2. Execute a aplicação empacotada
+java -jar target/s_berry-1.0-jar-with-dependencies.jar
+
+# 3. Acesse no navegador:
+http://localhost:7070
+```
 
 ---
 
-## Membros da Equipe
-* Edgar Henrique da Silva [@Edgar-sh](https://github.com/Edgar-sh) 
-* Randerson Ranniery Soares [@randersonranniery7](https://github.com/randersonranniery7) 
-* Anna Beatriz Alves de Vasconcelos [@Annabdv](https://github.com/Annabdv) 
+## 👩‍💻 Autoria
+
+* **Desenvolvimento e Refatoração Visual:** Anna Beatriz Alves de Vasconcelos ([@Annabdv](https://github.com/Annabdv))
+* **Projeto desenvolvido no contexto acadêmico:** UFPB - Campus IV (Rio Tinto / Mamanguape)
