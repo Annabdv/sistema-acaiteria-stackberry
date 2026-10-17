@@ -5,43 +5,98 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Cardápio - Monte seu Açaí</title>
+    <title>Cardápio - StackBerry</title>
     <th:block layout:fragment="page-css">
         <link rel="stylesheet" th:href="@{/styles/menu.css}">
     </th:block>
 </head>
 <body>
 <main layout:fragment="content">
-    <div class="order-wrapper">
-        <!-- Header da Página com Botão Direto para o Carrinho -->
-        <div class="order-header-container">
-            <div class="order-header-text">
-                <span class="badge-pill">✨ 100% Personalizado • Ingredientes Selecionados</span>
-                <h1>Monte o seu Açaí</h1>
-                <p>Escolha o tamanho ideal, adicione seus acompanhamentos prediletos e aproveite o melhor sabor!</p>
+    <div class="storefront-wrapper">
+        
+        <!-- 1. HERO BANNER (Inspirado no print: Açaí de verdade, do seu jeito) -->
+        <section class="hero-banner-section">
+            <div class="hero-banner-card">
+                <div class="hero-banner-content">
+                    <span class="hero-badge">SEU MOMENTO MAIS GOSTOSO</span>
+                    <h1 class="hero-heading">Açaí de verdade,<br>do seu jeito.</h1>
+                    <p class="hero-subtitle">
+                        Cremoso, natural e cheio de energia. Escolha seu tamanho favorito ou monte uma combinação só sua com frutas e acompanhamentos frescos.
+                    </p>
+                    <a href="#catalogo-secao" class="btn-hero-cta">
+                        Ver cardápio <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                </div>
+                <div class="hero-banner-media">
+                    <img src="/images/acai_tigela_frutas.jpg" alt="Açaí artesanal StackBerry" class="hero-banner-img">
+                </div>
             </div>
-            <div class="order-header-action">
-                <a href="/carrinho" class="btn-outline-glass btn-header-cart">
-                    <i class="fa-solid fa-cart-shopping"></i> Ver Carrinho
-                </a>
-            </div>
-        </div>
+        </section>
 
-        <form th:action="@{/carrinho/adicionar}" method="post" id="form-pedido">
-            <div class="order-steps-container">
+        <!-- 2. STATUS & INFORMAÇÕES RÁPIDAS (Inspirado no print: Aberto agora / Entrega / Destaque) -->
+        <section class="info-pills-section">
+            <div class="info-pills-grid">
+                <div class="info-pill-card">
+                    <div class="info-pill-icon"><i class="fa-regular fa-clock"></i></div>
+                    <div class="info-pill-text">
+                        <strong>Aberto agora</strong>
+                        <span>Hoje até às 22h</span>
+                    </div>
+                </div>
+
+                <div class="info-pill-card">
+                    <div class="info-pill-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="info-pill-text">
+                        <strong>Preparo rápido</strong>
+                        <span>15–25 min • Monte do seu jeito</span>
+                    </div>
+                </div>
+
+                <div class="info-pill-card highlight-pill">
+                    <div class="info-pill-icon"><i class="fa-solid fa-star"></i></div>
+                    <div class="info-pill-text">
+                        <strong>100% Puro & Artesanal</strong>
+                        <span>Ingredientes selecionados & sabor real</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. CATÁLOGO & MONTAGEM DO AÇAÍ -->
+        <section class="menu-catalog-section" id="catalogo-secao">
+            <div class="catalog-header-row">
+                <div class="catalog-title-group">
+                    <span class="catalog-tag">CARDÁPIO</span>
+                    <h2 class="catalog-heading-serif">Escolha sua felicidade</h2>
+                </div>
+                <div class="category-tabs-row">
+                    <button type="button" class="category-tab active" onclick="focarSecao('passo-tamanho')">
+                        Destaques
+                    </button>
+                    <button type="button" class="category-tab" onclick="focarSecao('passo-tamanho')">
+                        Monte o seu
+                    </button>
+                    <button type="button" class="category-tab" onclick="focarSecao('passo-adicionais')">
+                        Acompanhamentos
+                    </button>
+                </div>
+            </div>
+
+            <!-- FORMULÁRIO DE MONTAGEM E COMPRA -->
+            <form th:action="@{/carrinho/adicionar}" method="post" id="form-pedido">
                 
-                <!-- Passo 1: Tamanho -->
-                <div class="step-card">
-                    <div class="step-title">
-                        <span class="step-number">1</span>
+                <!-- PASSO 1: ESCOLHA O TAMANHO (Cartões Estilo Vitrine Delivery - Imagem 3) -->
+                <div class="catalog-step-box" id="passo-tamanho">
+                    <div class="step-header">
+                        <span class="step-num">1</span>
                         <div>
-                            <h2>Escolha o Tamanho</h2>
+                            <h3>Escolha o Tamanho da Base</h3>
                             <p>Selecione a porção ideal para matar a sua vontade</p>
                         </div>
                     </div>
 
-                    <div class="sizes-grid">
-                        <label class="size-option" th:each="t, iter : ${tamanhos}">
+                    <div class="product-cards-grid">
+                        <label class="product-card-option" th:each="t, iter : ${tamanhos}">
                             <input type="radio" 
                                    name="tamanhoId" 
                                    th:value="${t.id}"
@@ -51,32 +106,70 @@
                                    th:data-nome="${t.nome}"
                                    required
                                    onchange="atualizarResumo()">
-                            <div class="size-card">
-                                <div class="size-thumb">
+                            
+                            <div class="product-card">
+                                <div class="product-card-media">
+                                    <!-- Badges superiores estilo imagem de referência -->
+                                    <span class="card-badge-pill" th:if="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300')}">
+                                        INDIVIDUAL
+                                    </span>
+                                    <span class="card-badge-pill highlight" th:if="${(#strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500')) and !#strings.containsIgnoreCase(t.nome, 'pequeno')}">
+                                        MAIS PEDIDO
+                                    </span>
+                                    <span class="card-badge-pill highlight" th:if="${#strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
+                                        FAVORITO
+                                    </span>
+
+                                    <!-- Imagens dos tamanhos -->
                                     <img src="/images/acai_copo_tampa.png" alt="Copo Pequeno" th:if="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300')}">
                                     <img src="/images/acai_copo_camadas.png" alt="Copo Médio" th:if="${(#strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500')) and !#strings.containsIgnoreCase(t.nome, 'pequeno')}">
-                                    <img src="/images/acai_copo_perfeito.jpg" alt="Tigela Grande" th:if="${#strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
+                                    <img src="/images/acai_copo_perfeito.jpg" alt="Tigela Grande" class="img-layered-cup" th:if="${#strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
                                     <img src="/images/acai_copo_especial.png" alt="Açaí Especial" th:unless="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300') or #strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500') or #strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
+
+                                    <!-- Volume Badge -->
+                                    <span class="card-volume-pill" th:if="${#strings.containsIgnoreCase(t.nome, '180')}">180ml</span>
+                                    <span class="card-volume-pill" th:if="${#strings.containsIgnoreCase(t.nome, '300')}">300ml</span>
+                                    <span class="card-volume-pill" th:if="${#strings.containsIgnoreCase(t.nome, '500') or #strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio')}">500ml</span>
+                                    <span class="card-volume-pill" th:if="${#strings.containsIgnoreCase(t.nome, '700') or #strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela')}">700ml</span>
                                 </div>
-                                <span class="size-name" th:text="${t.nome}">Copo Médio</span>
-                                <span class="size-price-tag" th:text="${#numbers.formatCurrency(t.preco)}">R$ 0,00</span>
+
+                                <div class="product-card-body">
+                                    <h4 class="product-card-title" th:text="${t.nome}">Copo Médio (500ml)</h4>
+                                    <p class="product-card-desc" th:if="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '300')}">
+                                        Refrescância na medida certa para uma pausa saborosa e leve no seu dia.
+                                    </p>
+                                    <p class="product-card-desc" th:if="${(#strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500')) and !#strings.containsIgnoreCase(t.nome, 'pequeno')}">
+                                        O campeão de pedidos! Combina açaí cremoso com as melhores camadas de frutas e acompanhamentos.
+                                    </p>
+                                    <p class="product-card-desc" th:if="${#strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
+                                        Nossa tigela mais generosa, perfeita para uma experiência completa e cheia de energia.
+                                    </p>
+
+                                    <div class="product-card-footer">
+                                        <span class="product-card-price" th:text="${#numbers.formatCurrency(t.preco)}">R$ 12,00</span>
+                                        <div class="card-select-btn" title="Selecionar este tamanho">
+                                            <i class="fa-solid fa-plus icon-plus"></i>
+                                            <i class="fa-solid fa-check icon-check"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </label>
                     </div>
                 </div>
 
-                <!-- Passo 2: Adicionais -->
-                <div class="step-card">
-                    <div class="step-title">
-                        <span class="step-number">2</span>
+                <!-- PASSO 2: ACOMPANHAMENTOS (Chips Modernos) -->
+                <div class="catalog-step-box" id="passo-adicionais">
+                    <div class="step-header">
+                        <span class="step-num">2</span>
                         <div>
-                            <h2>Adicione seus Acompanhamentos</h2>
-                            <p>Incremente com frutas, chocolates, cremes e coberturas</p>
+                            <h3>Escolha os Acompanhamentos</h3>
+                            <p>Incremente com frutas frescas, cremes e coberturas selecionadas</p>
                         </div>
                     </div>
 
-                    <div class="adicionais-grid">
-                        <label class="adicional-option" th:each="adicional : ${adicionais}">
+                    <div class="toppings-chips-grid">
+                        <label class="topping-chip-option" th:each="adicional : ${adicionais}">
                             <input type="checkbox"
                                    name="adicionaisIds"
                                    th:value="${adicional.id}"
@@ -84,12 +177,12 @@
                                    th:data-preco="${adicional.preco}"
                                    th:data-nome="${adicional.nome}"
                                    onchange="atualizarResumo()">
-                            <div class="adicional-chip">
-                                <div class="adicional-info">
-                                    <span class="adicional-title" th:text="${adicional.nome}">Morango</span>
-                                    <span class="adicional-cost" th:text="'+ ' + ${#numbers.formatCurrency(adicional.preco)}">+ R$ 0,00</span>
+                            <div class="topping-chip">
+                                <div class="topping-info">
+                                    <span class="topping-name" th:text="${adicional.nome}">Morango</span>
+                                    <span class="topping-price" th:text="'+ ' + ${#numbers.formatCurrency(adicional.preco)}">+ R$ 0,00</span>
                                 </div>
-                                <div class="adicional-check-indicator">
+                                <div class="topping-indicator">
                                     <i class="fa-solid fa-check"></i>
                                 </div>
                             </div>
@@ -97,18 +190,18 @@
                     </div>
                 </div>
 
-                <!-- Passo 3: Quantidade -->
-                <div class="step-card">
-                    <div class="step-title">
-                        <span class="step-number">3</span>
+                <!-- PASSO 3: QUANTIDADE -->
+                <div class="catalog-step-box" id="passo-quantidade">
+                    <div class="step-header">
+                        <span class="step-num">3</span>
                         <div>
-                            <h2>Quantidade</h2>
+                            <h3>Quantidade</h3>
                             <p>Quantos açaís com essa mesma combinação você deseja?</p>
                         </div>
                     </div>
 
-                    <div class="stepper-control">
-                        <button type="button" class="stepper-btn" onclick="alterarQtd(-1)" aria-label="Diminuir quantidade">
+                    <div class="stepper-wrap">
+                        <button type="button" class="btn-stepper" onclick="alterarQtd(-1)" aria-label="Diminuir">
                             <i class="fa-solid fa-minus"></i>
                         </button>
                         <input type="number" 
@@ -117,40 +210,60 @@
                                value="1" 
                                name="quantidade" 
                                id="quantidade" 
-                               class="stepper-input" 
+                               class="input-stepper" 
                                required 
                                oninput="atualizarResumo()"/>
-                        <button type="button" class="stepper-btn" onclick="alterarQtd(1)" aria-label="Aumentar quantidade">
+                        <button type="button" class="btn-stepper" onclick="alterarQtd(1)" aria-label="Aumentar">
                             <i class="fa-solid fa-plus"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- Barra de Ação Final (Subtotal do Item + Botões) -->
-                <div class="order-action-bar">
-                    <div class="action-bar-info">
-                        <span class="action-bar-label">Total deste açaí:</span>
-                        <span class="action-bar-price" id="resumo-total">R$ 0,00</span>
-                        <span class="action-bar-subtext" id="resumo-detalhe">1x item selecionado</span>
+                <!-- BARRA DE AÇÃO DA MONTAGEM (Subtotal + Adicionar à Sacola) -->
+                <div class="assembly-action-card">
+                    <div class="assembly-summary">
+                        <span class="assembly-label">Total deste item:</span>
+                        <span class="assembly-total-price" id="resumo-total">R$ 0,00</span>
+                        <span class="assembly-subtext" id="resumo-detalhe">1x selecionado</span>
                     </div>
-
-                    <div class="action-bar-buttons">
-                        <button type="submit" class="btn-default btn-add-main">
-                            <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                    <div class="assembly-btns">
+                        <button type="submit" class="btn-purple btn-add-bag">
+                            <i class="fa-solid fa-bag-shopping"></i> Adicionar à Sacola
                         </button>
                         <a href="/carrinho" class="btn-outline-glass">
-                            <i class="fa-solid fa-basket-shopping"></i> Ver Carrinho
+                            Ver Sacola
                         </a>
                     </div>
                 </div>
 
+            </form>
+        </section>
+
+        <!-- 4. BARRA FIXA INFERIOR DE SACOLA / CARRINHO (Idêntica às Imagens 1 e 2 de referência) -->
+        <div class="floating-bag-bar" th:if="${session.carrinho != null and session.carrinho.totalItens > 0}">
+            <div class="floating-bag-inner">
+                <div class="floating-bag-info">
+                    <span class="floating-bag-count" th:text="${session.carrinho.totalItens + (session.carrinho.totalItens == 1 ? ' item na sacola' : ' itens na sacola')}">1 item na sacola</span>
+                    <strong class="floating-bag-total" th:text="${#numbers.formatCurrency(session.carrinho.total)}">R$ 17,90</strong>
+                </div>
+                <a href="/carrinho" class="btn-floating-bag">
+                    Ver sacola <i class="fa-solid fa-chevron-right"></i>
+                </a>
             </div>
-        </form>
+        </div>
+
     </div>
 </main>
 
 <th:block layout:fragment="page-script">
 <script>
+    function focarSecao(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
     function alterarQtd(delta) {
         const input = document.getElementById('quantidade');
         let val = parseInt(input.value) || 1;

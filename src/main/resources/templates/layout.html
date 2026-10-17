@@ -42,8 +42,12 @@
         </ul>
 
         <div class="navbar-buttons">
-            <a class="btn-default" href="/carrinho">
-                <i class="fa-solid fa-cart-shopping"></i> Carrinho
+            <a class="btn-default" href="/carrinho" style="position: relative;">
+                <i class="fa-solid fa-bag-shopping"></i> Sacola
+                <span th:if="${session.carrinho != null and session.carrinho.totalItens > 0}" 
+                      th:text="${session.carrinho.totalItens}" 
+                      style="position: absolute; top: -7px; right: -7px; background: #66023C; color: #FFFFFF; font-size: 0.72rem; font-weight: 800; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #FFFFFF;">
+                </span>
             </a>
 
             <a class="btn-outline-glass" th:if="${usuario != null}" href="/logout">

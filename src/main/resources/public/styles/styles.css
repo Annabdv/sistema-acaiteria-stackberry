@@ -1,25 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('header.css');
 @import url('home.css');
 @import url('menu.css');
 
 :root {
-    /* Paleta Inspirada na Imagem Cítrico & Púrpura (Sutileza & Equilíbrio) */
+    /* Paleta Cítrico & Púrpura (Sutileza, Frescor & Equilíbrio) */
     --bg-page: #FAF9F7;
     --bg-surface: #FFFFFF;
     --bg-surface-soft: #F5F4EE;
     
-    /* Púrpura Nobre (Hex #66023C da paleta) */
+    /* Púrpura Nobre (#66023C da paleta) */
     --primary-berry: #66023C;
     --primary-berry-hover: #4F012E;
     --primary-berry-soft: #FBF0F6;
     --primary-berry-border: #F3D2E3;
     
-    /* Cítrico Suave (Hex #CAD183 da paleta) */
+    /* Cítrico Suave (#CAD183 da paleta) */
     --accent-citric: #CAD183;
     --accent-citric-soft: #F6F8E9;
     --accent-citric-border: #BDC672;
-    --accent-citric-dark: #465220; /* Tom mais escuro do cítrico para legibilidade perfeita */
+    --accent-citric-dark: #465220; /* Legibilidade perfeita */
+    
+    /* Cores de Destaques e Frutas */
+    --tag-citric-bg: #DCE388;
+    --tag-citric-text: #2D3905;
+    --tag-mango-bg: #FCAB10;
+    --tag-berry-bg: #F59CA9;
+    
+    /* Tipografia */
+    --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-title: 'Outfit', sans-serif;
+    --font-body: 'Poppins', sans-serif;
     
     /* Tipografia e Textos */
     --text-title: #2D1121;
