@@ -13,162 +13,137 @@
 <body>
 <main layout:fragment="content">
     <div class="order-wrapper">
-        <!-- Header da Página -->
-        <div class="order-header">
-            <span class="badge-pill">✨ 100% Personalizado • Ingredientes Selecionados</span>
-            <h1>Monte o seu Açaí Perfeito</h1>
-            <p>Selecione o tamanho ideal, adicione seus acompanhamentos prediletos e aproveite a energia que só o StackBerry tem!</p>
+        <!-- Header da Página com Botão Direto para o Carrinho -->
+        <div class="order-header-container">
+            <div class="order-header-text">
+                <span class="badge-pill">✨ 100% Personalizado • Ingredientes Selecionados</span>
+                <h1>Monte o seu Açaí</h1>
+                <p>Escolha o tamanho ideal, adicione seus acompanhamentos prediletos e aproveite o melhor sabor!</p>
+            </div>
+            <div class="order-header-action">
+                <a href="/carrinho" class="btn-outline-glass btn-header-cart">
+                    <i class="fa-solid fa-cart-shopping"></i> Ver Carrinho
+                </a>
+            </div>
         </div>
 
         <form th:action="@{/carrinho/adicionar}" method="post" id="form-pedido">
-            <div class="order-grid">
-                <!-- Coluna Principal com os Passos -->
-                <div class="order-steps-column">
-                    
-                    <!-- Passo 1: Tamanho -->
-                    <div class="step-card">
-                        <div class="step-title">
-                            <span class="step-number">1</span>
-                            <div>
-                                <h2>Escolha o Tamanho da Tigela</h2>
-                                <p>Selecione a porção ideal para matar a sua vontade</p>
-                            </div>
+            <div class="order-steps-container">
+                
+                <!-- Passo 1: Tamanho -->
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">1</span>
+                        <div>
+                            <h2>Escolha o Tamanho</h2>
+                            <p>Selecione a porção ideal para matar a sua vontade</p>
                         </div>
+                    </div>
 
-                        <div class="sizes-grid">
-                            <label class="size-option" th:each="t, iter : ${tamanhos}">
-                                <input type="radio" 
-                                       name="tamanhoId" 
-                                       th:value="${t.id}"
-                                       th:id="${'tamanho-' + t.id}"
-                                       th:checked="${iter.first}"
-                                       th:data-preco="${t.preco}"
-                                       th:data-nome="${t.nome}"
-                                       required
-                                       onchange="atualizarResumo()">
-                                <div class="size-card">
-                                    <div class="size-thumb">
-                                        <img src="/images/acai_copo_tampa.png" alt="Açaí Pequeno" th:if="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180')}">
-                                        <img src="/images/acai_copo_camadas.png" alt="Açaí Médio" th:if="${(#strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '300')) and !#strings.containsIgnoreCase(t.nome, 'pequeno')}">
-                                        <img src="/images/acai_copo_especial.png" alt="Açaí Especial" th:unless="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio')}">
-                                    </div>
-                                    <span class="size-name" th:text="${t.nome}">Médio</span>
-                                    <span class="size-price-tag" th:text="${#numbers.formatCurrency(t.preco)}">R$ 0,00</span>
+                    <div class="sizes-grid">
+                        <label class="size-option" th:each="t, iter : ${tamanhos}">
+                            <input type="radio" 
+                                   name="tamanhoId" 
+                                   th:value="${t.id}"
+                                   th:id="${'tamanho-' + t.id}"
+                                   th:checked="${iter.first}"
+                                   th:data-preco="${t.preco}"
+                                   th:data-nome="${t.nome}"
+                                   required
+                                   onchange="atualizarResumo()">
+                            <div class="size-card">
+                                <div class="size-thumb">
+                                    <img src="/images/acai_copo_tampa.png" alt="Copo Pequeno" th:if="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300')}">
+                                    <img src="/images/acai_copo_camadas.png" alt="Copo Médio" th:if="${(#strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500')) and !#strings.containsIgnoreCase(t.nome, 'pequeno')}">
+                                    <img src="/images/acai_copo_perfeito.jpg" alt="Tigela Grande" th:if="${#strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
+                                    <img src="/images/acai_copo_especial.png" alt="Açaí Especial" th:unless="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300') or #strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500') or #strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
                                 </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Passo 2: Adicionais -->
-                    <div class="step-card">
-                        <div class="step-title">
-                            <span class="step-number">2</span>
-                            <div>
-                                <h2>Adicione seus Acompanhamentos</h2>
-                                <p>Incremente com frutas, chocolates, cremes e coberturas</p>
+                                <span class="size-name" th:text="${t.nome}">Copo Médio</span>
+                                <span class="size-price-tag" th:text="${#numbers.formatCurrency(t.preco)}">R$ 0,00</span>
                             </div>
-                        </div>
-
-                        <div class="adicionais-grid">
-                            <label class="adicional-option" th:each="adicional : ${adicionais}">
-                                <input type="checkbox"
-                                       name="adicionaisIds"
-                                       th:value="${adicional.id}"
-                                       th:id="${'adicional-' + adicional.id}"
-                                       th:data-preco="${adicional.preco}"
-                                       th:data-nome="${adicional.nome}"
-                                       onchange="atualizarResumo()">
-                                <div class="adicional-chip">
-                                    <div class="adicional-info">
-                                        <span class="adicional-title" th:text="${adicional.nome}">Morango</span>
-                                        <span class="adicional-cost" th:text="'+ ' + ${#numbers.formatCurrency(adicional.preco)}">+ R$ 0,00</span>
-                                    </div>
-                                    <div class="adicional-check-indicator">
-                                        <i class="fa-solid fa-check"></i>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
+                        </label>
                     </div>
-
-                    <!-- Passo 3: Quantidade -->
-                    <div class="step-card">
-                        <div class="step-title">
-                            <span class="step-number">3</span>
-                            <div>
-                                <h2>Quantidade de Tigelas</h2>
-                                <p>Quantas unidades iguais a essa você deseja?</p>
-                            </div>
-                        </div>
-
-                        <div class="stepper-control">
-                            <button type="button" class="stepper-btn" onclick="alterarQtd(-1)" aria-label="Diminuir quantidade">
-                                <i class="fa-solid fa-minus"></i>
-                            </button>
-                            <input type="number" 
-                                   min="1" 
-                                   max="50" 
-                                   value="1" 
-                                   name="quantidade" 
-                                   id="quantidade" 
-                                   class="stepper-input" 
-                                   required 
-                                   oninput="atualizarResumo()"/>
-                            <button type="button" class="stepper-btn" onclick="alterarQtd(1)" aria-label="Aumentar quantidade">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-
                 </div>
 
-                <!-- Coluna Lateral de Resumo em Tempo Real -->
-                <aside class="order-summary-card">
-                    <div class="summary-header">
-                        <h3><i class="fa-solid fa-receipt"></i> Resumo do Pedido</h3>
+                <!-- Passo 2: Adicionais -->
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">2</span>
+                        <div>
+                            <h2>Adicione seus Acompanhamentos</h2>
+                            <p>Incremente com frutas, chocolates, cremes e coberturas</p>
+                        </div>
                     </div>
 
-                    <div class="summary-item-row">
-                        <span class="summary-label">Tamanho Base:</span>
-                        <span class="summary-value" id="resumo-tamanho-nome">-</span>
+                    <div class="adicionais-grid">
+                        <label class="adicional-option" th:each="adicional : ${adicionais}">
+                            <input type="checkbox"
+                                   name="adicionaisIds"
+                                   th:value="${adicional.id}"
+                                   th:id="${'adicional-' + adicional.id}"
+                                   th:data-preco="${adicional.preco}"
+                                   th:data-nome="${adicional.nome}"
+                                   onchange="atualizarResumo()">
+                            <div class="adicional-chip">
+                                <div class="adicional-info">
+                                    <span class="adicional-title" th:text="${adicional.nome}">Morango</span>
+                                    <span class="adicional-cost" th:text="'+ ' + ${#numbers.formatCurrency(adicional.preco)}">+ R$ 0,00</span>
+                                </div>
+                                <div class="adicional-check-indicator">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Passo 3: Quantidade -->
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">3</span>
+                        <div>
+                            <h2>Quantidade</h2>
+                            <p>Quantos açaís com essa mesma combinação você deseja?</p>
+                        </div>
                     </div>
 
-                    <div class="summary-item-row">
-                        <span class="summary-label">Preço Base:</span>
-                        <span class="summary-value" id="resumo-tamanho-preco">R$ 0,00</span>
+                    <div class="stepper-control">
+                        <button type="button" class="stepper-btn" onclick="alterarQtd(-1)" aria-label="Diminuir quantidade">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                        <input type="number" 
+                               min="1" 
+                               max="50" 
+                               value="1" 
+                               name="quantidade" 
+                               id="quantidade" 
+                               class="stepper-input" 
+                               required 
+                               oninput="atualizarResumo()"/>
+                        <button type="button" class="stepper-btn" onclick="alterarQtd(1)" aria-label="Aumentar quantidade">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Barra de Ação Final (Subtotal do Item + Botões) -->
+                <div class="order-action-bar">
+                    <div class="action-bar-info">
+                        <span class="action-bar-label">Total deste açaí:</span>
+                        <span class="action-bar-price" id="resumo-total">R$ 0,00</span>
+                        <span class="action-bar-subtext" id="resumo-detalhe">1x item selecionado</span>
                     </div>
 
-                    <div class="summary-divider"></div>
-
-                    <div class="summary-item-row">
-                        <span class="summary-label">Acompanhamentos (<span id="resumo-adicionais-count">0</span>):</span>
-                        <span class="summary-value" id="resumo-adicionais-total">+ R$ 0,00</span>
+                    <div class="action-bar-buttons">
+                        <button type="submit" class="btn-default btn-add-main">
+                            <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                        </button>
+                        <a href="/carrinho" class="btn-outline-glass">
+                            <i class="fa-solid fa-basket-shopping"></i> Ver Carrinho
+                        </a>
                     </div>
+                </div>
 
-                    <div class="selected-tags-container" id="resumo-adicionais-tags">
-                        <span style="font-size: 0.8rem; color: var(--text-subtle);">Nenhum acompanhamento adicionado</span>
-                    </div>
-
-                    <div class="summary-divider"></div>
-
-                    <div class="summary-item-row">
-                        <span class="summary-label">Quantidade:</span>
-                        <span class="summary-value" id="resumo-quantidade">1x</span>
-                    </div>
-
-                    <div class="summary-total-row">
-                        <span class="summary-total-label">Total Estimado:</span>
-                        <span class="summary-total-price" id="resumo-total">R$ 0,00</span>
-                    </div>
-
-                    <button type="submit" class="btn-default btn-add-cart">
-                        <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
-                    </button>
-
-                    <a href="/carrinho" class="btn-outline-glass btn-view-cart">
-                        <i class="fa-solid fa-basket-shopping"></i> Ver Carrinho Atual
-                    </a>
-                </aside>
             </div>
         </form>
     </div>
@@ -194,50 +169,39 @@
         // 1. Obter tamanho selecionado
         const radioChecked = document.querySelector('input[name="tamanhoId"]:checked');
         let precoTamanho = 0;
-        let nomeTamanho = 'Nenhum selecionado';
+        let nomeTamanho = 'Nenhum tamanho';
 
         if (radioChecked) {
             precoTamanho = parseFloat(radioChecked.getAttribute('data-preco')) || 0;
             nomeTamanho = radioChecked.getAttribute('data-nome') || '';
         }
 
-        document.getElementById('resumo-tamanho-nome').textContent = nomeTamanho;
-        document.getElementById('resumo-tamanho-preco').textContent = formatarMoeda(precoTamanho);
-
         // 2. Obter adicionais selecionados
         const checkboxes = document.querySelectorAll('input[name="adicionaisIds"]:checked');
         let totalAdicionais = 0;
-        const tagsContainer = document.getElementById('resumo-adicionais-tags');
-        tagsContainer.innerHTML = '';
-
-        if (checkboxes.length === 0) {
-            tagsContainer.innerHTML = '<span style="font-size: 0.8rem; color: var(--text-subtle);">Nenhum acompanhamento adicionado</span>';
-        } else {
-            checkboxes.forEach(cb => {
-                const preco = parseFloat(cb.getAttribute('data-preco')) || 0;
-                const nome = cb.getAttribute('data-nome') || '';
-                totalAdicionais += preco;
-
-                const tag = document.createElement('span');
-                tag.className = 'topping-badge-item';
-                tag.textContent = nome;
-                tagsContainer.appendChild(tag);
-            });
-        }
-
-        document.getElementById('resumo-adicionais-count').textContent = checkboxes.length;
-        document.getElementById('resumo-adicionais-total').textContent = '+ ' + formatarMoeda(totalAdicionais);
+        checkboxes.forEach(cb => {
+            const preco = parseFloat(cb.getAttribute('data-preco')) || 0;
+            totalAdicionais += preco;
+        });
 
         // 3. Quantidade
         const inputQtd = document.getElementById('quantidade');
         const quantidade = parseInt(inputQtd.value) || 1;
-        document.getElementById('resumo-quantidade').textContent = quantidade + 'x';
 
         // 4. Total Final
         const precoUnitario = precoTamanho + totalAdicionais;
         const totalFinal = precoUnitario * quantidade;
 
-        document.getElementById('resumo-total').textContent = formatarMoeda(totalFinal);
+        const elTotal = document.getElementById('resumo-total');
+        if (elTotal) {
+            elTotal.textContent = formatarMoeda(totalFinal);
+        }
+
+        const elDetalhe = document.getElementById('resumo-detalhe');
+        if (elDetalhe) {
+            const adicText = checkboxes.length > 0 ? ` + ${checkboxes.length} adicional(is)` : '';
+            elDetalhe.textContent = `${quantidade}x ${nomeTamanho}${adicText}`;
+        }
     }
 
     // Inicializa o resumo no carregamento

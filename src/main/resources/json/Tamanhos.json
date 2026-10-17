@@ -1,9 +1,17 @@
-[ {
-  "nome" : "Pequeno 180ml",
-  "id" : "21e51885-0913-46ab-9821-27ec52180f2a",
-  "preco" : 4
-}, {
-  "nome" : "Medio",
-  "id" : "c1ede2e2-d04e-4f49-ae6f-64bb51db3aa0",
-  "preco" : 6
-} ]
+[
+  {
+    "id": "21e51885-0913-46ab-9821-27ec52180f2a",
+    "nome": "Copo Pequeno (300ml)",
+    "preco": 8.00
+  },
+  {
+    "id": "c1ede2e2-d04e-4f49-ae6f-64bb51db3aa0",
+    "nome": "Copo Médio (500ml)",
+    "preco": 12.00
+  },
+  {
+    "id": "3b9a7f14-e2a1-4328-9843-08a9f62c0821",
+    "nome": "Tigela Grande (700ml)",
+    "preco": 16.00
+  }
+]
