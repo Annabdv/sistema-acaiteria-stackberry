@@ -1,4 +1,4 @@
-/* Estilos Claros e Modernos do Cardápio - StackBerry */
+/* Estilos Claros e Sutis do Cardápio - Cítrico & Púrpura */
 
 .order-wrapper {
     max-width: 1200px;
@@ -8,7 +8,7 @@
 
 .order-header {
     text-align: center;
-    margin-bottom: 36px;
+    margin-bottom: 34px;
 }
 
 .order-header .badge-pill {
@@ -16,16 +16,16 @@
 }
 
 .order-header h1 {
-    font-size: 2.6rem;
+    font-size: 2.5rem;
     font-weight: 800;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     color: var(--text-title);
 }
 
 .order-header p {
     color: var(--text-muted);
-    font-size: 1.05rem;
-    max-width: 600px;
+    font-size: 1.02rem;
+    max-width: 580px;
     margin: 0 auto;
 }
 
@@ -71,7 +71,7 @@
     color: #ffffff;
     font-weight: 700;
     font-size: 0.95rem;
-    box-shadow: 0 3px 8px rgba(107, 33, 168, 0.25);
+    box-shadow: 0 3px 8px rgba(102, 2, 60, 0.2);
 }
 
 .step-title h2 {
@@ -87,7 +87,7 @@
     margin: 2px 0 0 0;
 }
 
-/* 1. Grade de Tamanhos com Imagens Reais */
+/* 1. Grade de Tamanhos com Imagens */
 .sizes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -118,7 +118,6 @@
     border-radius: var(--radius-lg);
     transition: all 0.22s ease;
     height: 100%;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.02);
 }
 
 .size-card:hover {
@@ -128,8 +127,8 @@
 }
 
 .size-thumb {
-    width: 86px;
-    height: 86px;
+    width: 90px;
+    height: 90px;
     margin-bottom: 12px;
     display: flex;
     align-items: center;
@@ -140,7 +139,7 @@
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
 }
 
 .size-name {
@@ -152,9 +151,9 @@
 
 .size-price-tag {
     display: inline-block;
-    background: var(--accent-green-soft);
-    border: 1px solid var(--accent-green-border);
-    color: var(--accent-green);
+    background: var(--accent-citric-soft);
+    border: 1px solid var(--accent-citric-border);
+    color: var(--accent-citric-dark);
     font-weight: 700;
     font-size: 0.95rem;
     padding: 4px 12px;
@@ -163,19 +162,19 @@
 
 /* Tamanho Selecionado */
 .size-option input[type="radio"]:checked + .size-card {
-    border-color: var(--accent-green);
-    background: #F0FDF4;
-    box-shadow: 0 4px 16px rgba(21, 128, 61, 0.15);
+    border-color: var(--primary-berry);
+    background: var(--primary-berry-soft);
+    box-shadow: 0 4px 16px rgba(102, 2, 60, 0.12);
     transform: translateY(-2px);
 }
 
 .size-option input[type="radio"]:checked + .size-card .size-price-tag {
-    background: var(--accent-green);
+    background: var(--primary-berry);
     color: #ffffff;
-    border-color: var(--accent-green);
+    border-color: var(--primary-berry);
 }
 
-/* 2. Grade de Adicionais / Acompanhamentos */
+/* 2. Grade de Adicionais */
 .adicionais-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
@@ -329,7 +328,7 @@
 }
 
 .summary-header h3 i {
-    color: var(--accent-green);
+    color: var(--primary-berry);
 }
 
 .summary-item-row {
@@ -390,7 +389,7 @@
 .summary-total-price {
     font-size: 1.8rem;
     font-weight: 800;
-    color: var(--accent-green);
+    color: var(--primary-berry);
 }
 
 .btn-add-cart {
@@ -399,6 +398,11 @@
     font-size: 1rem;
     border-radius: var(--radius-md);
     margin-bottom: 10px;
+    background: var(--primary-berry);
+}
+
+.btn-add-cart:hover {
+    background: var(--primary-berry-hover);
 }
 
 .btn-view-cart {
@@ -408,7 +412,7 @@
 }
 
 /* ==============================================
-   RESPONSIVIDADE MOBILE APRIMORADA (Sem vazamentos)
+   RESPONSIVIDADE MOBILE APRIMORADA
    ============================================== */
 @media screen and (max-width: 991px) {
     .order-wrapper {
@@ -456,8 +460,8 @@
     }
 
     .size-thumb {
-        width: 68px;
-        height: 68px;
+        width: 70px;
+        height: 70px;
         margin-bottom: 8px;
     }
 

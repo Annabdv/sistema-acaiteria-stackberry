@@ -4,41 +4,41 @@
 @import url('menu.css');
 
 :root {
-    /* Paleta Clara & Fresca - Açaiteria Moderna */
-    --bg-page: #FAF7FC;
+    /* Paleta Inspirada na Imagem Cítrico & Púrpura (Sutileza & Equilíbrio) */
+    --bg-page: #FAF9F7;
     --bg-surface: #FFFFFF;
-    --bg-surface-soft: #F4EEF8;
+    --bg-surface-soft: #F5F4EE;
     
-    /* Roxo Açaí Refinado (não pesado/escuro demais) */
-    --primary-berry: #6B21A8;
-    --primary-berry-hover: #581C87;
-    --primary-berry-soft: #F3E8FF;
-    --primary-berry-border: #E9D5FF;
+    /* Púrpura Nobre (Hex #66023C da paleta) */
+    --primary-berry: #66023C;
+    --primary-berry-hover: #4F012E;
+    --primary-berry-soft: #FBF0F6;
+    --primary-berry-border: #F3D2E3;
     
-    /* Verde Escuro Elegante para Detalhes e Ações */
-    --accent-green: #15803D;
-    --accent-green-hover: #166534;
-    --accent-green-soft: #DCFCE7;
-    --accent-green-border: #86EFAC;
+    /* Cítrico Suave (Hex #CAD183 da paleta) */
+    --accent-citric: #CAD183;
+    --accent-citric-soft: #F6F8E9;
+    --accent-citric-border: #BDC672;
+    --accent-citric-dark: #465220; /* Tom mais escuro do cítrico para legibilidade perfeita */
     
-    /* Tipografia de Alto Contraste */
-    --text-title: #1E1035;
-    --text-body: #4A3E5C;
-    --text-muted: #736787;
+    /* Tipografia e Textos */
+    --text-title: #2D1121;
+    --text-body: #4A3E47;
+    --text-muted: #7A6F77;
     --text-light: #FFFFFF;
     
-    /* Bordas & Sombras Suaves */
-    --border-light: #EFE7F6;
-    --border-medium: #DDD0EB;
-    --shadow-sm: 0 2px 8px rgba(92, 22, 109, 0.04);
-    --shadow-md: 0 6px 20px rgba(92, 22, 109, 0.07);
-    --shadow-lg: 0 12px 32px rgba(92, 22, 109, 0.1);
+    /* Bordas e Sombras Suaves */
+    --border-light: #EFECE6;
+    --border-medium: #DFDACF;
+    --shadow-sm: 0 2px 8px rgba(102, 2, 60, 0.04);
+    --shadow-md: 0 6px 20px rgba(102, 2, 60, 0.06);
+    --shadow-lg: 0 12px 30px rgba(102, 2, 60, 0.09);
     
     --radius-sm: 8px;
     --radius-md: 12px;
-    --radius-lg: 18px;
-    --radius-xl: 24px;
-    --transition: all 0.22s ease-in-out;
+    --radius-lg: 16px;
+    --radius-xl: 22px;
+    --transition: all 0.2s ease-in-out;
 }
 
 * {
@@ -59,11 +59,6 @@ html {
 
 body {
     background-color: var(--bg-page);
-    background-image: 
-        radial-gradient(circle at 10% 5%, rgba(107, 33, 168, 0.04) 0%, transparent 40%),
-        radial-gradient(circle at 90% 95%, rgba(21, 128, 61, 0.04) 0%, transparent 40%),
-        linear-gradient(180deg, #FAF7FC 0%, #F5EEF9 100%);
-    background-attachment: fixed;
     color: var(--text-body);
     min-height: 100vh;
     display: flex;
@@ -81,32 +76,32 @@ main {
 }
 
 section {
-    padding: 32px 6%;
+    padding: 30px 6%;
 }
 
-/* Botões Globais */
+/* Botões Globais Harmonizados */
 .btn-default {
     border: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: var(--accent-green);
+    background: var(--accent-citric-dark);
     color: #ffffff !important;
     border-radius: var(--radius-md);
     padding: 12px 24px;
     font-weight: 600;
     font-size: 0.95rem;
-    box-shadow: 0 4px 12px rgba(21, 128, 61, 0.25);
+    box-shadow: 0 4px 12px rgba(70, 82, 32, 0.2);
     cursor: pointer;
     transition: var(--transition);
     text-decoration: none;
 }
 
 .btn-default:hover {
-    background: var(--accent-green-hover);
+    background: #394318;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(21, 128, 61, 0.35);
+    box-shadow: 0 6px 16px rgba(70, 82, 32, 0.3);
 }
 
 .btn-purple {
@@ -121,7 +116,7 @@ section {
     padding: 12px 24px;
     font-weight: 600;
     font-size: 0.95rem;
-    box-shadow: 0 4px 14px rgba(107, 33, 168, 0.25);
+    box-shadow: 0 4px 14px rgba(102, 2, 60, 0.25);
     cursor: pointer;
     transition: var(--transition);
     text-decoration: none;
@@ -130,12 +125,12 @@ section {
 .btn-purple:hover {
     background: var(--primary-berry-hover);
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(107, 33, 168, 0.35);
+    box-shadow: 0 6px 18px rgba(102, 2, 60, 0.35);
 }
 
 .btn-outline-glass {
     border: 1.5px solid var(--border-medium);
-    background: #ffffff;
+    background: #FFFFFF;
     color: var(--primary-berry) !important;
     border-radius: var(--radius-md);
     padding: 10px 20px;
@@ -155,7 +150,7 @@ section {
     transform: translateY(-2px);
 }
 
-/* Badges */
+/* Badges Sutis */
 .badge-pill {
     display: inline-flex;
     align-items: center;
@@ -171,12 +166,12 @@ section {
 }
 
 .badge-green {
-    background: var(--accent-green-soft);
-    border: 1px solid var(--accent-green-border);
-    color: var(--accent-green);
+    background: var(--accent-citric-soft);
+    border: 1px solid var(--accent-citric-border);
+    color: var(--accent-citric-dark);
 }
 
-/* Rodapé Limpo & Acolhedor */
+/* Rodapé Limpo */
 #footer {
     background: #FFFFFF;
     border-top: 1px solid var(--border-light);

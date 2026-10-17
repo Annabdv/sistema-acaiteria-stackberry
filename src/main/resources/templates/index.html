@@ -1,48 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-br"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+<html lang="pt-br">
 <head>
-    <title>Home</title>
-    <th:block layout:fragment="page-css">
-        <link rel="stylesheet" th:href="@{/styles/home.css}">
-        <link rel="stylesheet" th:href="@{/styles/menu.css}">
-    </th:block>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0;url=/cardapio">
+    <title>StackBerry - Cardápio</title>
+    <script>
+        window.location.replace('/cardapio');
+    </script>
 </head>
-<body>
-<main layout:fragment="content">
-    <section id="home">
-        <div class="shape"></div>
-        <div id="cta">
-            <h1 class="title">
-                Do Stack da tecnologia à tigela de Açaí
-            </h1>
-
-            <h6 class="description">
-                Compilamos os melhores ingredientes e debugamos qualquer rotina cansativa. Cada tigela de açaí é um
-                upgrade de energia, feita sob medida para você.
-            </h6>
-
-            <div id="cta_buttons">
-                <a href="/cardapio" class="btn-default">Peça aqui</a>
-                <a href="tel:+5583986703744" id="phone_button">
-                    <button class="btn-default">
-                        <i class="fa-solid fa-phone"></i>
-                    </button>
-                    (011) 4002-8922
-                </a>
-            </div>
-
-        </div>
-
-        <div id="banner">
-            <img src="/images/acaiHomepage.png" alt="Banner Açaí">
-        </div>
-    </section>
-
-</main>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
+<body style="font-family: sans-serif; text-align: center; padding: 50px;">
+    <p>Abrindo o Cardápio do StackBerry... <a href="/cardapio">Clique aqui</a> caso não redirecione automaticamente.</p>
 </body>
 </html>
