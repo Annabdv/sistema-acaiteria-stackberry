@@ -1,27 +1,25 @@
-/* Estilos Modernos do Cardápio / Montar Pedido - StackBerry */
+/* Estilos Claros e Modernos do Cardápio - StackBerry */
 
 .order-wrapper {
-    max-width: 1240px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 30px 20px 80px 20px;
+    padding: 30px 16px 80px 16px;
 }
 
 .order-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
 }
 
 .order-header .badge-pill {
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .order-header h1 {
-    font-size: 2.8rem;
+    font-size: 2.6rem;
     font-weight: 800;
     margin-bottom: 10px;
-    background: linear-gradient(135deg, #ffffff 50%, #c4b5fd 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-title);
 }
 
 .order-header p {
@@ -31,75 +29,75 @@
     margin: 0 auto;
 }
 
-/* Layout em Grid: Formulário + Resumo */
+/* Layout em Grid Principal */
 .order-grid {
     display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 32px;
+    grid-template-columns: 1fr 360px;
+    gap: 28px;
     align-items: start;
 }
 
-/* Seções do Formulário */
+/* Passos do Pedido */
 .step-card {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #FFFFFF;
+    border: 1px solid var(--border-light);
     border-radius: var(--radius-xl);
-    padding: 30px;
-    margin-bottom: 28px;
+    padding: 26px 24px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow-sm);
     transition: var(--transition);
 }
 
 .step-card:hover {
-    border-color: rgba(255, 255, 255, 0.16);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    border-color: var(--border-medium);
+    box-shadow: var(--shadow-md);
 }
 
 .step-title {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 22px;
+    margin-bottom: 20px;
 }
 
 .step-number {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     border-radius: 10px;
-    background: linear-gradient(135deg, var(--primary-berry), var(--primary-berry-dark));
+    background: var(--primary-berry);
     color: #ffffff;
     font-weight: 700;
     font-size: 0.95rem;
-    box-shadow: 0 4px 12px var(--primary-berry-glow);
+    box-shadow: 0 3px 8px rgba(107, 33, 168, 0.25);
 }
 
 .step-title h2 {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--text-title);
     margin: 0;
 }
 
 .step-title p {
-    font-size: 0.88rem;
-    color: var(--text-subtle);
+    font-size: 0.85rem;
+    color: var(--text-muted);
     margin: 2px 0 0 0;
 }
 
-/* 1. Cards Interativos de Tamanhos */
+/* 1. Grade de Tamanhos com Imagens Reais */
 .sizes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
 }
 
 .size-option {
     position: relative;
     cursor: pointer;
+    display: block;
 }
 
 .size-option input[type="radio"] {
@@ -114,65 +112,61 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 24px 16px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 14px;
+    background: #FFFFFF;
+    border: 2px solid var(--border-light);
     border-radius: var(--radius-lg);
-    transition: all 0.25s ease;
+    transition: all 0.22s ease;
     height: 100%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.02);
 }
 
 .size-card:hover {
-    transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(139, 92, 246, 0.4);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    border-color: var(--primary-berry-border);
+    box-shadow: var(--shadow-md);
 }
 
-.size-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.05) 70%);
+.size-thumb {
+    width: 86px;
+    height: 86px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 14px;
-    font-size: 1.7rem;
-    color: #c4b5fd;
-    transition: var(--transition);
+}
+
+.size-thumb img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
 }
 
 .size-name {
     font-weight: 700;
-    font-size: 1.1rem;
-    color: #ffffff;
+    font-size: 1.05rem;
+    color: var(--text-title);
     margin-bottom: 8px;
 }
 
 .size-price-tag {
     display: inline-block;
-    background: rgba(34, 197, 94, 0.15);
-    border: 1px solid rgba(34, 197, 94, 0.3);
-    color: #86efac;
+    background: var(--accent-green-soft);
+    border: 1px solid var(--accent-green-border);
+    color: var(--accent-green);
     font-weight: 700;
     font-size: 0.95rem;
-    padding: 5px 14px;
+    padding: 4px 12px;
     border-radius: 20px;
 }
 
 /* Tamanho Selecionado */
 .size-option input[type="radio"]:checked + .size-card {
     border-color: var(--accent-green);
-    background: rgba(34, 197, 94, 0.08);
-    box-shadow: 0 0 25px rgba(34, 197, 94, 0.25), inset 0 0 15px rgba(34, 197, 94, 0.05);
-    transform: translateY(-4px);
-}
-
-.size-option input[type="radio"]:checked + .size-card .size-icon {
-    background: var(--accent-green);
-    color: #ffffff;
-    box-shadow: 0 4px 14px var(--accent-green-glow);
+    background: #F0FDF4;
+    box-shadow: 0 4px 16px rgba(21, 128, 61, 0.15);
+    transform: translateY(-2px);
 }
 
 .size-option input[type="radio"]:checked + .size-card .size-price-tag {
@@ -181,16 +175,17 @@
     border-color: var(--accent-green);
 }
 
-/* 2. Grid Interativo de Adicionais */
+/* 2. Grade de Adicionais / Acompanhamentos */
 .adicionais-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 12px;
 }
 
 .adicional-option {
     position: relative;
     cursor: pointer;
+    display: block;
 }
 
 .adicional-option input[type="checkbox"] {
@@ -204,19 +199,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    padding: 14px 16px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1.5px solid rgba(255, 255, 255, 0.09);
+    gap: 8px;
+    padding: 12px 14px;
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-light);
     border-radius: var(--radius-md);
     transition: all 0.2s ease;
     user-select: none;
 }
 
 .adicional-chip:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
+    background: var(--primary-berry-soft);
+    border-color: var(--primary-berry-border);
 }
 
 .adicional-info {
@@ -226,36 +220,36 @@
 }
 
 .adicional-title {
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--text-title);
 }
 
 .adicional-cost {
     font-size: 0.8rem;
-    font-weight: 500;
-    color: #a78bfa;
+    font-weight: 600;
+    color: var(--primary-berry);
 }
 
 .adicional-check-indicator {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     border-radius: 6px;
-    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border: 1.5px solid var(--border-medium);
     display: flex;
     align-items: center;
     justify-content: center;
     color: transparent;
-    font-size: 0.75rem;
-    transition: all 0.2s ease;
+    font-size: 0.72rem;
+    background: #FFFFFF;
     flex-shrink: 0;
+    transition: all 0.2s ease;
 }
 
 /* Adicional Selecionado */
 .adicional-option input[type="checkbox"]:checked + .adicional-chip {
-    background: rgba(139, 92, 246, 0.14);
+    background: var(--primary-berry-soft);
     border-color: var(--primary-berry);
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
 }
 
 .adicional-option input[type="checkbox"]:checked + .adicional-chip .adicional-check-indicator {
@@ -268,20 +262,20 @@
 .stepper-control {
     display: inline-flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-medium);
     border-radius: var(--radius-md);
-    overflow: hidden;
     padding: 4px;
+    box-shadow: var(--shadow-sm);
 }
 
 .stepper-btn {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border: none;
-    background: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
-    font-size: 1.2rem;
+    background: var(--bg-surface-soft);
+    color: var(--text-title);
+    font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
     border-radius: 8px;
@@ -292,53 +286,46 @@
 }
 
 .stepper-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--primary-berry-soft);
+    color: var(--primary-berry);
 }
 
 .stepper-input {
-    width: 60px;
+    width: 56px;
     text-align: center;
     background: transparent;
     border: none;
-    color: #ffffff;
-    font-size: 1.2rem;
+    color: var(--text-title);
+    font-size: 1.15rem;
     font-weight: 700;
     outline: none;
-    -moz-appearance: textfield;
 }
 
-.stepper-input::-webkit-outer-spin-button,
-.stepper-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* 4. Resumo Lateral do Pedido (Sticky) */
+/* 4. Resumo Lateral do Pedido */
 .order-summary-card {
     position: sticky;
-    top: 96px;
-    background: rgba(22, 4, 44, 0.85);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    top: 90px;
+    background: #FFFFFF;
+    border: 1px solid var(--border-light);
     border-radius: var(--radius-xl);
-    padding: 28px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    padding: 24px;
+    box-shadow: var(--shadow-lg);
 }
 
 .summary-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 16px;
-    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
 }
 
 .summary-header h3 {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--text-title);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    margin: 0;
 }
 
 .summary-header h3 i {
@@ -349,8 +336,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 14px;
-    font-size: 0.95rem;
+    margin-bottom: 12px;
+    font-size: 0.92rem;
 }
 
 .summary-label {
@@ -359,75 +346,152 @@
 
 .summary-value {
     font-weight: 600;
-    color: #ffffff;
+    color: var(--text-title);
 }
 
 .selected-tags-container {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin: 8px 0 16px 0;
-    max-height: 120px;
+    margin: 6px 0 14px 0;
+    max-height: 110px;
     overflow-y: auto;
 }
 
 .topping-badge-item {
-    font-size: 0.76rem;
-    background: rgba(139, 92, 246, 0.2);
-    border: 1px solid rgba(139, 92, 246, 0.35);
-    color: #ddd6fe;
-    padding: 3px 10px;
-    border-radius: 12px;
+    font-size: 0.75rem;
+    background: var(--primary-berry-soft);
+    border: 1px solid var(--primary-berry-border);
+    color: var(--primary-berry);
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 10px;
 }
 
 .summary-divider {
     height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 18px 0;
+    background: var(--border-light);
+    margin: 16px 0;
 }
 
 .summary-total-row {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .summary-total-label {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-title);
 }
 
 .summary-total-price {
-    font-size: 1.9rem;
+    font-size: 1.8rem;
     font-weight: 800;
-    color: #86efac;
-    text-shadow: 0 0 16px rgba(34, 197, 94, 0.4);
+    color: var(--accent-green);
 }
 
 .btn-add-cart {
     width: 100%;
-    padding: 15px 20px;
-    font-size: 1.05rem;
+    padding: 14px 20px;
+    font-size: 1rem;
     border-radius: var(--radius-md);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .btn-view-cart {
     width: 100%;
     justify-content: center;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
 }
 
-/* Responsividade */
-@media screen and (max-width: 992px) {
+/* ==============================================
+   RESPONSIVIDADE MOBILE APRIMORADA (Sem vazamentos)
+   ============================================== */
+@media screen and (max-width: 991px) {
+    .order-wrapper {
+        padding: 16px 12px 60px 12px;
+    }
+
+    .order-header h1 {
+        font-size: 2rem;
+    }
+
+    .order-header p {
+        font-size: 0.95rem;
+    }
+
     .order-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 
     .order-summary-card {
         position: relative;
         top: 0;
+        margin-top: 10px;
+        box-shadow: var(--shadow-md);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .step-card {
+        padding: 18px 14px;
+        border-radius: var(--radius-lg);
+    }
+
+    .step-title h2 {
+        font-size: 1.1rem;
+    }
+
+    .sizes-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .size-card {
+        padding: 14px 8px;
+    }
+
+    .size-thumb {
+        width: 68px;
+        height: 68px;
+        margin-bottom: 8px;
+    }
+
+    .size-name {
+        font-size: 0.92rem;
+    }
+
+    .size-price-tag {
+        font-size: 0.85rem;
+        padding: 3px 8px;
+    }
+
+    .adicionais-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .adicional-chip {
+        padding: 10px 8px;
+    }
+
+    .adicional-title {
+        font-size: 0.82rem;
+    }
+
+    .adicional-cost {
+        font-size: 0.74rem;
+    }
+
+    .order-summary-card {
+        padding: 18px 14px;
+    }
+
+    .summary-total-price {
+        font-size: 1.5rem;
     }
 }

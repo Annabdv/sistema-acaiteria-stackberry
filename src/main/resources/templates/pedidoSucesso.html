@@ -8,91 +8,82 @@
     <title>Pedido Concluído - StackBerry</title>
     <style>
         .success-wrapper {
-            max-width: 680px;
-            margin: 50px auto 90px auto;
-            padding: 0 20px;
+            max-width: 640px;
+            margin: 40px auto 80px auto;
+            padding: 0 16px;
             text-align: center;
         }
 
         .success-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-xl);
-            padding: 44px 32px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            padding: 40px 28px;
+            box-shadow: var(--shadow-md);
         }
 
         .success-icon-badge {
-            width: 84px;
-            height: 84px;
+            width: 76px;
+            height: 76px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(34, 197, 94, 0.1));
+            background: var(--accent-green-soft);
             border: 2px solid var(--accent-green);
-            color: #86efac;
-            font-size: 2.5rem;
+            color: var(--accent-green);
+            font-size: 2.2rem;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 22px;
-            box-shadow: 0 0 30px var(--accent-green-glow);
-            animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            60% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
+            margin-bottom: 20px;
         }
 
         .order-ref-box {
-            background: rgba(139, 92, 246, 0.15);
-            border: 1px dashed rgba(139, 92, 246, 0.4);
+            background: var(--primary-berry-soft);
+            border: 1px dashed var(--primary-berry-border);
             border-radius: var(--radius-md);
-            padding: 14px 20px;
-            margin: 20px 0;
+            padding: 12px 20px;
+            margin: 18px 0;
             display: inline-block;
         }
 
         .order-ref-box span {
-            color: var(--text-subtle);
-            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
             display: block;
         }
 
         .order-ref-box strong {
-            color: #c4b5fd;
+            color: var(--primary-berry);
             font-size: 1.15rem;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .whatsapp-cta-box {
-            background: rgba(37, 211, 102, 0.1);
-            border: 1px solid rgba(37, 211, 102, 0.25);
+            background: #F0FDF4;
+            border: 1px solid #BBF7D0;
             border-radius: var(--radius-lg);
-            padding: 24px;
-            margin: 24px 0;
+            padding: 22px;
+            margin: 22px 0;
         }
 
         .btn-whatsapp {
-            background: linear-gradient(135deg, #25D366, #128C7E);
+            background: #25D366;
             color: #ffffff !important;
-            padding: 14px 28px;
-            font-size: 1.05rem;
+            padding: 14px 26px;
+            font-size: 1rem;
             font-weight: 700;
             border-radius: var(--radius-md);
             display: inline-flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
             transition: var(--transition);
         }
 
         .btn-whatsapp:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 28px rgba(37, 211, 102, 0.6);
+            background: #1EBE5D;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(37, 211, 102, 0.45);
         }
     </style>
 </head>
@@ -104,28 +95,28 @@
                 <i class="fa-solid fa-check"></i>
             </div>
 
-            <h1 style="font-size: 2.2rem; margin-bottom: 10px;">Pedido Confirmado!</h1>
-            <p style="color: var(--text-muted); font-size: 1.05rem;">
-                Obrigado, <strong th:text="${pedido.usuarioNome}">Cliente</strong>! Seu pedido foi registrado com sucesso em nosso sistema.
+            <h1 style="font-size: 2rem; margin-bottom: 10px;">Pedido Confirmado!</h1>
+            <p style="color: var(--text-muted); font-size: 1rem;">
+                Obrigado, <strong th:text="${pedido.usuarioNome}">Cliente</strong>! Seu pedido foi registrado com sucesso.
             </p>
 
             <div class="order-ref-box">
-                <span>Código de identificação do pedido:</span>
+                <span>Código do pedido:</span>
                 <strong th:text="${pedido.id}">#PEDIDO-12345</strong>
             </div>
 
             <div class="whatsapp-cta-box">
-                <p style="margin-bottom: 14px; color: #ffffff; font-weight: 500;">
-                    📲 <strong>Última etapa:</strong> Envie o pedido para o nosso WhatsApp para iniciarmos o preparo imediatamente!
+                <p style="margin-bottom: 14px; color: var(--text-title); font-weight: 500;">
+                    📲 <strong>Última etapa:</strong> Envie o pedido para o nosso WhatsApp para iniciarmos o preparo!
                 </p>
                 <div th:if="${whatsappUrl != null}">
                     <a th:href="${whatsappUrl}" class="btn-whatsapp" target="_blank">
-                        <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i> Enviar Pedido via WhatsApp
+                        <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> Enviar Pedido via WhatsApp
                     </a>
                 </div>
             </div>
 
-            <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
                 <a th:href="@{/meus-pedidos}" class="btn-purple">
                     <i class="fa-solid fa-list-check"></i> Acompanhar Pedido
                 </a>
@@ -136,11 +127,11 @@
         </div>
 
         <div class="success-card" th:if="${pedido == null}">
-            <div class="success-icon-badge" style="border-color: #ef4444; color: #fca5a5;">
+            <div class="success-icon-badge" style="background: #FEE2E2; border-color: #EF4444; color: #DC2626;">
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
-            <h2>Detalhes do pedido não encontrados</h2>
-            <p style="color: var(--text-muted); margin-bottom: 24px;">Não conseguimos carregar as informações do seu pedido agora.</p>
+            <h2>Pedido não encontrado</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Não conseguimos carregar as informações do seu pedido agora.</p>
             <a th:href="@{/cardapio}" class="btn-default">Voltar ao Cardápio</a>
         </div>
     </div>

@@ -103,7 +103,10 @@ http://localhost:7070
 
 ---
 
-## 👩‍💻 Autoria
+## 👥 Integrantes & Autoria
 
-* **Desenvolvimento e Refatoração Visual:** Anna Beatriz Alves de Vasconcelos ([@Annabdv](https://github.com/Annabdv))
-* **Projeto desenvolvido no contexto acadêmico:** UFPB - Campus IV (Rio Tinto / Mamanguape)
+* **Anna Beatriz Alves de Vasconcelos** ([@Annabdv](https://github.com/Annabdv)) — Desenvolvimento e refatoração visual completa da interface.
+* **Edgar Henrique da Silva** ([@Edgar-sh](https://github.com/Edgar-sh)) — Integrante da equipe original na disciplina de APS.
+* **Randerson Ranniery Soares** ([@randersonranniery7](https://github.com/randersonranniery7)) — Integrante da equipe original na disciplina de APS.
+
+> *Projeto concebido e desenvolvido para a disciplina de Análise e Projeto de Sistemas (APS) na Universidade Federal da Paraíba (UFPB - Campus IV).*

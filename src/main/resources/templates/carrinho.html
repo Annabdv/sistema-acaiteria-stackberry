@@ -10,67 +10,60 @@
         .cart-wrapper {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 40px 20px 80px 20px;
+            padding: 30px 16px 80px 16px;
         }
 
         .cart-title-section {
             text-align: center;
-            margin-bottom: 36px;
+            margin-bottom: 30px;
         }
 
         .cart-title-section h1 {
-            font-size: 2.6rem;
+            font-size: 2.4rem;
             font-weight: 800;
             margin-bottom: 8px;
-            background: linear-gradient(135deg, #ffffff 40%, #c4b5fd 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-title);
         }
 
         .cart-empty-panel {
             text-align: center;
-            padding: 70px 30px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 24px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-xl);
-            max-width: 560px;
+            max-width: 520px;
             margin: 0 auto;
+            box-shadow: var(--shadow-sm);
         }
 
         .cart-empty-icon {
-            font-size: 4rem;
-            color: #8b5cf6;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            color: var(--primary-berry);
+            margin-bottom: 16px;
             display: inline-block;
-            animation: pulseGlow 2.5s infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.08); opacity: 1; }
         }
 
         .cart-grid {
             display: grid;
             grid-template-columns: 1fr 340px;
-            gap: 28px;
+            gap: 24px;
             align-items: start;
         }
 
         .cart-items-card {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-xl);
-            padding: 24px;
+            padding: 22px;
+            box-shadow: var(--shadow-sm);
         }
 
         .cart-item-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border-light);
             gap: 16px;
         }
 
@@ -81,29 +74,29 @@
         .cart-item-info {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             flex: 1;
         }
 
         .item-icon-circle {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(109, 40, 217, 0.15));
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--primary-berry-soft);
+            border: 1px solid var(--primary-berry-border);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
-            color: #c4b5fd;
+            font-size: 1.3rem;
+            color: var(--primary-berry);
             flex-shrink: 0;
         }
 
         .item-details h4 {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            color: #ffffff;
-            margin: 0 0 6px 0;
+            color: var(--text-title);
+            margin: 0 0 4px 0;
         }
 
         .item-toppings-list {
@@ -116,73 +109,73 @@
         }
 
         .item-topping-pill {
-            font-size: 0.78rem;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            font-size: 0.76rem;
+            background: var(--bg-surface-soft);
+            border: 1px solid var(--border-light);
             padding: 2px 8px;
             border-radius: 10px;
-            color: #e2e8f0;
+            color: var(--text-body);
         }
 
         .cart-item-actions {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
         }
 
         .cart-qty-form {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .cart-qty-input {
-            width: 54px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #ffffff;
+            width: 50px;
+            background: #FFFFFF;
+            border: 1.5px solid var(--border-medium);
+            color: var(--text-title);
             padding: 6px 4px;
             text-align: center;
             border-radius: 8px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95rem;
         }
 
         .btn-update-qty {
             border: none;
-            background: rgba(255, 255, 255, 0.12);
-            color: #ffffff;
-            padding: 6px 10px;
+            background: var(--bg-surface-soft);
+            color: var(--primary-berry);
+            padding: 7px 10px;
             border-radius: 8px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: var(--transition);
         }
 
         .btn-update-qty:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: var(--primary-berry-soft);
         }
 
         .cart-item-price {
             text-align: right;
-            min-width: 90px;
+            min-width: 85px;
         }
 
         .cart-item-price .unit-cost {
-            font-size: 0.8rem;
-            color: var(--text-subtle);
+            font-size: 0.78rem;
+            color: var(--text-muted);
         }
 
         .cart-item-price .subtotal-cost {
             font-size: 1.15rem;
             font-weight: 700;
-            color: #86efac;
+            color: var(--accent-green);
         }
 
         .btn-remove-item {
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #fca5a5;
+            background: #FEE2E2;
+            border: 1px solid #FCA5A5;
+            color: #DC2626;
             width: 36px;
             height: 36px;
             border-radius: 8px;
@@ -194,64 +187,63 @@
         }
 
         .btn-remove-item:hover {
-            background: #ef4444;
+            background: #EF4444;
             color: #ffffff;
-            transform: scale(1.05);
         }
 
         /* Card de Resumo Lateral */
         .cart-checkout-card {
-            background: rgba(22, 4, 44, 0.85);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-xl);
-            padding: 28px;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+            padding: 24px;
+            box-shadow: var(--shadow-md);
         }
 
         .cart-checkout-card h3 {
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            color: #ffffff;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-title);
+            border-bottom: 1px solid var(--border-light);
             padding-bottom: 14px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .checkout-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 12px;
-            font-size: 0.95rem;
-            color: var(--text-muted);
+            font-size: 0.92rem;
+            color: var(--text-body);
         }
 
         .checkout-row.total-row {
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-top: 1.5px solid var(--border-light);
             padding-top: 14px;
-            margin-top: 16px;
-            font-size: 1.25rem;
+            margin-top: 14px;
+            font-size: 1.15rem;
             font-weight: 700;
-            color: #ffffff;
+            color: var(--text-title);
         }
 
         .checkout-row.total-row span:last-child {
-            color: #86efac;
+            color: var(--accent-green);
             font-size: 1.6rem;
+            font-weight: 800;
         }
 
         .btn-finish-order {
             width: 100%;
-            margin-top: 20px;
-            padding: 15px 20px;
-            font-size: 1.05rem;
+            margin-top: 18px;
+            padding: 14px 20px;
+            font-size: 1rem;
         }
 
         .btn-keep-shopping {
             width: 100%;
             justify-content: center;
             margin-top: 10px;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
         }
 
         @media screen and (max-width: 860px) {
@@ -262,12 +254,12 @@
             .cart-item-row {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 12px;
             }
 
             .cart-item-actions {
                 width: 100%;
                 justify-content: space-between;
-                margin-top: 12px;
             }
         }
     </style>
@@ -286,8 +278,8 @@
             <div class="cart-empty-icon">
                 <i class="fa-solid fa-basket-shopping"></i>
             </div>
-            <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Sua sacola está vazia</h2>
-            <p style="color: var(--text-muted); margin-bottom: 24px;">Que tal montar um açaí geladinho com seus adicionais preferidos?</p>
+            <h2 style="font-size: 1.4rem; margin-bottom: 8px;">Sua sacola está vazia</h2>
+            <p style="color: var(--text-muted); margin-bottom: 22px;">Que tal montar um açaí geladinho com seus adicionais preferidos?</p>
             <a href="/cardapio" class="btn-default">
                 <i class="fa-solid fa-plus"></i> Montar meu Açaí
             </a>
@@ -352,7 +344,7 @@
 
                 <div class="checkout-row">
                     <span>Entrega:</span>
-                    <span style="color: #86efac; font-weight: 600;">Retirada / A combinar</span>
+                    <span style="color: var(--accent-green); font-weight: 600;">Retirada / A combinar</span>
                 </div>
 
                 <div class="checkout-row total-row">

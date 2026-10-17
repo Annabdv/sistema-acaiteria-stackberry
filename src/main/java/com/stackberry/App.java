@@ -91,7 +91,17 @@ public class App {
 
             String path = ctx.path();
 
-            List<String> rotasPublicas = List.of("/", "/login", "/cadastrar", "/usuarios/cadastrar");
+            List<String> rotasPublicas = List.of(
+                "/", 
+                "/cardapio", 
+                "/carrinho", 
+                "/carrinho/adicionar", 
+                "/carrinho/remover", 
+                "/carrinho/atualizar", 
+                "/login", 
+                "/cadastrar", 
+                "/usuarios/cadastrar"
+            );
 
             if (!rotasPublicas.contains(path) && !path.startsWith("/styles") && !path.startsWith("/js") && !path.startsWith("/images")) {
 

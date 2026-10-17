@@ -155,7 +155,7 @@ public class CarrinhoController {
         Usuario usuario = ctx.sessionAttribute("usuarioLogado");
 
         if (usuario == null) {
-            ctx.status(400).result("Usuário não logado");
+            ctx.redirect("/login");
             return;
         }
         if (carrinho == null || carrinho.getItensNoCarrinho().isEmpty()) {
