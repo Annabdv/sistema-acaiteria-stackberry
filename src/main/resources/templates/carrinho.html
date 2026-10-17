@@ -227,7 +227,7 @@
         }
 
         .checkout-row.total-row span:last-child {
-            color: var(--accent-green);
+            color: var(--accent-warm);
             font-size: 1.6rem;
             font-weight: 800;
         }
@@ -237,6 +237,19 @@
             margin-top: 18px;
             padding: 14px 20px;
             font-size: 1rem;
+            background: var(--accent-warm);
+            color: #FFFFFF !important;
+            border-radius: 999px;
+            border: none;
+            box-shadow: 0 4px 14px rgba(222, 117, 63, 0.28);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-finish-order:hover {
+            background: var(--accent-warm-hover);
+            transform: translateY(-2px);
         }
 
         .btn-keep-shopping {
@@ -244,6 +257,7 @@
             justify-content: center;
             margin-top: 10px;
             font-size: 0.9rem;
+            border-radius: 999px;
         }
 
         @media screen and (max-width: 860px) {

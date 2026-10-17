@@ -1,54 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('header.css');
 @import url('home.css');
 @import url('menu.css');
 
 :root {
-    /* Paleta Cítrico & Púrpura (Sutileza, Frescor & Equilíbrio) */
-    --bg-page: #FAF9F7;
-    --bg-surface: #FFFFFF;
-    --bg-surface-soft: #F5F4EE;
+    /* Paleta Inspirada nas Referências Purr'Coffee (Quente, Suave, Aconchegante & Minimalista) */
+    --bg-canvas: #F8F4EE;         /* Fundo canvas suave e arejado */
+    --bg-window: #FFFFFF;         /* Moldura da aplicação */
+    --bg-surface: #FFFFFF;        /* Superfície dos cartões */
+    --bg-surface-soft: #F5EFE7;   /* Fundos secundários suaves / busca */
     
-    /* Púrpura Nobre (#66023C da paleta) */
+    /* Cor de Destaque Quente / Terracotta Frutado (Idêntica aos botões do Purr'Coffee) */
+    --accent-warm: #DE753F;
+    --accent-warm-hover: #C6622E;
+    --accent-warm-soft: #FDF1EA;
+    --accent-warm-border: #F6D6C4;
+    
+    /* Púrpura Nobre (StackBerry Açaí) */
     --primary-berry: #66023C;
     --primary-berry-hover: #4F012E;
-    --primary-berry-soft: #FBF0F6;
+    --primary-berry-soft: #FAF0F6;
     --primary-berry-border: #F3D2E3;
     
-    /* Cítrico Suave (#CAD183 da paleta) */
+    /* Cítrico Suave */
     --accent-citric: #CAD183;
     --accent-citric-soft: #F6F8E9;
-    --accent-citric-border: #BDC672;
-    --accent-citric-dark: #465220; /* Legibilidade perfeita */
+    --accent-citric-dark: #465220;
     
-    /* Cores de Destaques e Frutas */
-    --tag-citric-bg: #DCE388;
-    --tag-citric-text: #2D3905;
-    --tag-mango-bg: #FCAB10;
-    --tag-berry-bg: #F59CA9;
-    
-    /* Tipografia */
-    --font-serif: 'DM Serif Display', Georgia, serif;
-    --font-title: 'Outfit', sans-serif;
-    --font-body: 'Poppins', sans-serif;
-    
-    /* Tipografia e Textos */
-    --text-title: #2D1121;
-    --text-body: #4A3E47;
-    --text-muted: #7A6F77;
+    /* Tipografia e Textos Quentes */
+    --text-title: #2C211B;
+    --text-body: #5A4E45;
+    --text-muted: #8C7F75;
     --text-light: #FFFFFF;
     
     /* Bordas e Sombras Suaves */
-    --border-light: #EFECE6;
-    --border-medium: #DFDACF;
-    --shadow-sm: 0 2px 8px rgba(102, 2, 60, 0.04);
-    --shadow-md: 0 6px 20px rgba(102, 2, 60, 0.06);
-    --shadow-lg: 0 12px 30px rgba(102, 2, 60, 0.09);
+    --border-light: #EDE6DC;
+    --border-medium: #DFD7CC;
+    --shadow-window: 0 16px 48px rgba(44, 33, 27, 0.06);
+    --shadow-sm: 0 2px 8px rgba(44, 33, 27, 0.04);
+    --shadow-md: 0 6px 20px rgba(44, 33, 27, 0.06);
+    --shadow-lg: 0 12px 32px rgba(44, 33, 27, 0.09);
     
     --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 22px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-xl: 26px;
     --transition: all 0.2s ease-in-out;
 }
 
@@ -64,12 +60,8 @@ html, body {
     overflow-x: hidden;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
-    background-color: var(--bg-page);
+    background-color: var(--bg-canvas);
     color: var(--text-body);
     min-height: 100vh;
     display: flex;
@@ -81,118 +73,316 @@ h1, h2, h3, h4, h5, h6, .brand-font {
     color: var(--text-title);
 }
 
-main {
-    flex: 1;
+/* Moldura Global no estilo Purr'Coffee App Window */
+.pos-body {
+    background: var(--bg-canvas);
+    padding: 24px 16px;
+    min-height: 100vh;
+}
+
+.pos-app-wrapper {
+    max-width: 1380px;
+    margin: 0 auto;
     width: 100%;
 }
 
-section {
-    padding: 30px 6%;
+.pos-app-window {
+    background: var(--bg-window);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-window);
+    display: flex;
+    min-height: calc(100vh - 48px);
+    overflow: hidden;
+    position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   COLUNA 1: SIDEBAR LATERAL ESQUERDA (Inspirado no Purr'Coffee)
+   -------------------------------------------------------------------------- */
+.pos-sidebar {
+    width: 220px;
+    background: #FFFFFF;
+    border-right: 1px solid var(--border-light);
+    padding: 28px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.pos-brand-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    margin-bottom: 34px;
+}
+
+.pos-brand-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--accent-warm-soft);
+    color: var(--accent-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.pos-brand-name {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--text-title);
+    line-height: 1.1;
+}
+
+.brand-sub {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.pos-nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.pos-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--text-body);
+    font-size: 0.92rem;
+    font-weight: 600;
+    transition: var(--transition);
+    position: relative;
+}
+
+.pos-nav-link i {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    width: 20px;
+    text-align: center;
+    transition: color 0.2s ease;
+}
+
+.pos-nav-link:hover {
+    background: var(--bg-surface-soft);
+    color: var(--accent-warm);
+}
+
+.pos-nav-link:hover i {
+    color: var(--accent-warm);
+}
+
+/* Item Ativo (Pill terracota/quente como na referência) */
+.pos-nav-link.active {
+    background: var(--accent-warm-soft);
+    color: var(--accent-warm);
+}
+
+.pos-nav-link.active i {
+    color: var(--accent-warm);
+}
+
+.pos-nav-pill-badge {
+    margin-left: auto;
+    background: var(--accent-warm);
+    color: #FFFFFF;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 999px;
+}
+
+.pos-sidebar-footer {
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+}
+
+.pos-user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-surface-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-title);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1;
+}
+
+.user-details strong {
+    font-size: 0.85rem;
+    color: var(--text-title);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-details span {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-logout-icon {
+    color: var(--text-muted);
+    padding: 6px;
+    border-radius: 8px;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.btn-logout-icon:hover {
+    color: #DC2626;
+    background: #FEE2E2;
+}
+
+.login-link {
+    color: var(--accent-warm);
+}
+
+.login-link i {
+    color: var(--accent-warm);
+}
+
+/* ÁREA DE CONTEÚDO PRINCIPAL */
+.pos-main-viewport {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    overflow-y: auto;
+    max-height: calc(100vh - 48px);
 }
 
 /* Botões Globais Harmonizados */
-.btn-default {
+.btn-warm {
+    background: var(--accent-warm);
+    color: #FFFFFF !important;
     border: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: var(--accent-citric-dark);
-    color: #ffffff !important;
-    border-radius: var(--radius-md);
-    padding: 12px 24px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    box-shadow: 0 4px 12px rgba(70, 82, 32, 0.2);
-    cursor: pointer;
-    transition: var(--transition);
-    text-decoration: none;
-}
-
-.btn-default:hover {
-    background: #394318;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(70, 82, 32, 0.3);
-}
-
-.btn-purple {
-    border: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: var(--primary-berry);
-    color: #ffffff !important;
-    border-radius: var(--radius-md);
-    padding: 12px 24px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    box-shadow: 0 4px 14px rgba(102, 2, 60, 0.25);
-    cursor: pointer;
-    transition: var(--transition);
-    text-decoration: none;
-}
-
-.btn-purple:hover {
-    background: var(--primary-berry-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(102, 2, 60, 0.35);
-}
-
-.btn-outline-glass {
-    border: 1.5px solid var(--border-medium);
-    background: #FFFFFF;
-    color: var(--primary-berry) !important;
     border-radius: var(--radius-md);
     padding: 10px 20px;
     font-weight: 600;
     font-size: 0.92rem;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     text-decoration: none;
     transition: var(--transition);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 12px rgba(222, 117, 63, 0.22);
 }
 
-.btn-outline-glass:hover {
-    background: var(--primary-berry-soft);
-    border-color: var(--primary-berry);
+.btn-warm:hover {
+    background: var(--accent-warm-hover);
     transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(222, 117, 63, 0.32);
 }
 
-/* Badges Sutis */
-.badge-pill {
+.btn-outline-warm {
+    border: 1.5px solid var(--border-medium);
+    background: #FFFFFF;
+    color: var(--text-title) !important;
+    border-radius: var(--radius-md);
+    padding: 9px 18px;
+    font-weight: 600;
+    font-size: 0.9rem;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background: var(--primary-berry-soft);
-    border: 1px solid var(--primary-berry-border);
-    color: var(--primary-berry);
-    font-size: 0.82rem;
-    font-weight: 600;
-    padding: 6px 14px;
-    border-radius: 999px;
-    letter-spacing: 0.3px;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: var(--transition);
 }
 
-.badge-green {
-    background: var(--accent-citric-soft);
-    border: 1px solid var(--accent-citric-border);
-    color: var(--accent-citric-dark);
+.btn-outline-warm:hover {
+    border-color: var(--accent-warm);
+    color: var(--accent-warm) !important;
+    background: var(--accent-warm-soft);
 }
 
-/* Rodapé Limpo */
-#footer {
-    background: #FFFFFF;
-    border-top: 1px solid var(--border-light);
-    color: var(--text-muted);
-    text-align: center;
-    padding: 24px 16px;
-    font-size: 0.9rem;
-    margin-top: auto;
-}
+/* Responsividade Mobile da Moldura */
+@media screen and (max-width: 900px) {
+    .pos-body {
+        padding: 8px;
+    }
 
-#footer p {
-    margin: 0;
+    .pos-app-window {
+        flex-direction: column;
+        border-radius: var(--radius-lg);
+        min-height: 100vh;
+    }
+
+    .pos-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+        padding: 16px;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .pos-brand-link {
+        margin-bottom: 0;
+    }
+
+    .pos-nav-menu {
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .pos-nav-link span:not(.pos-nav-pill-badge) {
+        display: none;
+    }
+
+    .pos-nav-link {
+        padding: 10px;
+    }
+
+    .pos-sidebar-footer {
+        padding-top: 0;
+        border-top: none;
+    }
+
+    .user-details {
+        display: none;
+    }
+
+    .pos-main-viewport {
+        max-height: none;
+    }
 }
