@@ -17,83 +17,147 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                min-height: calc(100vh - 180px);
-                padding: 30px 16px;
+                min-height: calc(100vh - 220px);
+                padding: 40px 16px 80px 16px;
+                background-color: var(--bg-main, #FAF6F0);
             }
 
             .signup-card {
                 width: 100%;
-                max-width: 480px;
-                border-radius: var(--radius-xl);
-                background: #FFFFFF;
-                border: 1px solid var(--border-light);
-                box-shadow: var(--shadow-md);
-                padding: 36px 30px;
+                max-width: 490px;
+                border-radius: 28px;
+                background: linear-gradient(165deg, #FCF8FA 0%, #F5ECF5 100%);
+                border: 1.5px solid #E4D2E8;
+                box-shadow: 0 20px 48px rgba(58, 11, 46, 0.09);
+                padding: 44px 38px 36px 38px;
+                text-align: center;
+            }
+
+            .signup-logo-emblem {
+                width: 68px;
+                height: 68px;
+                object-fit: contain;
+                margin-bottom: 12px;
+                filter: drop-shadow(0 4px 10px rgba(58, 11, 46, 0.12));
             }
 
             .signup-card h2 {
-                font-size: 1.8rem;
-                font-weight: 700;
+                font-family: var(--font-heading, 'Outfit', sans-serif);
+                font-size: 1.95rem;
+                font-weight: 900;
                 margin-bottom: 6px;
-                text-align: center;
-                color: var(--text-title);
+                color: var(--text-title, #26051E);
+                letter-spacing: -0.5px;
             }
 
             .signup-card p.subtitle {
-                text-align: center;
-                color: var(--text-muted);
+                color: var(--text-muted, #7D6476);
                 font-size: 0.95rem;
-                margin-bottom: 22px;
+                margin-bottom: 26px;
+                line-height: 1.45;
+            }
+
+            .form-group-wrap {
+                text-align: left;
+                margin-bottom: 18px;
             }
 
             .form-label {
-                font-weight: 600;
-                font-size: 0.88rem;
-                color: var(--text-body);
-                margin-bottom: 6px;
+                font-family: var(--font-heading, 'Outfit', sans-serif);
+                font-weight: 700;
+                font-size: 0.9rem;
+                color: var(--text-title, #26051E);
+                margin-bottom: 8px;
+                display: block;
             }
 
             .form-control {
                 background: #FFFFFF;
-                border: 1.5px solid var(--border-medium);
-                border-radius: var(--radius-md);
-                color: var(--text-title);
-                padding: 11px 14px;
-                font-size: 0.95rem;
-                transition: var(--transition);
+                border: 1.5px solid #DFCEE4;
+                border-radius: 16px;
+                color: var(--text-title, #26051E);
+                padding: 13px 18px;
+                font-size: 0.96rem;
+                font-family: 'Poppins', sans-serif;
+                transition: var(--transition, all 0.25s ease);
+                width: 100%;
             }
 
             .form-control:focus {
                 background: #FFFFFF;
-                border-color: var(--accent-green);
-                color: var(--text-title);
-                box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12);
+                border-color: #26051E;
+                color: var(--text-title, #26051E);
+                box-shadow: 0 0 0 4px rgba(38, 5, 30, 0.1);
+                outline: none;
+            }
+
+            .form-control::placeholder {
+                color: #A993AD;
             }
 
             .btn-signup-submit {
-                width: 100%;
-                padding: 13px;
-                font-size: 1rem;
-                margin-top: 10px;
-                margin-bottom: 16px;
+                background: #26051E !important;
+                color: #FFFFFF !important;
+                border: none !important;
+                border-radius: 9999px !important;
+                padding: 14px 28px !important;
+                font-weight: 800 !important;
+                font-size: 1.05rem !important;
+                font-family: var(--font-heading, 'Outfit', sans-serif) !important;
+                cursor: pointer !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 10px !important;
+                transition: all 0.25s ease !important;
+                box-shadow: 0 8px 24px rgba(38, 5, 30, 0.28) !important;
+                width: 100% !important;
+                margin-top: 14px;
+                margin-bottom: 22px;
+                text-decoration: none !important;
+            }
+
+            .btn-signup-submit:hover {
+                background: #3A0B2E !important;
+                transform: translateY(-2px) !important;
+                box-shadow: 0 12px 30px rgba(38, 5, 30, 0.38) !important;
+                color: #FFFFFF !important;
             }
 
             .form-footer {
-                font-size: 0.9rem;
+                font-size: 0.92rem;
                 text-align: center;
-                color: var(--text-muted);
-                border-top: 1px solid var(--border-light);
-                padding-top: 16px;
+                color: var(--text-muted, #7D6476);
+                border-top: 1.5px solid var(--border-light, #EFE4F2);
+                padding-top: 20px;
+                margin-top: 10px;
             }
 
             .form-footer a {
-                color: var(--primary-berry);
+                color: var(--color-pink, #AD1457);
                 text-decoration: none;
-                font-weight: 600;
+                font-weight: 700;
+                transition: color 0.2s ease;
             }
 
             .form-footer a:hover {
+                color: #26051E;
                 text-decoration: underline;
+            }
+
+            .alert {
+                border-radius: 16px;
+                font-size: 0.9rem;
+                padding: 12px 18px;
+                border: 1.5px solid transparent;
+                margin-bottom: 20px;
+                text-align: left;
+            }
+
+            .alert-danger {
+                background: #FEE2E2;
+                border-color: #FCA5A5;
+                color: #991B1B;
             }
         </style>
     </th:block>
@@ -104,8 +168,9 @@
 <main layout:fragment="content">
     <div class="form-container">
         <div class="signup-card">
+            <img src="/images/StackBerry_OnlyLogo.png" alt="StackBerry Emblem" class="signup-logo-emblem">
             <h2>Crie sua Conta</h2>
-            <p class="subtitle">Cadastre-se para pedir seu açaí em poucos segundos</p>
+            <p class="subtitle">Cadastre-se para pedir seu açaí artesanal em poucos segundos</p>
 
             <div th:if="${erro}" class="alert alert-danger" role="alert">
                 <p th:text="${erro}" class="mb-0"></p>
@@ -113,36 +178,36 @@
 
             <form th:action="@{/usuarios/cadastrar}" method="post" id="cadastroForm">
 
-                <div class="mb-3">
+                <div class="form-group-wrap">
                     <label for="nome" class="form-label">Nome Completo</label>
-                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome completo" required>
+                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome completo" required autofocus>
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group-wrap">
                     <label for="email" class="form-label">Endereço de E-mail</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="seuemail@exemplo.com" required>
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group-wrap">
                     <label for="senha" class="form-label">Senha</label>
                     <input type="password" class="form-control" id="senha" name="senha" placeholder="••••••••" required>
                 </div>
 
-                <div class="mb-4">
+                <div class="form-group-wrap">
                     <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
                     <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" placeholder="••••••••" required>
                     <div class="invalid-feedback" id="senhaError">
-                        As senhas não coincidem.
+                        As senhas informadas não coincidem.
                     </div>
                 </div>
 
-                <button type="submit" class="btn-default btn-signup-submit">
-                    <i class="fa-solid fa-user-plus"></i> Finalizar Cadastro
+                <button type="submit" class="btn-signup-submit">
+                    <span>Finalizar Cadastro</span> <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </form>
 
             <div class="form-footer">
-                <p class="mb-0">Já tem uma conta? <a th:href="@{/login}">Faça login</a></p>
+                <p class="mb-0">Já tem uma conta cadastrada? <a th:href="@{/login}">Faça login</a></p>
             </div>
         </div>
     </div>

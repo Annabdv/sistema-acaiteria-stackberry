@@ -4,43 +4,402 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Dashboard Admin</title>
-    <link rel="stylesheet" th:href="@{/styles/dashboard.css}">
+    <meta charset="UTF-8">
+    <title>Dashboard Administrativo</title>
+    <th:block layout:fragment="page-css">
+        <link rel="stylesheet" th:href="@{/styles/dashboard.css}">
+        <link rel="stylesheet" th:href="@{/styles/formulario.css}">
+    </th:block>
 </head>
 <body>
 
 <main layout:fragment="content">
-    <div class="dashboard-wrapper">
-        <div class="dashboard-box">
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <div class="user-info">
-                    <img src="/images/user.jpeg" alt="Logo/Foto">
-                    <h3 th:if="${usuario}" th:text="${usuario.getNome()}"> </h3>
-                    <p>Administrador</p>
-                </div>
-
-                <button onclick="loadContent('inicio')">Início</button>
-                <button onclick="loadContent('usuarios')">Usuários</button>
-                <button onclick="loadContent('pedidos')">Pedidos</button>
-                <button onclick="loadContent('tamanho')">Tamanhos</button>
-                <button onclick="loadContent('adicionais')">Adicionais</button>
-
+    <div class="admin-dashboard-container">
+        
+        <!-- Cabeçalho Limpo do Dashboard (Sem container/caixa) -->
+        <div class="admin-dashboard-hero-title">
+            <div class="admin-header-title-wrap">
+                <h1>Painel Administrativo</h1>
+                <p>Olá, <span class="admin-highlight-name" th:text="${usuario != null ? usuario.nome : 'Administrador'}">Admin</span>! Aqui está a visão em tempo real da sua açaiteria.</p>
             </div>
 
-            <!-- Conteúdo principal -->
-            <div class="main-content">
-                <div class="content-area" id="content-area">
-                    <!-- Conteúdo inicial carregado automaticamente -->
-                </div>
+            <div class="admin-header-actions">
+                <button type="button" class="btn-admin-refresh" onclick="carregarTudo()" title="Atualizar dados">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                    <span>Atualizar</span>
+                </button>
+                <a href="/cardapio" class="btn-admin-store">
+                    <i class="fa-solid fa-store"></i>
+                    <span>Ver Loja</span>
+                </a>
             </div>
         </div>
+
+        <!-- Abas de Navegação Rápida do Admin -->
+        <div class="admin-quick-tabs">
+            <a href="#secao-pedidos" class="admin-tab-pill active">
+                <i class="fa-solid fa-chart-pie"></i> Visão Geral
+            </a>
+            <a href="#secao-produtos" class="admin-tab-pill">
+                <i class="fa-solid fa-bowl-food"></i> Cardápio
+            </a>
+            <a href="#secao-adicionais" class="admin-tab-pill">
+                <i class="fa-solid fa-seedling"></i> Adicionais
+            </a>
+            <a href="#secao-usuarios" class="admin-tab-pill">
+                <i class="fa-solid fa-users"></i> Usuários
+            </a>
+            <button type="button" onclick="abrirModalNovoProduto()" class="admin-tab-pill add-tab">
+                <i class="fa-solid fa-plus"></i> Novo Produto
+            </button>
+            <button type="button" onclick="abrirModalNovoAdicional()" class="admin-tab-pill add-tab">
+                <i class="fa-solid fa-plus"></i> Novo Adicional
+            </button>
+        </div>
+
+        <!-- Grade de Indicadores Principais (KPIs) -->
+        <section class="admin-kpi-grid">
+            
+            <!-- KPI 1: Pedidos Realizados -->
+            <div class="kpi-card purple">
+                <div class="kpi-icon-circle">
+                    <i class="fa-solid fa-receipt"></i>
+                </div>
+                <div class="kpi-info">
+                    <span class="kpi-label">Pedidos Feitos</span>
+                    <strong class="kpi-value" id="kpi-total-pedidos">0</strong>
+                    <span class="kpi-sub">Total de pedidos no sistema</span>
+                </div>
+            </div>
+
+            <!-- KPI 2: Faturamento Total -->
+            <div class="kpi-card green">
+                <div class="kpi-icon-circle">
+                    <i class="fa-solid fa-sack-dollar"></i>
+                </div>
+                <div class="kpi-info">
+                    <span class="kpi-label">Faturamento Total</span>
+                    <strong class="kpi-value" id="kpi-faturamento">R$ 0,00</strong>
+                    <span class="kpi-sub">Soma de todos os pedidos</span>
+                </div>
+            </div>
+
+            <!-- KPI 3: Usuários Cadastrados -->
+            <div class="kpi-card blue">
+                <div class="kpi-icon-circle">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div class="kpi-info">
+                    <span class="kpi-label">Usuários</span>
+                    <strong class="kpi-value" id="kpi-total-usuarios">0</strong>
+                    <span class="kpi-sub">Clientes e administradores</span>
+                </div>
+            </div>
+
+            <!-- KPI 4: Cardápio Ativo -->
+            <div class="kpi-card yellow">
+                <div class="kpi-icon-circle">
+                    <i class="fa-solid fa-bowl-food"></i>
+                </div>
+                <div class="kpi-info">
+                    <span class="kpi-label">Itens no Cardápio</span>
+                    <strong class="kpi-value" id="kpi-itens-cardapio">0</strong>
+                    <span class="kpi-sub">Tamanhos e Acompanhamentos</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Seção 1: Pedidos em Andamento & Histórico Recente -->
+        <section class="admin-card-section" id="secao-pedidos">
+            <div class="section-head-bar">
+                <div class="section-head-title-wrap">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <h2>Pedidos da Açaiteria</h2>
+                </div>
+                <span class="badge-status em-preparo" id="badge-pedidos-andamento">Sincronizando...</span>
+            </div>
+
+            <div class="table-responsive-clean">
+                <table class="admin-table-clean">
+                    <thead>
+                        <tr>
+                            <th>Data / Hora</th>
+                            <th>Cliente</th>
+                            <th>Itens do Açaí</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th style="text-align: right;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pedidos-tbody">
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                                <i class="fa-solid fa-spinner fa-spin"></i> Carregando pedidos...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Seção 2: Gerenciamento do Cardápio (Tamanhos e Adicionais) -->
+        <div class="admin-two-cols-grid">
+            
+            <!-- Coluna A: Produtos do Cardápio (Açaí, Copos & Tigelas) -->
+            <section class="admin-card-section" id="secao-produtos">
+                <div class="section-head-bar">
+                    <div class="section-head-title-wrap">
+                        <i class="fa-solid fa-bowl-food"></i>
+                        <h2>Produtos do Cardápio</h2>
+                    </div>
+                    <button type="button" class="btn-admin-action-add" onclick="abrirModalNovoProduto()">
+                        <i class="fa-solid fa-plus"></i> Novo Produto
+                    </button>
+                </div>
+
+                <div class="table-responsive-clean">
+                    <table class="admin-table-clean">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">Foto</th>
+                                <th>Produto &amp; Tamanho</th>
+                                <th>Preço</th>
+                                <th style="text-align: right;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tamanhos-tbody">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 20px;">
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Carregando produtos...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Coluna B: Acompanhamentos & Caldas -->
+            <section class="admin-card-section" id="secao-adicionais">
+                <div class="section-head-bar">
+                    <div class="section-head-title-wrap">
+                        <i class="fa-solid fa-seedling"></i>
+                        <h2>Acompanhamentos</h2>
+                    </div>
+                    <button type="button" class="btn-admin-action-add" onclick="abrirModalNovoAdicional()">
+                        <i class="fa-solid fa-plus"></i> Novo Adicional
+                    </button>
+                </div>
+
+                <div class="table-responsive-clean">
+                    <table class="admin-table-clean">
+                        <thead>
+                            <tr>
+                                <th>Acompanhamento</th>
+                                <th>Preço</th>
+                                <th style="text-align: right;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adicionais-tbody">
+                            <tr>
+                                <td colspan="3" style="text-align: center; color: var(--text-muted); padding: 20px;">
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Carregando...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Seção 3: Usuários Cadastrados -->
+        <section class="admin-card-section" id="secao-usuarios">
+            <div class="section-head-bar">
+                <div class="section-head-title-wrap">
+                    <i class="fa-solid fa-user-group"></i>
+                    <h2>Usuários do Sistema</h2>
+                </div>
+                <span class="kpi-sub" id="usuarios-sub-info">Carregando usuários...</span>
+            </div>
+
+            <div class="table-responsive-clean">
+                <table class="admin-table-clean">
+                    <thead>
+                        <tr>
+                            <th>Nome Completo</th>
+                            <th>E-mail</th>
+                            <th>Tipo de Usuário</th>
+                            <th>Status</th>
+                            <th style="text-align: right;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usuarios-tbody">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                                <i class="fa-solid fa-spinner fa-spin"></i> Carregando usuários...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ======================================================================
+         MODAIS FLUTUANTES ADMINISTRATIVOS (ESTILO MONTE SEU AÇAÍ)
+         ====================================================================== -->
+
+    <!-- Modal 1: Cadastrar / Editar Produto do Cardápio -->
+    <div class="sb-modal-overlay" id="modal-admin-produto" onclick="fecharModalAdminFora(event, 'modal-admin-produto')">
+        <div class="sb-modal-box sb-admin-modal-box">
+            <div class="sb-modal-header">
+                <h3 id="modal-admin-produto-title"><i class="fa-solid fa-bowl-food" style="margin-right: 8px; color: var(--color-pink);"></i> Cadastrar Novo Produto</h3>
+                <button type="button" class="btn-modal-close" onclick="fecharModalAdminProduto()" aria-label="Fechar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="form-admin-produto" action="/admin/tamanhos/salvar" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" id="admin-prod-id">
+
+                <div class="sb-modal-body">
+                    <!-- Nome -->
+                    <div class="sb-admin-form-group">
+                        <label for="admin-prod-nome">Nome do Produto:</label>
+                        <input type="text" class="sb-admin-input" id="admin-prod-nome" name="nome" placeholder="Ex: Copo Tradicional Artesanal" required>
+                        <span class="form-help">Nome exibido no cardápio e nos pedidos.</span>
+                    </div>
+
+                    <!-- Volume e Preço lado a lado -->
+                    <div class="sb-admin-two-inputs">
+                        <div class="sb-admin-form-group">
+                            <label for="admin-prod-volume">Tamanho / Volume:</label>
+                            <input type="text" class="sb-admin-input" id="admin-prod-volume" name="volume" placeholder="Ex: 500ml, 300ml, Barca 1L">
+                            <span class="form-help">Badge em destaque sobre o produto.</span>
+                        </div>
+                        <div class="sb-admin-form-group">
+                            <label for="admin-prod-preco">Preço Base (R$):</label>
+                            <input type="number" step="0.01" min="0" class="sb-admin-input" id="admin-prod-preco" name="preco" placeholder="18.00" required>
+                            <span class="form-help">Valor base sem acompanhamentos.</span>
+                        </div>
+                    </div>
+
+                    <!-- Descrição -->
+                    <div class="sb-admin-form-group">
+                        <label for="admin-prod-descricao">Descrição do Produto:</label>
+                        <textarea class="sb-admin-textarea" id="admin-prod-descricao" name="descricao" rows="2" placeholder="Conte aos clientes sobre a textura do açaí, cremosidade, ingredientes especiais..."></textarea>
+                    </div>
+
+                    <!-- Foto do Produto -->
+                    <div class="sb-admin-form-group">
+                        <label>Foto do Produto:</label>
+
+                        <!-- Presets rápidos -->
+                        <div class="image-presets-grid" id="admin-image-presets">
+                            <div class="image-preset-option selected" data-img="/images/acai_copo_perfeito.jpg" onclick="selecionarPresetModal(this)">
+                                <img src="/images/acai_copo_perfeito.jpg" alt="Copo Clássico">
+                                <span>Copo Clássico</span>
+                            </div>
+                            <div class="image-preset-option" data-img="/images/acai_copo_camadas.png" onclick="selecionarPresetModal(this)">
+                                <img src="/images/acai_copo_camadas.png" alt="Copo Camadas">
+                                <span>Em Camadas</span>
+                            </div>
+                            <div class="image-preset-option" data-img="/images/acai_copo_tampa.png" onclick="selecionarPresetModal(this)">
+                                <img src="/images/acai_copo_tampa.png" alt="Copo Tampa">
+                                <span>Tampa Bolha</span>
+                            </div>
+                            <div class="image-preset-option" data-img="/images/acai_tigela_branca_frutas.jpg" onclick="selecionarPresetModal(this)">
+                                <img src="/images/acai_tigela_branca_frutas.jpg" alt="Tigela Frutas">
+                                <span>Tigela Frutas</span>
+                            </div>
+                            <div class="image-preset-option" data-img="/images/acai_tigela_palmeira_roxo.jpg" onclick="selecionarPresetModal(this)">
+                                <img src="/images/acai_tigela_palmeira_roxo.jpg" alt="Tigela Tropical">
+                                <span>Tropical</span>
+                            </div>
+                            <div class="image-preset-option" data-img="/images/acai_topdown_folhas_monstera.jpg" onclick="selecionarPresetModal(this)">
+                                <img src="/images/acai_topdown_folhas_monstera.jpg" alt="Tigela Gourmet">
+                                <span>Gourmet</span>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="admin-prod-imagem" name="imagem" value="/images/acai_copo_perfeito.jpg">
+
+                        <!-- Dropzone / Upload Local -->
+                        <label for="admin-prod-arquivo" class="file-upload-dropzone" style="padding: 14px 12px; margin-top: 8px;">
+                            <i class="fa-solid fa-cloud-arrow-up file-upload-icon" style="font-size: 1.5rem; margin-bottom: 4px;"></i>
+                            <strong class="file-upload-title" style="font-size: 0.88rem;">Ou envie uma foto do computador</strong>
+                            <span class="file-upload-sub" style="font-size: 0.76rem;">PNG, JPG, JPEG ou WEBP</span>
+                            <input type="file" id="admin-prod-arquivo" name="fotoArquivo" accept="image/*" style="display:none;" onchange="lidarComUploadModalProduto(this)">
+                        </label>
+
+                        <!-- Preview da Imagem -->
+                        <div class="image-preview-wrapper" style="margin-top: 10px;">
+                            <img src="/images/acai_copo_perfeito.jpg" alt="Preview" class="image-preview-thumb" id="admin-prod-img-preview" onerror="this.src='/images/acai_copo_perfeito.jpg'">
+                            <div class="image-preview-label">
+                                <strong>Foto Selecionada</strong>
+                                <span id="admin-prod-img-preview-text">/images/acai_copo_perfeito.jpg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sb-admin-modal-footer">
+                    <button type="button" class="btn-modal-cancel" onclick="fecharModalAdminProduto()">Cancelar</button>
+                    <button type="submit" class="btn-modal-save" id="admin-prod-btn-submit">
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar Produto
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal 2: Cadastrar / Editar Acompanhamento (Adicional) -->
+    <div class="sb-modal-overlay" id="modal-admin-adicional" onclick="fecharModalAdminFora(event, 'modal-admin-adicional')">
+        <div class="sb-modal-box sb-admin-modal-box" style="max-width: 480px;">
+            <div class="sb-modal-header">
+                <h3 id="modal-admin-adic-title"><i class="fa-solid fa-seedling" style="margin-right: 8px; color: var(--color-green);"></i> Cadastrar Novo Adicional</h3>
+                <button type="button" class="btn-modal-close" onclick="fecharModalAdminAdicional()" aria-label="Fechar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="form-admin-adicional" action="/admin/adicionais/salvar" method="post">
+                <input type="hidden" name="id" id="admin-adic-id">
+
+                <div class="sb-modal-body">
+                    <!-- Nome do Adicional -->
+                    <div class="sb-admin-form-group">
+                        <label for="admin-adic-nome">Nome do Acompanhamento:</label>
+                        <input type="text" class="sb-admin-input" id="admin-adic-nome" name="nome" placeholder="Ex: Morango Fresco em Fatias" required>
+                        <span class="form-help">Nome exibido na lista de adicionais no cardápio.</span>
+                    </div>
+
+                    <!-- Preço Adicional -->
+                    <div class="sb-admin-form-group">
+                        <label for="admin-adic-preco">Preço Adicional (R$):</label>
+                        <input type="number" step="0.01" min="0" class="sb-admin-input" id="admin-adic-preco" name="preco" placeholder="3.50" required>
+                        <span class="form-help">Valor somado ao açaí quando selecionado.</span>
+                    </div>
+                </div>
+
+                <div class="sb-admin-modal-footer">
+                    <button type="button" class="btn-modal-cancel" onclick="fecharModalAdminAdicional()">Cancelar</button>
+                    <button type="submit" class="btn-modal-save" id="admin-adic-btn-submit">
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar Adicional
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     </div>
 </main>
 
-<!-- Chamada do JS externo -->
 <th:block layout:fragment="page-script">
     <script th:src="@{/js/dashboard.js}"></script>
 </th:block>
+
 </body>
 </html>

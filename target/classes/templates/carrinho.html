@@ -10,39 +10,106 @@
         .cart-wrapper {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 30px 16px 80px 16px;
+            padding: 28px 16px 80px 16px;
+            background: var(--bg-main, #F4EBF7);
         }
 
         .cart-title-section {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
+        }
+
+        .cart-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-panel-secondary, #F4EBF7);
+            color: var(--color-purple, #3A0B2E);
+            border: 1.5px solid var(--border-lavender, #E4D5E9);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 999px;
+            margin-bottom: 10px;
         }
 
         .cart-title-section h1 {
-            font-size: 2.4rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.3rem;
             font-weight: 800;
-            margin-bottom: 8px;
-            color: var(--text-title);
+            margin-bottom: 6px;
+            color: var(--color-purple, #3A0B2E);
+            letter-spacing: -0.5px;
         }
 
+        .cart-title-section p {
+            color: var(--text-muted, #7A6573);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Estado de Carrinho Vazio */
         .cart-empty-panel {
             text-align: center;
-            padding: 60px 24px;
-            background: #FFFFFF;
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-xl);
+            padding: 56px 24px;
+            background: var(--bg-panel-secondary, #F4EBF7);
+            border: 1.5px solid var(--border-lavender, #E4D5E9);
+            border-radius: var(--radius-xl, 22px);
             max-width: 520px;
-            margin: 0 auto;
-            box-shadow: var(--shadow-sm);
+            margin: 20px auto;
+            box-shadow: 0 4px 18px rgba(58, 11, 46, 0.05);
         }
 
         .cart-empty-icon {
-            font-size: 3.5rem;
-            color: var(--primary-berry);
-            margin-bottom: 16px;
-            display: inline-block;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 1.5px solid var(--border-lavender, #E4D5E9);
+            color: var(--color-purple, #3A0B2E);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px auto;
+            box-shadow: 0 4px 12px rgba(58, 11, 46, 0.06);
         }
 
+        .cart-empty-panel h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--color-purple, #3A0B2E);
+            margin-bottom: 8px;
+        }
+
+        .cart-empty-panel p {
+            color: var(--text-muted, #7A6573);
+            font-size: 0.92rem;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .cart-empty-panel .btn-empty-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--color-purple, #3A0B2E);
+            color: #FFFFFF;
+            padding: 12px 26px;
+            border-radius: 999px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition, all 0.2s ease);
+            box-shadow: 0 4px 14px rgba(58, 11, 46, 0.22);
+        }
+
+        .cart-empty-panel .btn-empty-action:hover {
+            background: var(--color-purple-hover, #26051E);
+            transform: translateY(-2px);
+        }
+
+        /* Layout Grid */
         .cart-grid {
             display: grid;
             grid-template-columns: 1fr 340px;
@@ -52,10 +119,10 @@
 
         .cart-items-card {
             background: #FFFFFF;
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-xl);
+            border: 1.5px solid var(--border-light, #E8DFDC);
+            border-radius: var(--radius-xl, 22px);
             padding: 22px;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 4px 18px rgba(58, 11, 46, 0.06);
         }
 
         .cart-item-row {
@@ -63,12 +130,18 @@
             align-items: center;
             justify-content: space-between;
             padding: 18px 0;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1.5px solid var(--border-light, #E8DFDC);
             gap: 16px;
+            transition: background 0.15s ease;
         }
 
         .cart-item-row:last-child {
             border-bottom: none;
+            padding-bottom: 4px;
+        }
+
+        .cart-item-row:first-child {
+            padding-top: 4px;
         }
 
         .cart-item-info {
@@ -76,27 +149,34 @@
             align-items: center;
             gap: 14px;
             flex: 1;
+            min-width: 0;
         }
 
         .item-icon-circle {
             width: 48px;
             height: 48px;
-            border-radius: 12px;
-            background: var(--primary-berry-soft);
-            border: 1px solid var(--primary-berry-border);
+            border-radius: 14px;
+            background: var(--bg-panel-secondary, #F4EBF7);
+            border: 1.5px solid var(--border-lavender, #E4D5E9);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
-            color: var(--primary-berry);
+            color: var(--color-purple, #3A0B2E);
             flex-shrink: 0;
         }
 
+        .item-details {
+            min-width: 0;
+        }
+
         .item-details h4 {
-            font-size: 1.1rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
             font-weight: 700;
-            color: var(--text-title);
-            margin: 0 0 4px 0;
+            color: var(--color-purple, #3A0B2E);
+            margin: 0 0 6px 0;
+            word-break: break-word;
         }
 
         .item-toppings-list {
@@ -109,53 +189,94 @@
         }
 
         .item-topping-pill {
-            font-size: 0.76rem;
-            background: var(--bg-surface-soft);
-            border: 1px solid var(--border-light);
-            padding: 2px 8px;
-            border-radius: 10px;
-            color: var(--text-body);
+            font-size: 0.74rem;
+            font-weight: 600;
+            background: #FFFFFF;
+            border: 1px solid var(--color-green, #2E7D32);
+            padding: 2px 9px;
+            border-radius: 999px;
+            color: var(--color-green, #2E7D32);
+            white-space: nowrap;
         }
 
+        .item-topping-pill.pill-empty {
+            border-color: var(--border-medium, #DCD0CD);
+            color: var(--text-muted, #7A6573);
+            background: #FFFFFF;
+        }
+
+        /* Ações de Edição do Item */
         .cart-item-actions {
             display: flex;
             align-items: center;
             gap: 16px;
+            flex-shrink: 0;
         }
 
-        .cart-qty-form {
+        /* Seletor de Quantidade Interativo e Responsivo */
+        .cart-stepper-form {
+            display: inline-flex;
+            align-items: center;
+            margin: 0;
+        }
+
+        .cart-stepper-control {
+            display: inline-flex;
+            align-items: center;
+            background: #FFFFFF;
+            border: 1.5px solid var(--border-lavender, #E4D5E9);
+            border-radius: 999px;
+            padding: 3px 5px;
+            box-shadow: 0 2px 6px rgba(58, 11, 46, 0.04);
+        }
+
+        .stepper-btn-cart {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--border-lavender, #E4D5E9);
+            background: #FFFFFF;
+            color: var(--color-purple, #3A0B2E);
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            transition: all 0.2s ease;
+            user-select: none;
         }
 
-        .cart-qty-input {
-            width: 50px;
-            background: #FFFFFF;
-            border: 1.5px solid var(--border-medium);
-            color: var(--text-title);
-            padding: 6px 4px;
-            text-align: center;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.95rem;
+        .stepper-btn-cart:hover {
+            background: var(--color-purple, #3A0B2E);
+            color: #FFFFFF;
+            border-color: var(--color-purple, #3A0B2E);
         }
 
-        .btn-update-qty {
+        .stepper-btn-cart:active {
+            transform: scale(0.92);
+        }
+
+        .cart-qty-val-input {
+            width: 36px;
             border: none;
-            background: var(--bg-surface-soft);
-            color: var(--primary-berry);
-            padding: 7px 10px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: var(--transition);
+            background: transparent;
+            text-align: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--color-purple, #3A0B2E);
+            outline: none;
+            -moz-appearance: textfield;
+            appearance: textfield;
         }
 
-        .btn-update-qty:hover {
-            background: var(--primary-berry-soft);
+        .cart-qty-val-input::-webkit-outer-spin-button,
+        .cart-qty-val-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
 
+        /* Bloco de Preços */
         .cart-item-price {
             text-align: right;
             min-width: 85px;
@@ -163,103 +284,220 @@
 
         .cart-item-price .unit-cost {
             font-size: 0.78rem;
-            color: var(--text-muted);
+            color: var(--text-muted, #7A6573);
+            white-space: nowrap;
         }
 
         .cart-item-price .subtotal-cost {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--accent-green);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--color-purple, #3A0B2E);
+            white-space: nowrap;
+            line-height: 1.2;
         }
 
+        /* Botão Remover */
         .btn-remove-item {
             background: #FEE2E2;
             border: 1px solid #FCA5A5;
             color: #DC2626;
             width: 36px;
             height: 36px;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition);
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
         }
 
         .btn-remove-item:hover {
             background: #EF4444;
-            color: #ffffff;
+            color: #FFFFFF;
+            border-color: #EF4444;
+            transform: scale(1.05);
         }
 
         /* Card de Resumo Lateral */
         .cart-checkout-card {
-            background: #FFFFFF;
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-xl);
+            background: var(--bg-panel-secondary, #F4EBF7);
+            border: 1.5px solid var(--border-lavender, #E4D5E9);
+            border-radius: var(--radius-xl, 22px);
             padding: 24px;
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 18px rgba(58, 11, 46, 0.06);
         }
 
         .cart-checkout-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-title);
-            border-bottom: 1px solid var(--border-light);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--color-purple, #3A0B2E);
+            border-bottom: 1.5px solid var(--border-lavender, #E4D5E9);
             padding-bottom: 14px;
-            margin-bottom: 16px;
+            margin: 0 0 16px 0;
+            letter-spacing: -0.3px;
         }
 
         .checkout-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 12px;
             font-size: 0.92rem;
-            color: var(--text-body);
+            color: var(--text-body, #4A3543);
         }
 
         .checkout-row.total-row {
-            border-top: 1.5px solid var(--border-light);
+            border-top: 1.5px solid var(--border-lavender, #E4D5E9);
             padding-top: 14px;
-            margin-top: 14px;
+            margin-top: 16px;
             font-size: 1.15rem;
             font-weight: 700;
-            color: var(--text-title);
+            color: var(--color-purple, #3A0B2E);
         }
 
         .checkout-row.total-row span:last-child {
-            color: var(--accent-green);
-            font-size: 1.6rem;
+            font-family: 'Outfit', sans-serif;
+            color: var(--color-purple, #3A0B2E);
+            font-size: 1.65rem;
             font-weight: 800;
         }
 
         .btn-finish-order {
             width: 100%;
-            margin-top: 18px;
+            margin-top: 20px;
             padding: 14px 20px;
             font-size: 1rem;
+            background: var(--color-purple, #3A0B2E);
+            color: #FFFFFF !important;
+            border-radius: 999px;
+            border: none;
+            box-shadow: 0 6px 18px rgba(58, 11, 46, 0.28);
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-finish-order:hover {
+            background: var(--color-purple-hover, #26051E);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(58, 11, 46, 0.38);
         }
 
         .btn-keep-shopping {
             width: 100%;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            margin-top: 10px;
-            font-size: 0.9rem;
+            gap: 8px;
+            margin-top: 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border-radius: 999px;
+            padding: 11px 18px;
+            background: #FFFFFF;
+            color: var(--color-purple, #3A0B2E);
+            border: 1.5px solid var(--border-lavender, #E4D5E9);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
         }
 
+        .btn-keep-shopping:hover {
+            border-color: var(--color-purple, #3A0B2E);
+            background: #FAF7FB;
+        }
+
+        /* --------------------------------------------------------------------------
+           RESPONSIVIDADE MODERNA DO EDITAR PEDIDO (TABLETS E CELULARES)
+           -------------------------------------------------------------------------- */
         @media screen and (max-width: 860px) {
             .cart-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .cart-wrapper {
+                padding: 18px 12px 60px 12px;
+            }
+
+            .cart-title-section h1 {
+                font-size: 1.9rem;
+            }
+
+            .cart-items-card {
+                padding: 16px 14px;
             }
 
             .cart-item-row {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
+                align-items: stretch;
+                gap: 14px;
+                padding: 16px 0;
             }
 
             .cart-item-actions {
                 width: 100%;
                 justify-content: space-between;
+                align-items: center;
+                background: #FAF7FB;
+                padding: 10px 14px;
+                border-radius: 14px;
+                border: 1px solid var(--border-lavender, #E4D5E9);
+                box-sizing: border-box;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .cart-title-section {
+                margin-bottom: 18px;
+            }
+
+            .cart-title-section h1 {
+                font-size: 1.65rem;
+            }
+
+            .cart-item-info {
+                gap: 10px;
+            }
+
+            .item-icon-circle {
+                width: 42px;
+                height: 42px;
+                font-size: 1.15rem;
+            }
+
+            .item-details h4 {
+                font-size: 1.05rem;
+            }
+
+            .cart-item-actions {
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                gap: 10px;
+                align-items: center;
+                padding: 8px 10px;
+            }
+
+            .cart-item-price {
+                min-width: 0;
+                text-align: center;
+            }
+
+            .cart-item-price .subtotal-cost {
+                font-size: 1.15rem;
+            }
+
+            .cart-checkout-card {
+                padding: 18px 16px;
             }
         }
     </style>
@@ -268,9 +506,11 @@
 <main layout:fragment="content">
     <div class="cart-wrapper">
         <div class="cart-title-section">
-            <span class="badge-pill">🛒 Sacola de Pedidos</span>
+            <span class="cart-badge-pill">
+                <i class="fa-solid fa-basket-shopping"></i> Sacola de Pedidos
+            </span>
             <h1>Seu Carrinho</h1>
-            <p>Revise suas tigelas de açaí antes de finalizar o pedido</p>
+            <p>Revise suas tigelas e copos de açaí antes de finalizar o pedido</p>
         </div>
 
         <!-- Estado de Carrinho Vazio -->
@@ -278,17 +518,19 @@
             <div class="cart-empty-icon">
                 <i class="fa-solid fa-basket-shopping"></i>
             </div>
-            <h2 style="font-size: 1.4rem; margin-bottom: 8px;">Sua sacola está vazia</h2>
-            <p style="color: var(--text-muted); margin-bottom: 22px;">Que tal montar um açaí geladinho com seus adicionais preferidos?</p>
-            <a href="/cardapio" class="btn-default">
+            <h2>Sua sacola está vazia</h2>
+            <p>Que tal escolher uma opção deliciosa e montar seu açaí artesanal geladinho?</p>
+            <a href="/cardapio" class="btn-empty-action">
                 <i class="fa-solid fa-plus"></i> Montar meu Açaí
             </a>
         </div>
 
-        <!-- Estado com Itens no Carrinho -->
+        <!-- Estado com Itens no Carrinho (Edição Responsiva do Pedido) -->
         <div th:unless="${#lists.isEmpty(carrinho.itensNoCarrinho)}" class="cart-grid">
             <div class="cart-items-card">
                 <div th:each="item : ${carrinho.itensNoCarrinho}" class="cart-item-row">
+                    
+                    <!-- Informações do Item (Nome, Tamanho, Adicionais) -->
                     <div class="cart-item-info">
                         <div class="item-icon-circle">
                             <i class="fa-solid fa-bowl-food"></i>
@@ -296,7 +538,7 @@
                         <div class="item-details">
                             <h4 th:text="${item.acai.tamanho.nome}">Tamanho do Açaí</h4>
                             <ul class="item-toppings-list">
-                                <li th:if="${#lists.isEmpty(item.acai.adicionais)}" class="item-topping-pill" style="opacity: 0.7;">
+                                <li th:if="${#lists.isEmpty(item.acai.adicionais)}" class="item-topping-pill pill-empty">
                                     Sem adicionais
                                 </li>
                                 <li th:each="ad : ${item.acai.adicionais}" class="item-topping-pill"
@@ -307,44 +549,49 @@
                         </div>
                     </div>
 
+                    <!-- Barra de Ações: Editar Quantidade, Ver Preço e Remover -->
                     <div class="cart-item-actions">
-                        <!-- Formulário para Atualizar Quantidade -->
-                        <form th:action="@{/carrinho/atualizar}" method="post" class="cart-qty-form">
+                        
+                        <!-- Seletor Interativo de Quantidade (- 1 +) com Auto-atualização -->
+                        <form th:action="@{/carrinho/atualizar}" method="post" class="cart-stepper-form" id="form-item-${item.id}">
                             <input type="hidden" name="itemId" th:value="${item.id}"/>
-                            <input type="number" min="1" max="50" name="quantidade" th:value="${item.quantidade}" class="cart-qty-input"/>
-                            <button type="submit" class="btn-update-qty" title="Atualizar quantidade">
-                                <i class="fa-solid fa-arrows-rotate"></i>
-                            </button>
+                            <div class="cart-stepper-control">
+                                <button type="button" class="stepper-btn-cart" onclick="atualizarQuantidadeItem(this, -1)" title="Diminuir quantidade">−</button>
+                                <input type="number" min="1" max="50" name="quantidade" th:value="${item.quantidade}" class="cart-qty-val-input" onchange="this.form.submit()" readonly/>
+                                <button type="button" class="stepper-btn-cart" onclick="atualizarQuantidadeItem(this, 1)" title="Aumentar quantidade">+</button>
+                            </div>
                         </form>
 
+                        <!-- Subtotal do Item -->
                         <div class="cart-item-price">
                             <div class="unit-cost" th:text="${#numbers.formatCurrency(item.precoUnitario) + ' un.'}">R$ 0,00 un.</div>
                             <div class="subtotal-cost" th:text="${#numbers.formatCurrency(item.subTotal())}">R$ 0,00</div>
                         </div>
 
-                        <!-- Formulário para Remover Item -->
+                        <!-- Remover Item -->
                         <form th:action="@{/carrinho/remover}" method="post">
                             <input type="hidden" name="itemId" th:value="${item.id}"/>
-                            <button type="submit" class="btn-remove-item" title="Remover da sacola">
+                            <button type="submit" class="btn-remove-item" title="Remover da sacola" onclick="return confirm('Deseja retirar este item da sacola?');">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </form>
+
                     </div>
                 </div>
             </div>
 
-            <!-- Resumo e Finalização da Compra -->
+            <!-- Resumo Financeiro e Finalização da Compra -->
             <aside class="cart-checkout-card">
                 <h3>Resumo do Pedido</h3>
 
                 <div class="checkout-row">
                     <span>Itens na sacola:</span>
-                    <span th:text="${#lists.size(carrinho.itensNoCarrinho)} + ' item(ns)'">1 item</span>
+                    <strong th:text="${#lists.size(carrinho.itensNoCarrinho)} + ' item(ns)'">1 item</strong>
                 </div>
 
                 <div class="checkout-row">
                     <span>Entrega:</span>
-                    <span style="color: var(--accent-green); font-weight: 600;">Retirada / A combinar</span>
+                    <strong style="color: var(--color-green, #2E7D32);">Retirada / A combinar</strong>
                 </div>
 
                 <div class="checkout-row total-row">
@@ -353,17 +600,48 @@
                 </div>
 
                 <form th:action="@{/carrinho/finalizarCompra}" method="post">
-                    <button type="submit" class="btn-default btn-finish-order">
+                    <button type="submit" class="btn-finish-order">
                         <i class="fa-solid fa-bag-shopping"></i> Finalizar Compra
                     </button>
                 </form>
 
-                <a href="/cardapio" class="btn-outline-glass btn-keep-shopping">
+                <a href="/cardapio" class="btn-keep-shopping">
                     <i class="fa-solid fa-arrow-left"></i> Continuar Comprando
                 </a>
             </aside>
         </div>
     </div>
+
+    <!-- Script de Edição Ágil da Quantidade -->
+    <script>
+        function atualizarQuantidadeItem(buttonEl, delta) {
+            const form = buttonEl.closest('form');
+            if (!form) return;
+            const input = form.querySelector('input[name="quantidade"]');
+            if (!input) return;
+
+            let currentVal = parseInt(input.value, 10) || 1;
+            let newVal = currentVal + delta;
+
+            if (newVal < 1) {
+                // Se o usuário diminuir para 0, perguntar se quer remover
+                const row = form.closest('.cart-item-row');
+                const removeForm = row ? row.querySelector('form[action*="/carrinho/remover"]') : null;
+                if (removeForm && confirm('Deseja remover este item da sua sacola?')) {
+                    removeForm.submit();
+                    return;
+                }
+                newVal = 1;
+            }
+
+            if (newVal > 50) {
+                newVal = 50;
+            }
+
+            input.value = newVal;
+            form.submit();
+        }
+    </script>
 </main>
 </body>
 </html>

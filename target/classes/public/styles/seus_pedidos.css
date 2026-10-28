@@ -1,60 +1,62 @@
-/* Estilos Claros e Responsivos - Meus Pedidos */
+/* ==========================================================================
+   STACKBERRY - PÁGINA MEUS PEDIDOS (ARTESANAL & RESPONSIVO)
+   ========================================================================== */
 
 .container {
-    max-width: 980px;
-    margin: 30px auto 70px auto;
-    padding: 0 16px;
+    max-width: 1040px;
+    margin: 40px auto 90px auto;
+    padding: 0 20px;
     width: 100%;
     box-sizing: border-box;
 }
 
 .text-center h1 {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--text-title);
-    margin-bottom: 24px;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: 2.3rem;
+    font-weight: 900;
+    color: var(--text-title, #26051E);
+    margin-bottom: 28px;
+    letter-spacing: -0.5px;
 }
 
 #pedidos-list {
     background: #FFFFFF;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-sm);
+    border: 1.5px solid var(--border-light, #EFE4F2);
+    border-radius: 28px;
+    box-shadow: 0 14px 36px rgba(58, 11, 46, 0.08);
     width: 100%;
     overflow: hidden;
 }
 
 .table-responsive {
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     display: block;
 }
 
 #pedidos-list table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 540px; /* Garante que as colunas não fiquem esmagadas no celular */
 }
 
 #pedidos-list th {
-    background: var(--bg-surface-soft);
-    color: var(--text-title);
-    font-weight: 700;
+    background: #F6EEF8;
+    color: var(--text-title, #26051E);
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-weight: 800;
     font-size: 0.88rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    padding: 14px 18px;
-    border-bottom: 1.5px solid var(--border-light);
+    padding: 18px 24px;
+    border-bottom: 1.5px solid var(--border-medium, #E2CFE8);
     text-align: left;
     white-space: nowrap;
 }
 
 #pedidos-list td {
-    padding: 16px 18px;
-    border-bottom: 1px solid var(--border-light);
-    color: var(--text-body);
-    font-size: 0.92rem;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border-light, #EFE4F2);
+    color: var(--text-body, #4A3043);
+    font-size: 0.94rem;
     vertical-align: middle;
 }
 
@@ -63,105 +65,201 @@
 }
 
 #pedidos-list tr:hover td {
-    background: #FDFBFE;
+    background: #FDF9FE;
 }
 
+/* Badges de Status do Pedido */
 .badge {
-    display: inline-block;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.82rem;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: 9999px;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: 0.85rem;
+    font-weight: 800;
     white-space: nowrap;
 }
 
 .bg-success {
-    background: var(--accent-green-soft) !important;
-    border: 1px solid var(--accent-green-border);
-    color: var(--accent-green) !important;
+    background: #DCFCE7 !important;
+    border: 1.5px solid #86EFAC;
+    color: #166534 !important;
 }
 
 .bg-warning {
-    background: #FEF9C3 !important;
-    border: 1px solid #FDE047;
-    color: #854D0E !important;
+    background: #FEF3C7 !important;
+    border: 1.5px solid #FCD34D;
+    color: #92400E !important;
 }
 
 .bg-danger {
     background: #FEE2E2 !important;
-    border: 1px solid #FCA5A5;
+    border: 1.5px solid #FCA5A5;
     color: #991B1B !important;
 }
 
 #mensagem-sem-pedidos {
     background: #FFFFFF;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-xl);
-    padding: 48px 20px;
+    border: 1.5px solid var(--border-light, #EFE4F2);
+    border-radius: 28px;
+    padding: 60px 24px;
     text-align: center;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 14px 36px rgba(58, 11, 46, 0.08);
 }
 
 #mensagem-sem-pedidos p {
-    font-size: 1.1rem;
-    color: var(--text-body);
-    margin-bottom: 18px;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: 1.3rem;
+    color: var(--text-title, #26051E);
+    font-weight: 800;
+    margin-bottom: 22px;
 }
 
 .btn-cancelar-pedido {
     background: #FEE2E2;
     border: 1px solid #FCA5A5;
     color: #DC2626;
-    padding: 6px 14px;
-    border-radius: 8px;
+    padding: 8px 18px;
+    border-radius: 9999px;
     cursor: pointer;
-    font-size: 0.82rem;
-    font-weight: 600;
-    transition: var(--transition);
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: 0.86rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
     white-space: nowrap;
 }
 
 .btn-cancelar-pedido:hover {
     background: #EF4444;
-    color: #ffffff;
+    color: #FFFFFF;
+    border-color: #EF4444;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.btn-purple {
+    background: #26051E !important;
+    color: #FFFFFF !important;
+    padding: 13px 32px;
+    border-radius: 9999px;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-weight: 800;
+    font-size: 0.98rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+    border: none;
+    box-shadow: 0 8px 24px rgba(38, 5, 30, 0.28);
+}
+
+.btn-purple:hover {
+    background: #3A0B2E !important;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(38, 5, 30, 0.38);
+    color: #FFFFFF !important;
 }
 
 hr.separador-suave {
     border: none;
-    height: 1px;
-    background: var(--border-light);
-    margin: 36px auto;
+    height: 1.5px;
+    background: var(--border-light, #EFE4F2);
+    margin: 40px auto;
 }
 
-/* Dica de rolagem visual no mobile */
 .mobile-swipe-hint {
     display: none;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    text-align: right;
-    margin-bottom: 8px;
 }
 
+/* ==========================================================================
+   VISUALIZAÇÃO EM CARDS NO MOBILE
+   ========================================================================== */
 @media screen and (max-width: 768px) {
     .container {
-        padding: 0 12px;
-        margin: 20px auto 50px auto;
+        padding: 0 16px;
+        margin: 24px auto 60px auto;
     }
 
     .text-center h1 {
-        font-size: 1.8rem;
-    }
-
-    .mobile-swipe-hint {
-        display: block;
+        font-size: 1.9rem;
     }
 
     #pedidos-list {
-        border-radius: var(--radius-lg);
+        background: transparent;
+        border: none;
+        box-shadow: none;
     }
 
-    #pedidos-list th, #pedidos-list td {
-        padding: 12px 14px;
-        font-size: 0.86rem;
+    .table-responsive {
+        overflow-x: visible;
+    }
+
+    #pedidos-list table {
+        min-width: 0;
+        width: 100%;
+        display: block;
+    }
+
+    #pedidos-list thead {
+        display: none;
+    }
+
+    #pedidos-list tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+    }
+
+    #pedidos-list tr {
+        display: flex;
+        flex-direction: column;
+        background: #FFFFFF;
+        border: 1.5px solid var(--border-light, #EFE4F2);
+        border-radius: 22px;
+        padding: 20px;
+        box-shadow: 0 8px 24px rgba(58, 11, 46, 0.06);
+        gap: 12px;
+    }
+
+    #pedidos-list td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px dashed var(--border-light, #EFE4F2);
+        font-size: 0.92rem;
+    }
+
+    #pedidos-list td::before {
+        content: attr(data-label);
+        font-family: var(--font-heading, 'Outfit', sans-serif);
+        font-weight: 800;
+        color: var(--text-title, #26051E);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    #pedidos-list td[data-label="Itens"] {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    #pedidos-list td[data-label="Itens"]::before {
+        margin-bottom: 2px;
+    }
+
+    #pedidos-list td[data-label="Ação"] {
+        border-bottom: none;
+        padding-top: 10px;
+        justify-content: flex-end;
+    }
+
+    #pedidos-list td:empty {
+        display: none;
     }
 }

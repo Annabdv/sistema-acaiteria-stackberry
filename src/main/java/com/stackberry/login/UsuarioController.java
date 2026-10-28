@@ -48,6 +48,13 @@ public class UsuarioController {
             Usuario usuario = usuarioService.autenticaUsuario(email, senha);
             ctx.sessionAttribute("usuarioLogado", usuario);
 
+            String redirectPosLogin = ctx.sessionAttribute("redirectPosLogin");
+            if (redirectPosLogin != null && !redirectPosLogin.isEmpty()) {
+                ctx.sessionAttribute("redirectPosLogin", null);
+                ctx.redirect(redirectPosLogin);
+                return;
+            }
+
             // Redirect por tipo de usuario
             switch (usuario.getTipoDeUsuario()) {
                 case CLIENTE -> ctx.redirect("/cardapio");

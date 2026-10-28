@@ -2,6 +2,7 @@ package com.stackberry.cardapio;
 
 import com.stackberry.adicional.Adicional;
 import com.stackberry.adicional.AdicionalService;
+import com.stackberry.carrinho.Carrinho;
 import com.stackberry.tamanho.Tamanho;
 import com.stackberry.tamanho.TamanhoService;
 
@@ -16,11 +17,15 @@ public class CardapioController {
 
         List<Tamanho> tamanhos = tamanhoService.listarTamanhos();
         List<Adicional> adicionais = adicionalService.listarAdicionais();
-
+        Carrinho carrinho = ctx.sessionAttribute("carrinho");
+        if (carrinho == null) {
+            carrinho = new Carrinho();
+        }
 
         ctx.render("cardapio.html", java.util.Map.of(
                 "tamanhos", tamanhos,
-                "adicionais", adicionais
+                "adicionais", adicionais,
+                "carrinho", carrinho
         ));
     }
 }

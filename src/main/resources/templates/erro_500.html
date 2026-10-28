@@ -1,29 +1,152 @@
 <!DOCTYPE html>
 <html lang="pt-br"
-      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layout}">
 <head>
-    <title>Erro interno</title>
+    <meta charset="UTF-8">
+    <title>Erro Interno - 500 | StackBerry</title>
     <th:block layout:fragment="page-css">
-        <style>
-            .error-container {
-                padding-top: 50px;
-                padding-bottom: 50px;
+    <style>
+        .error-500-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px 80px 16px;
+            text-align: center;
+            min-height: calc(100vh - 220px);
+            background: var(--bg-main, #FAF6F0);
+            box-sizing: border-box;
+        }
+
+        .error-500-card {
+            background: #FFFFFF;
+            border: 1.5px solid var(--border-light, #EFE4F2);
+            border-radius: 28px;
+            padding: 46px 36px;
+            max-width: 520px;
+            width: 100%;
+            box-shadow: 0 16px 40px rgba(58, 11, 46, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .cat-gif-wrapper {
+            width: 240px;
+            height: 240px;
+            border-radius: 22px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 24px rgba(58, 11, 46, 0.12);
+            border: 2px solid var(--border-medium, #E2CFE8);
+            background: #F6EEF8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cat-gif-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .error-code-badge {
+            background: #26051E;
+            color: #FFFFFF;
+            font-size: 0.85rem;
+            font-weight: 800;
+            padding: 5px 16px;
+            border-radius: 9999px;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+            font-family: var(--font-heading, 'Outfit', sans-serif);
+        }
+
+        .error-500-card h1 {
+            font-family: var(--font-heading, 'Outfit', sans-serif);
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: var(--text-title, #26051E);
+            margin: 0 0 10px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .error-500-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted, #7D6476);
+            line-height: 1.55;
+            margin: 0 0 26px 0;
+            max-width: 420px;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btn-back-home {
+            background: #26051E;
+            color: #FFFFFF !important;
+            padding: 13px 32px;
+            border-radius: 9999px;
+            font-family: var(--font-heading, 'Outfit', sans-serif);
+            font-weight: 800;
+            font-size: 0.98rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 24px rgba(38, 5, 30, 0.28);
+        }
+
+        .btn-back-home:hover {
+            background: #3A0B2E;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(38, 5, 30, 0.38);
+        }
+
+        @media (max-width: 540px) {
+            .error-500-card {
+                padding: 28px 18px;
             }
-        </style>
+            .cat-gif-wrapper {
+                width: 200px;
+                height: 200px;
+            }
+            .error-500-card h1 {
+                font-size: 1.55rem;
+            }
+            .btn-back-home {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
     </th:block>
 </head>
 <body>
 <main layout:fragment="content">
-    <div class="container text-center error-container">
-        <div class="row align-items-center mt-5">
-            <div class="col-md-6">
-                <img th:src="@{/images/gato.gif}" alt="Gato triste" class="img-fluid">
+    <div class="error-500-wrapper">
+        <div class="error-500-card">
+            <div class="cat-gif-wrapper">
+                <img th:src="@{/images/gato.gif}" alt="Gato triste">
             </div>
-            <div class="col-md-6 d-flex align-items-start flex-column">
-                <h1>Alguma coisa de errado aconteceu no sistema.</h1>
-                <h2>Desculpe-nos o transtorno.</h2>
+            <span class="error-code-badge">ERRO 500</span>
+            <h1>Opa! Algo deu errado</h1>
+            <p>Ocorreu uma instabilidade inesperada no servidor. Nossa equipe já foi notificada para ajustar o liquidificador!</p>
+            <div class="error-actions">
+                <a href="/cardapio" class="btn-back-home">
+                    <i class="fa-solid fa-utensils"></i> Voltar ao Cardápio
+                </a>
             </div>
         </div>
     </div>

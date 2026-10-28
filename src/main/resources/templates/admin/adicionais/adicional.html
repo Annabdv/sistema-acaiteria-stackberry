@@ -4,46 +4,226 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <head>
-    <title>Gerenciar Adicionais</title>
+    <title>Gerenciar Adicionais - StackBerry</title>
+    <th:block layout:fragment="page-css">
+        <link rel="stylesheet" th:href="@{/styles/dashboard.css}">
+        <style>
+            .admin-page-card {
+                background: #FFFFFF;
+                border: 1.5px solid var(--border-light, #EFE4F2);
+                border-radius: 28px;
+                box-shadow: 0 14px 36px rgba(58, 11, 46, 0.08);
+                padding: 36px;
+                margin-top: 20px;
+            }
+
+            .admin-page-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 16px;
+                margin-bottom: 28px;
+            }
+
+            .admin-page-header h1 {
+                font-family: var(--font-heading, 'Outfit', sans-serif);
+                font-size: 1.85rem;
+                font-weight: 900;
+                color: var(--text-title, #26051E);
+                letter-spacing: -0.5px;
+                margin: 0;
+            }
+
+            .btn-admin-add {
+                background: #26051E;
+                color: #FFFFFF !important;
+                padding: 11px 24px;
+                border-radius: 9999px;
+                font-family: var(--font-heading, 'Outfit', sans-serif);
+                font-weight: 800;
+                font-size: 0.9rem;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                box-shadow: 0 6px 20px rgba(38, 5, 30, 0.25);
+                transition: all 0.25s ease;
+            }
+
+            .btn-admin-add:hover {
+                background: #3A0B2E;
+                transform: translateY(-2px);
+                box-shadow: 0 10px 26px rgba(38, 5, 30, 0.35);
+            }
+
+            .btn-action-edit {
+                background: #F6EEF8;
+                border: 1.5px solid #E2CFE8;
+                color: #26051E !important;
+                padding: 6px 16px;
+                border-radius: 9999px;
+                font-family: var(--font-heading, 'Outfit', sans-serif);
+                font-weight: 700;
+                font-size: 0.82rem;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                transition: all 0.2s ease;
+            }
+
+            .btn-action-edit:hover {
+                background: #26051E;
+                border-color: #26051E;
+                color: #FFFFFF !important;
+            }
+
+            .btn-action-remove {
+                background: #FEE2E2;
+                border: 1.5px solid #FCA5A5;
+                color: #DC2626;
+                padding: 6px 16px;
+                border-radius: 9999px;
+                font-family: var(--font-heading, 'Outfit', sans-serif);
+                font-weight: 700;
+                font-size: 0.82rem;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            .btn-action-remove:hover {
+                background: #EF4444;
+                border-color: #EF4444;
+                color: #FFFFFF;
+            }
+
+            @media (max-width: 600px) {
+                .admin-page-card {
+                    padding: 18px 12px;
+                    border-radius: 20px;
+                    margin-top: 14px;
+                }
+
+                .admin-page-header {
+                    flex-direction: column;
+                    align-items: stretch;
+                    gap: 12px;
+                }
+
+                .admin-page-header h1 {
+                    font-size: 1.4rem;
+                }
+
+                .btn-admin-add {
+                    width: 100%;
+                    justify-content: center;
+                }
+
+                .admin-table-clean thead {
+                    display: none;
+                }
+
+                .admin-table-clean tbody {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    width: 100%;
+                }
+
+                .admin-table-clean tbody tr {
+                    display: flex;
+                    flex-direction: column;
+                    background: #FAF8F6;
+                    border: 1.5px solid var(--border-light, #EFE4F2);
+                    border-radius: 16px;
+                    padding: 14px;
+                    gap: 8px;
+                }
+
+                .admin-table-clean tbody td {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0 !important;
+                    border: none !important;
+                    width: 100% !important;
+                    font-size: 0.9rem;
+                }
+
+                .admin-table-clean tbody td:last-child {
+                    border-top: 1px dashed var(--border-light, #EFE4F2) !important;
+                    padding-top: 8px !important;
+                    justify-content: flex-end;
+                }
+            }
+        </style>
+    </th:block>
 </head>
 
 <body>
 
 <section layout:fragment="content">
-    <div class="container"><h1>Adicionais Cadastrados</h1>
+    <div class="admin-dashboard-container">
+        
+        <!-- Abas de Navegação Rápida do Admin -->
+        <div class="admin-quick-tabs">
+            <a th:href="@{/admin/dashboard_admin}" class="admin-tab-pill">
+                <i class="fa-solid fa-chart-pie"></i> Visão Geral
+            </a>
+            <a th:href="@{/admin/tamanhos}" class="admin-tab-pill">
+                <i class="fa-solid fa-bowl-food"></i> Cardápio
+            </a>
+            <a th:href="@{/admin/adicionais}" class="admin-tab-pill active">
+                <i class="fa-solid fa-seedling"></i> Adicionais
+            </a>
+            <a th:href="@{/admin/adicionais/novo}" class="admin-tab-pill add-tab">
+                <i class="fa-solid fa-plus"></i> Novo Adicional
+            </a>
+        </div>
 
-        <a th:href="@{/admin/adicionais/novo}" class="btn-default">Adicionar Novo Adicional</a>
+        <div class="admin-page-card">
+            <div class="admin-page-header">
+                <h1>Acompanhamentos &amp; Adicionais</h1>
+                <a th:href="@{/admin/adicionais/novo}" class="btn-admin-add">
+                    <i class="fa-solid fa-plus"></i> Adicionar Novo Adicional
+                </a>
+            </div>
 
-        <hr>
+            <div class="table-responsive-clean" th:if="${!adicionais.isEmpty()}">
+                <table class="admin-table-clean">
+                    <thead>
+                    <tr>
+                        <th>Nome do Acompanhamento</th>
+                        <th>Preço Adicional</th>
+                        <th style="text-align: right;">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="adicional : ${adicionais}">
+                        <td><strong th:text="${adicional.nome}">Nome do Adicional</strong></td>
+                        <td th:text="${#numbers.formatCurrency(adicional.preco)}">R$ 0,00</td>
+                        <td style="text-align: right;">
+                            <a th:href="@{/admin/adicionais/editar/{id}(id=${adicional.id})}" class="btn-action-edit">
+                                <i class="fa-solid fa-pen"></i> Editar
+                            </a>
 
-        <table th:if="${!adicionais.isEmpty()}">
-            <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Preço</th>
-                <th class="acoes">Ações</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="adicional : ${adicionais}">
-                <td th:text="${adicional.nome}">Nome do Adicional</td>
-                <td th:text="${#numbers.formatCurrency(adicional.preco)}">R$ 0,00</td>
-                <td class="acoes">
-                    <a th:href="@{/admin/adicionais/editar/{id}(id=${adicional.id})}" class="btn btn-editar">Editar</a>
+                            <form th:action="@{/admin/adicionais/remover/{id}(id=${adicional.id})}" method="post" style="display:inline; margin-left: 6px;">
+                                <button type="submit" class="btn-action-remove"
+                                        onclick="return confirm('Tem certeza que deseja remover este item?');">
+                                    <i class="fa-solid fa-trash"></i> Remover
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-                    <form th:action="@{/admin/adicionais/remover/{id}(id=${adicional.id})}" method="post" style="display:inline;">
-                        <button type="submit" class="btn btn-remover"
-                                onclick="return confirm('Tem certeza que deseja remover este item?');">
-                            Remover
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-        <div th:if="${adicionais.isEmpty()}">
-            <p>Nenhum adicional cadastrado ainda.</p>
+            <div th:if="${adicionais.isEmpty()}" style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                <p style="font-size: 1.1rem; margin-bottom: 16px;">Nenhum acompanhamento cadastrado ainda.</p>
+                <a th:href="@{/admin/adicionais/novo}" class="btn-admin-add">Cadastrar Primeiro Adicional</a>
+            </div>
         </div>
     </div>
 </section>

@@ -5,12 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">StackBerry</title>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">StackBerry - Açaiteria Artesanal</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Folha de Estilos Exclusiva da Vitrine Artesanal e Estilos Globais -->
+    <link rel="stylesheet" th:href="@{/styles/vitrine_artesanal.css}">
     <link rel="stylesheet" th:href="@{/styles/styles.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -21,98 +23,190 @@
 
     <th:block layout:fragment="page-css"></th:block>
 </head>
-<body class="pos-body">
+<body class="sb-storefront-body sb-unified-layout-body">
 
-<div class="pos-app-wrapper">
-    <div class="pos-app-window">
-        
-        <!-- SIDEBAR LATERAL ESQUERDA (Inspirado no Purr'Coffee) -->
-        <aside class="pos-sidebar">
-            <div class="pos-brand">
-                <a href="/cardapio" class="pos-brand-link">
-                    <div class="pos-brand-logo">
-                        <i class="fa-solid fa-bowl-food"></i>
-                    </div>
-                    <div class="pos-brand-name">
-                        <strong class="brand-title">StackBerry</strong>
-                        <span class="brand-sub">Açaiteria Artesanal</span>
-                    </div>
-                </a>
-            </div>
+    <!-- ======================================================================
+         1. NAVBAR FIXA NO TOPO (PADRÃO VITRINE ARTESANAL)
+         ====================================================================== -->
+    <header class="sb-top-navbar scrolled" id="top-navbar">
+        <div class="sb-navbar-container">
+            <!-- Marca & Logo (Apenas o Ícone Ampliado) -->
+            <a href="/cardapio" class="sb-navbar-brand" title="StackBerry - Início">
+                <img src="/images/StackBerry_OnlyLogo.png" alt="StackBerry Logo" class="sb-header-logo-icon">
+            </a>
 
-            <nav class="pos-nav-menu" id="pos-nav-menu">
-                <a href="/cardapio" class="pos-nav-link" id="nav-cardapio">
-                    <i class="fa-solid fa-utensils"></i>
-                    <span>Cardápio</span>
-                </a>
+            <!-- Links Centrais de Navegação -->
+            <nav class="sb-nav-links">
+                <a href="/cardapio#hero" class="sb-nav-link" id="nav-inicio">Início</a>
+                <a href="/cardapio#cardapio-vitrine" class="sb-nav-link" id="nav-cardapio">Cardápio</a>
 
-                <a href="/carrinho" class="pos-nav-link" id="nav-carrinho">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <span>Sacola</span>
-                    <span class="pos-nav-pill-badge" th:if="${session.carrinho != null and session.carrinho.totalItens > 0}" th:text="${session.carrinho.totalItens}">1</span>
-                </a>
+                <!-- Visualização Exclusiva do Administrador -->
+                <th:block th:if="${usuario != null and usuario.tipoDeUsuario.name() == 'ADMINISTRADOR'}">
+                    <a th:href="@{/admin/dashboard_admin}" class="sb-nav-link" id="nav-dashboard">
+                        <i class="fa-solid fa-chart-pie"></i> Painel Admin
+                    </a>
+                    <a href="/admin/dashboard_admin#secao-produtos" class="sb-nav-link" id="nav-produtos">
+                        <i class="fa-solid fa-bowl-food"></i> Produtos
+                    </a>
+                    <a href="/admin/dashboard_admin#secao-adicionais" class="sb-nav-link" id="nav-adicionais">
+                        <i class="fa-solid fa-seedling"></i> Adicionais
+                    </a>
+                </th:block>
 
-                <a href="/meus-pedidos" class="pos-nav-link" id="nav-pedidos" th:if="${usuario != null and usuario.tipoDeUsuario.name() == 'CLIENTE'}">
-                    <i class="fa-regular fa-bookmark"></i>
-                    <span>Meus Pedidos</span>
-                </a>
-
-                <a th:href="@{/admin/dashboard_admin}" class="pos-nav-link" id="nav-admin" th:if="${usuario != null and usuario.tipoDeUsuario.name() == 'ADMINISTRADOR'}">
-                    <i class="fa-solid fa-chart-pie"></i>
-                    <span>Dashboard</span>
-                </a>
+                <!-- Visualização para Cliente -->
+                <th:block th:if="${usuario != null and usuario.tipoDeUsuario.name() == 'CLIENTE'}">
+                    <a href="/meus-pedidos" class="sb-nav-link" id="nav-pedidos">
+                        <i class="fa-regular fa-bookmark"></i> Meus Pedidos
+                    </a>
+                </th:block>
             </nav>
 
-            <div class="pos-sidebar-footer">
-                <div class="pos-user-card" th:if="${usuario != null}">
-                    <div class="user-avatar">
-                        <i class="fa-regular fa-user"></i>
-                    </div>
-                    <div class="user-details">
-                        <strong th:text="${usuario.nome}">Cliente</strong>
-                        <span th:text="${usuario.email}">cliente@email.com</span>
-                    </div>
-                    <a href="/logout" class="btn-logout-icon" title="Sair">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    </a>
-                </div>
+            <!-- Ações Direitas: Usuário & Sacola Slide-Over -->
+            <div class="sb-navbar-actions">
+                <!-- Se Usuário Logado: Botão Inteiro Clicável para Sair -->
+                <a href="/logout" class="sb-user-profile-badge" th:if="${usuario != null}" title="Clique para sair da conta" aria-label="Sair da conta">
+                    <i class="fa-regular fa-circle-user"></i>
+                    <span th:text="${usuario.nome}">Cliente</span>
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </a>
 
-                <a href="/login" class="pos-nav-link login-link" th:if="${usuario == null}">
+                <!-- Se Visitante / Não Logado: SOMENTE O ÍCONE -->
+                <a href="/login" class="sb-btn-login-icon" th:if="${usuario == null}" title="Entrar na conta" aria-label="Entrar">
                     <i class="fa-solid fa-arrow-right-to-bracket"></i>
-                    <span>Fazer Login</span>
+                </a>
+
+                <!-- Botão da Sacola -->
+                <a href="/cardapio?abrirSacola=true" class="sb-navbar-cart-trigger" aria-label="Abrir sacola de pedidos">
+                    <div class="cart-icon-bubble">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="cart-badge-count" id="cart-nav-badge" th:text="${(carrinho != null ? carrinho.totalItens : (session.carrinho != null ? session.carrinho.totalItens : 0))}">0</span>
+                    </div>
+                    <span class="cart-btn-price" th:text="${(carrinho != null ? #numbers.formatCurrency(carrinho.total) : (session.carrinho != null ? #numbers.formatCurrency(session.carrinho.total) : 'R$ 0,00'))}">R$ 0,00</span>
                 </a>
             </div>
-        </aside>
-
-        <!-- ÁREA DE CONTEÚDO PRINCIPAL (CATÁLOGO + CARRINHO) -->
-        <div class="pos-main-viewport">
-            <main layout:fragment="content"></main>
         </div>
 
+        <!-- Ondinha Orgânica no Fundo do Header -->
+        <div class="navbar-wave-bottom" aria-hidden="true">
+            <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+                <path d="M0,0 L0,10 C150,22 350,2 500,16 C650,26 900,4 1200,14 L1200,0 Z" class="navbar-wave-fill"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
+    <div class="sb-layout-main">
+        <main layout:fragment="content"></main>
     </div>
-</div>
 
-<th:block layout:fragment="page-script"></th:block>
+    <!-- FOOTER ARTESANAL COMPLETO (Exibido nas páginas de cliente: cardápio, pedido finalizado, acompanhar pedidos, sacola, login e cadastro) -->
+    <footer class="sb-footer sb-footer-rich" id="sb-footer-rich">
+        <div class="footer-wave-top" aria-hidden="true">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0 C150,90 350,-40 500,45 C650,130 900,10 1200,50 L1200,120 L0,120 Z" class="footer-wave-fill"></path>
+            </svg>
+        </div>
 
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script src="/js/script.js"></script>
-<script>
-    (function() {
-        const path = window.location.pathname;
-        if (path.includes('/carrinho')) {
-            const el = document.getElementById('nav-carrinho');
-            if (el) el.classList.add('active');
-        } else if (path.includes('/meus-pedidos')) {
-            const el = document.getElementById('nav-pedidos');
-            if (el) el.classList.add('active');
-        } else if (path.includes('/admin')) {
-            const el = document.getElementById('nav-admin');
-            if (el) el.classList.add('active');
-        } else {
-            const el = document.getElementById('nav-cardapio');
-            if (el) el.classList.add('active');
-        }
-    })();
-</script>
+        <div class="sb-footer-container">
+            <div class="footer-brand-col">
+                <img src="/images/StackBerry_OnlyLogo.png" alt="StackBerry Logo">
+                <h4>StackBerry</h4>
+                <p>
+                    Açaiteria artesanal dedicada a oferecer o sabor puro, saudável e autêntico da floresta amazônica. Cremosidade sem igual e ingredientes de altíssima pureza.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h5>Navegação</h5>
+                <ul class="footer-links-list">
+                    <li><a href="/cardapio#hero">Início</a></li>
+                    <li><a href="/cardapio#cardapio-vitrine">Cardápio Completo</a></li>
+                    <li><a href="/carrinho">Minha Sacola</a></li>
+                    <li><a href="/meus-pedidos">Meus Pedidos</a></li>
+                    <li><a href="/login">Acessar Conta</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h5>Atendimento</h5>
+                <ul class="footer-links-list">
+                    <li>Segunda a Sexta: 12h às 22h</li>
+                    <li>Sábados e Domingos: 13h às 23h</li>
+                    <li>Entregas Rápidas no Bairro</li>
+                    <li>Retirada no Balcão</li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h5>Fale Conosco</h5>
+                <div class="footer-contact-item">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>4002-8922<br>Pedidos via WhatsApp</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>StackBerry Artesanal<br>Rio Tinto - PB</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sb-footer-bottom">
+            <span>&copy; 2026 StackBerry Açaiteria Artesanal &bull; Todos os direitos reservados.</span>
+            <span>Design Editorial &amp; Artesanal com Amor pelo Açaí.</span>
+        </div>
+    </footer>
+
+    <!-- FOOTER MINIMALISTA (Para painel administrativo e gerenciamento) -->
+    <footer class="sb-footer-minimal" id="sb-footer-minimal" style="display: none;">
+        <div class="sb-footer-minimal-container">
+            <p>&copy; 2026 StackBerry Açaiteria Artesanal &bull; Todos os direitos reservados.<br>Design Editorial &amp; Artesanal com Amor pelo Açaí.</p>
+        </div>
+    </footer>
+
+    <th:block layout:fragment="page-script"></th:block>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+        (function() {
+            const path = window.location.pathname;
+            document.querySelectorAll('.sb-nav-link').forEach(l => l.classList.remove('active'));
+            if (path.includes('/meus-pedidos')) {
+                const el = document.getElementById('nav-pedidos');
+                if (el) el.classList.add('active');
+            } else if (path.includes('/admin')) {
+                const el = document.getElementById('nav-dashboard');
+                if (el) el.classList.add('active');
+            } else if (path.includes('/cardapio')) {
+                const el = document.getElementById('nav-cardapio');
+                if (el) el.classList.add('active');
+            }
+
+            // Controle de Exibição do Rodapé (Completo vs Simples)
+            // Em login, cadastro, pedido finalizado, acompanhar pedido, sacola e admin: footer simples.
+            // O footer completo (com mapa de navegação e contatos) permanece no cardápio inicial.
+            const isSimpleFooterPage = path.includes('/login') || 
+                path.includes('/cadastrar') || 
+                path.includes('/signup') || 
+                path.includes('/usuarios/cadastrar') || 
+                path.includes('/pedido') || 
+                path.includes('/meus-pedidos') || 
+                path.includes('/pedidos') || 
+                path.includes('/carrinho') || 
+                path.includes('/admin');
+
+            const fRich = document.getElementById('sb-footer-rich');
+            const fMin = document.getElementById('sb-footer-minimal');
+            if (fRich && fMin) {
+                if (isSimpleFooterPage) {
+                    fRich.style.display = 'none';
+                    fMin.style.display = 'block';
+                } else {
+                    fRich.style.display = 'block';
+                    fMin.style.display = 'none';
+                }
+            }
+        })();
+    </script>
 </body>
 </html>

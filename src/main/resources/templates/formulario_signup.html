@@ -6,94 +6,280 @@
 
 <head>
     <title>Crie sua Conta - StackBerry</title>
-
     <th:block layout:fragment="page-css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-              crossorigin="anonymous">
-
         <style>
-            .form-container {
+            .auth-page-wrapper {
+                min-height: calc(100vh - 180px);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                min-height: calc(100vh - 180px);
-                padding: 30px 16px;
+                padding: 48px 16px 80px 16px;
+                background: radial-gradient(circle at 50% 20%, rgba(246, 238, 248, 0.8) 0%, rgba(250, 246, 240, 0.95) 100%);
+                position: relative;
             }
 
-            .signup-card {
+            .auth-card {
                 width: 100%;
                 max-width: 480px;
-                border-radius: var(--radius-xl);
                 background: #FFFFFF;
-                border: 1px solid var(--border-light);
-                box-shadow: var(--shadow-md);
-                padding: 36px 30px;
+                border: 1.5px solid var(--border-medium, #E2CFE8);
+                border-radius: 32px;
+                padding: 44px 38px 36px 38px;
+                text-align: center;
+                box-shadow: 0 20px 50px rgba(58, 11, 46, 0.08), 0 4px 16px rgba(58, 11, 46, 0.03);
+                position: relative;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
 
-            .signup-card h2 {
-                font-size: 1.8rem;
+            .auth-card:hover {
+                box-shadow: 0 26px 60px rgba(58, 11, 46, 0.12);
+            }
+
+            .auth-badge-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: var(--bg-lavender, #F6EEF8);
+                color: var(--color-acai, #3A0B2E);
+                border: 1px solid var(--border-medium, #E2CFE8);
+                padding: 4px 14px;
+                border-radius: 9999px;
+                font-family: var(--font-heading, 'Outfit', sans-serif);
+                font-size: 0.8rem;
                 font-weight: 700;
-                margin-bottom: 6px;
-                text-align: center;
-                color: var(--text-title);
-            }
-
-            .signup-card p.subtitle {
-                text-align: center;
-                color: var(--text-muted);
-                font-size: 0.95rem;
-                margin-bottom: 22px;
-            }
-
-            .form-label {
-                font-weight: 600;
-                font-size: 0.88rem;
-                color: var(--text-body);
-                margin-bottom: 6px;
-            }
-
-            .form-control {
-                background: #FFFFFF;
-                border: 1.5px solid var(--border-medium);
-                border-radius: var(--radius-md);
-                color: var(--text-title);
-                padding: 11px 14px;
-                font-size: 0.95rem;
-                transition: var(--transition);
-            }
-
-            .form-control:focus {
-                background: #FFFFFF;
-                border-color: var(--accent-green);
-                color: var(--text-title);
-                box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12);
-            }
-
-            .btn-signup-submit {
-                width: 100%;
-                padding: 13px;
-                font-size: 1rem;
-                margin-top: 10px;
                 margin-bottom: 16px;
             }
 
-            .form-footer {
-                font-size: 0.9rem;
-                text-align: center;
-                color: var(--text-muted);
-                border-top: 1px solid var(--border-light);
-                padding-top: 16px;
+            .auth-logo-emblem {
+                width: 64px;
+                height: 64px;
+                object-fit: contain;
+                margin: 0 auto 14px auto;
+                display: block;
+                filter: drop-shadow(0 6px 14px rgba(58, 11, 46, 0.12));
+                transition: transform 0.3s ease;
             }
 
-            .form-footer a {
-                color: var(--primary-berry);
-                text-decoration: none;
+            .auth-logo-emblem:hover {
+                transform: scale(1.05) rotate(-3deg);
+            }
+
+            .auth-card h1 {
+                font-family: var(--font-heading, 'Outfit', sans-serif);
+                font-size: 1.95rem;
+                font-weight: 900;
+                color: var(--text-title, #26051E);
+                letter-spacing: -0.5px;
+                margin: 0 0 8px 0;
+            }
+
+            .auth-card p.auth-subtitle {
+                color: var(--text-muted, #7D6476);
+                font-size: 0.94rem;
+                line-height: 1.5;
+                margin: 0 0 26px 0;
+            }
+
+            .auth-alert {
+                border-radius: 16px;
+                padding: 12px 18px;
+                font-size: 0.88rem;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 20px;
+                text-align: left;
+            }
+
+            .auth-alert-error {
+                background: #FEE2E2;
+                border: 1.5px solid #FCA5A5;
+                color: #991B1B;
+            }
+
+            .auth-form-group {
+                text-align: left;
+                margin-bottom: 18px;
+            }
+
+            .auth-form-label {
+                display: block;
+                font-family: var(--font-heading, 'Outfit', sans-serif);
+                font-weight: 700;
+                font-size: 0.88rem;
+                color: var(--text-title, #26051E);
+                margin-bottom: 8px;
+            }
+
+            .auth-input-container {
+                position: relative;
+                display: flex;
+                align-items: center;
+            }
+
+            .auth-input-icon {
+                position: absolute;
+                left: 16px;
+                color: #9C8596;
+                font-size: 1rem;
+                pointer-events: none;
+                transition: color 0.2s ease;
+            }
+
+            .auth-input {
+                width: 100%;
+                background: #FFFFFF;
+                border: 1.5px solid var(--border-medium, #DFCEE4);
+                border-radius: 16px;
+                padding: 13px 16px 13px 44px;
+                font-family: 'Poppins', sans-serif;
+                font-size: 0.95rem;
+                color: var(--text-title, #26051E);
+                outline: none;
+                transition: all 0.25s ease;
+            }
+
+            .auth-input:focus {
+                border-color: var(--color-acai, #3A0B2E);
+                box-shadow: 0 0 0 4px rgba(58, 11, 46, 0.08);
+            }
+
+            .auth-input:focus + .auth-input-icon,
+            .auth-input-container:focus-within .auth-input-icon {
+                color: var(--color-acai, #3A0B2E);
+            }
+
+            .auth-input.is-invalid {
+                border-color: #DC2626 !important;
+                background-color: #FEF2F2 !important;
+            }
+
+            .auth-input-feedback {
+                color: #DC2626;
+                font-size: 0.82rem;
+                margin-top: 6px;
+                display: none;
                 font-weight: 600;
             }
 
-            .form-footer a:hover {
+            .auth-input-feedback.show {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .btn-auth-submit {
+                width: 100%;
+                background: linear-gradient(135deg, #3A0B2E 0%, #26051E 100%);
+                color: #FFFFFF;
+                border: none;
+                border-radius: 9999px;
+                padding: 14px 28px;
+                font-family: var(--font-heading, 'Outfit', sans-serif);
+                font-size: 1.05rem;
+                font-weight: 800;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 24px;
+                margin-bottom: 22px;
+                box-shadow: 0 8px 24px rgba(38, 5, 30, 0.25);
+                transition: all 0.25s ease;
+            }
+
+            .btn-auth-submit:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 30px rgba(38, 5, 30, 0.35);
+                background: linear-gradient(135deg, #4A103B 0%, #2E0725 100%);
+            }
+
+            .btn-auth-submit i {
+                transition: transform 0.2s ease;
+            }
+
+            .btn-auth-submit:hover i {
+                transform: translateX(3px);
+            }
+
+            .auth-card-footer {
+                border-top: 1.5px solid var(--border-subtle, #EFE4F2);
+                padding-top: 20px;
+                font-size: 0.92rem;
+                color: var(--text-muted, #7D6476);
+            }
+
+            .auth-card-footer a {
+                color: var(--color-pink, #E91E63);
+                font-weight: 700;
+                text-decoration: none;
+                transition: color 0.2s ease;
+            }
+
+            .auth-card-footer a:hover {
+                color: var(--color-acai, #3A0B2E);
                 text-decoration: underline;
+            }
+
+            .auth-back-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                margin-top: 14px;
+                color: var(--text-muted, #7D6476);
+                font-size: 0.85rem;
+                text-decoration: none;
+                transition: color 0.2s ease;
+            }
+
+            .auth-back-link:hover {
+                color: var(--color-acai, #3A0B2E);
+            }
+
+            @media (max-width: 480px) {
+                .auth-page-wrapper {
+                    padding: 20px 12px 50px 12px;
+                    min-height: auto;
+                }
+
+                .auth-card {
+                    padding: 26px 16px 22px 16px;
+                    border-radius: 22px;
+                    max-width: 100%;
+                }
+
+                .auth-logo-emblem {
+                    width: 52px;
+                    height: 52px;
+                    margin-bottom: 10px;
+                }
+
+                .auth-card h1 {
+                    font-size: 1.6rem;
+                }
+
+                .auth-card p.auth-subtitle {
+                    font-size: 0.86rem;
+                    margin-bottom: 18px;
+                }
+
+                .auth-input {
+                    padding: 12px 14px 12px 42px;
+                    font-size: 0.9rem;
+                }
+
+                .btn-auth-submit {
+                    padding: 12px 20px;
+                    font-size: 0.96rem;
+                    margin-top: 16px;
+                    margin-bottom: 16px;
+                }
+
+                .auth-card-footer {
+                    padding-top: 16px;
+                    font-size: 0.86rem;
+                }
             }
         </style>
     </th:block>
@@ -102,69 +288,91 @@
 <body>
 
 <main layout:fragment="content">
-    <div class="form-container">
-        <div class="signup-card">
-            <h2>Crie sua Conta</h2>
-            <p class="subtitle">Cadastre-se para pedir seu açaí em poucos segundos</p>
+    <div class="auth-page-wrapper">
+        <div class="auth-card">
+            <span class="auth-badge-pill">
+                <i class="fa-solid fa-sparkles"></i> Cadastro Rápido
+            </span>
 
-            <div th:if="${erro}" class="alert alert-danger" role="alert">
-                <p th:text="${erro}" class="mb-0"></p>
+            <img src="/images/StackBerry_OnlyLogo.png" alt="StackBerry Logo" class="auth-logo-emblem">
+
+            <h1>Crie sua Conta</h1>
+            <p class="auth-subtitle">Cadastre-se para pedir seu açaí artesanal em poucos segundos</p>
+
+            <div th:if="${erro}" class="auth-alert auth-alert-error" role="alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span th:text="${erro}">Erro ao cadastrar</span>
             </div>
 
             <form th:action="@{/usuarios/cadastrar}" method="post" id="cadastroForm">
-
-                <div class="mb-3">
-                    <label for="nome" class="form-label">Nome Completo</label>
-                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome completo" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">Endereço de E-mail</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="seuemail@exemplo.com" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="senha" class="form-label">Senha</label>
-                    <input type="password" class="form-control" id="senha" name="senha" placeholder="••••••••" required>
-                </div>
-
-                <div class="mb-4">
-                    <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
-                    <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" placeholder="••••••••" required>
-                    <div class="invalid-feedback" id="senhaError">
-                        As senhas não coincidem.
+                <div class="auth-form-group">
+                    <label for="nome" class="auth-form-label">Nome Completo</label>
+                    <div class="auth-input-container">
+                        <i class="fa-regular fa-user auth-input-icon"></i>
+                        <input type="text" class="auth-input" id="nome" name="nome" placeholder="Seu nome completo" required autofocus>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-default btn-signup-submit">
-                    <i class="fa-solid fa-user-plus"></i> Finalizar Cadastro
+                <div class="auth-form-group">
+                    <label for="email" class="auth-form-label">Endereço de E-mail</label>
+                    <div class="auth-input-container">
+                        <i class="fa-regular fa-envelope auth-input-icon"></i>
+                        <input type="email" class="auth-input" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+                    </div>
+                </div>
+
+                <div class="auth-form-group">
+                    <label for="senha" class="auth-form-label">Crie uma Senha</label>
+                    <div class="auth-input-container">
+                        <i class="fa-solid fa-lock auth-input-icon"></i>
+                        <input type="password" class="auth-input" id="senha" name="senha" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="auth-form-group">
+                    <label for="confirmarSenha" class="auth-form-label">Confirme sua Senha</label>
+                    <div class="auth-input-container">
+                        <i class="fa-solid fa-shield-halved auth-input-icon"></i>
+                        <input type="password" class="auth-input" id="confirmarSenha" name="confirmarSenha" placeholder="••••••••" required>
+                    </div>
+                    <div class="auth-input-feedback" id="senhaError">
+                        <i class="fa-solid fa-circle-exclamation"></i> As senhas informadas não coincidem.
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-auth-submit">
+                    <span>Finalizar Cadastro</span>
+                    <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </form>
 
-            <div class="form-footer">
-                <p class="mb-0">Já tem uma conta? <a th:href="@{/login}">Faça login</a></p>
+            <div class="auth-card-footer">
+                <p>Já tem uma conta cadastrada? <a th:href="@{/login}">Faça login</a></p>
+                <a href="/cardapio" class="auth-back-link">
+                    <i class="fa-solid fa-arrow-left"></i> Voltar ao Cardápio
+                </a>
             </div>
         </div>
     </div>
 </main>
 
 <th:block layout:fragment="page-script">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            crossorigin="anonymous"></script>
-
     <script>
         const form = document.getElementById('cadastroForm');
         const senha = document.getElementById('senha');
         const confirmarSenha = document.getElementById('confirmarSenha');
+        const senhaError = document.getElementById('senhaError');
 
         form.addEventListener('submit', function (event) {
             senha.classList.remove('is-invalid');
             confirmarSenha.classList.remove('is-invalid');
+            senhaError.classList.remove('show');
 
             if (senha.value !== confirmarSenha.value) {
                 event.preventDefault();
                 senha.classList.add('is-invalid');
                 confirmarSenha.classList.add('is-invalid');
+                senhaError.classList.add('show');
             }
         });
     </script>
