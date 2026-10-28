@@ -1,212 +1,1020 @@
-#inicio h1 {
-    margin-bottom: 30px;
-    text-align: center;
-    color: #230033;
-}
+/* ==========================================================================
+   STACKBERRY - DASHBOARD ADMINISTRATIVO
+   Sem segundo container duplo: integrado diretamente ao viewport principal
+   ========================================================================== */
 
-//
-
-.content-area h2 {
-    margin-bottom: 10px;
-}
-
-.content-area hr {
-    border: none;
-    height: 1px;
-    background-color: #679F3A;
-    margin: 20px 0;
-}
-
-body, html {
-    height: 100%;
+.admin-dashboard-container {
+    padding: 32px 36px 60px 36px;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
+    gap: 32px;
 }
 
-main {
-    flex: 2;
+/* --------------------------------------------------------------------------
+   CABEÇALHO DO DASHBOARD
+   -------------------------------------------------------------------------- */
+.admin-dashboard-hero-title,
+.admin-dashboard-header {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 20px 0;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 0 0 8px 0;
+    margin: 4px 0 0 0;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    position: static !important;
 }
 
-.dashboard-wrapper {
+.admin-header-title-wrap h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.1rem;
+    font-weight: 900;
+    color: var(--text-title, #26051E);
+    margin: 0 0 6px 0;
+    letter-spacing: -0.5px;
+}
+
+.admin-header-title-wrap p {
+    font-size: 0.96rem;
+    color: var(--text-muted, #7D6476);
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.admin-header-title-wrap .admin-highlight-name {
+    color: var(--color-purple, #66023C);
+    font-weight: 700;
+}
+
+.admin-header-actions {
     display: flex;
-    justify-content: center;
-    padding: 20px;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-admin-refresh {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-medium);
+    color: var(--text-title);
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.btn-admin-refresh:hover {
+    border-color: var(--color-purple);
+    color: var(--color-purple);
+    background: var(--color-purple-soft);
+}
+
+.btn-admin-store {
+    background: var(--color-purple);
+    color: #FFFFFF !important;
+    padding: 9px 20px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(102, 2, 60, 0.22);
+}
+
+.btn-admin-store:hover {
+    background: #3A0B2E;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(38, 5, 30, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   ABAS DE NAVEGAÇÃO RÁPIDA (SUB-BARRA DO ADMIN)
+   -------------------------------------------------------------------------- */
+.admin-quick-tabs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: -12px;
+    margin-bottom: 8px;
+}
+
+.admin-tab-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFFFFF;
+    color: var(--text-title, #26051E);
+    border: 1.5px solid var(--border-medium, #E2CFE8);
+    padding: 9px 20px;
+    border-radius: 9999px;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(58, 11, 46, 0.04);
+}
+
+.admin-tab-pill:hover {
+    background: #F6EEF8;
+    border-color: #26051E;
+    color: #26051E;
+    transform: translateY(-1px);
+}
+
+.admin-tab-pill.active {
+    background: #26051E;
+    border-color: #26051E;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(38, 5, 30, 0.22);
+}
+
+.admin-tab-pill.add-tab {
+    background: #E8F5E9;
+    border-color: #A5D6A7;
+    color: #2E7D32;
+}
+
+.admin-tab-pill.add-tab:hover {
+    background: #2E7D32;
+    border-color: #2E7D32;
+    color: #FFFFFF !important;
+}
+
+/* --------------------------------------------------------------------------
+   CARDS DE MÉTRICAS / KPIS (4 Cores da Marca)
+   -------------------------------------------------------------------------- */
+.admin-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
 }
 
-.dashboard-box {
+.kpi-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-light, #EFE4F2);
+    border-radius: 24px;
+    padding: 24px;
     display: flex;
-    background-color: rebeccapurple;
-    border-radius: 20px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.1);
-    width: 1000px;
-    min-height: 500px;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 8px 24px rgba(58, 11, 46, 0.05);
+    transition: all 0.25s ease;
+    position: relative;
     overflow: hidden;
 }
 
-.sidebar {
-    width: 220px;
-    background-color: #230033;
-    color: #fff;
-    padding: 20px;
+.kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(58, 11, 46, 0.09);
+}
+
+.kpi-icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
 }
 
-.user-info { text-align: center; }
-.user-info img { width: 80px; height: 80px; border-radius: 50%; background-color: #555; display: block; margin: 0 auto 10px auto; }
-.user-info h3 { margin: 5px 0; }
-.user-info p { margin: 0; font-size: 0.9em; color: #ccc; }
-
-.sidebar button {
-    background-color: rebeccapurple;
-    border: none;
-    color: white;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: left;
-}
-.sidebar button:hover { background-color: #679F3A; color: white; }
-
-.main-content {
-    flex-grow: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.kpi-card.purple .kpi-icon-circle {
+    background: #F6EEF8;
+    color: #26051E;
 }
 
-.stats { display: flex; gap: 20px; }
-.stats button { flex: 1; padding: 80px; font-size: 1.2em; color: white; border-radius: 8px; border: none; cursor: pointer; background-color: #230033; }
-.stats button .stat-number { color: white; font-size: 18px; font-weight: bold; margin-top: 80px; }
+.kpi-card.green .kpi-icon-circle {
+    background: #E8F5E9;
+    color: #2E7D32;
+}
 
-.cliente-button { display: flex; justify-content: center; margin-top: 40px; }
-.cliente-button button { color: white; background-color: #230033; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; text-align: center; margin-top: 8px; }
-.cliente-button button:hover { background-color: #679F3A; color: white; }
+.kpi-card.blue .kpi-icon-circle {
+    background: var(--color-blue-soft);
+    color: var(--color-blue);
+}
 
-.btn-default { background-color: #679F3A; color: #230033; padding: 12px 24px; text-decoration: none; font-weight: bold; transition: all 0.3s ease; border: none; border-radius: 8px; display: inline-block; }
-.btn-default:hover { background-color: #fff3; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+.kpi-card.yellow .kpi-icon-circle {
+    background: var(--color-yellow-soft);
+    color: var(--color-yellow);
+}
 
-.content-area {
-    margin-top: 20px;
-    background-color: rebeccapurple;
-    flex-grow: 1;
-    padding: 20px;
-    border-radius: 8px;
-    min-height: 200px;
-    border: none;
+.kpi-info {
     display: flex;
     flex-direction: column;
 }
 
-#usuarios-list,
-#pedido-list,
-#adicional-list,
-#tamanho-list {
-    max-height: 400px;
-    overflow-y: auto;
-    min-width: 0;
+.kpi-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 2px;
 }
 
-.table-responsive {
-    overflow-x: auto;
+.kpi-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--text-title);
+    line-height: 1.2;
+}
+
+.kpi-sub {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   SEÇÕES EM CARDS BRANCOS ARREDONDADOS (Distribuídos na página)
+   -------------------------------------------------------------------------- */
+.admin-card-section {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 24px 28px;
+    box-shadow: 0 4px 18px rgba(102, 2, 60, 0.03);
+}
+
+.section-head-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.section-head-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-head-title-wrap i {
+    color: var(--color-purple);
+    font-size: 1.2rem;
+}
+
+.section-head-title-wrap h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-title);
+    margin: 0;
+}
+
+.btn-admin-action-add {
+    background: var(--color-pink-soft);
+    color: var(--color-pink);
+    border: 1.5px solid var(--color-pink-border);
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+}
+
+.btn-admin-action-add:hover {
+    background: var(--color-pink);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   GRADE DE 2 COLUNAS PARA O CARDÁPIO (Tamanhos e Adicionais)
+   -------------------------------------------------------------------------- */
+.admin-two-cols-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   TABELAS MODERNAS E ELEGANTES
+   -------------------------------------------------------------------------- */
+.table-responsive-clean {
     width: 100%;
+    overflow-x: auto;
 }
 
-#usuarios-list table,
-#pedido-list table,
-#adicional-list table,
-#tamanho-list table {
+.admin-table-clean {
     width: 100%;
     border-collapse: collapse;
-}
-
-#usuarios-list th, #usuarios-list td,
-#pedido-list th, #pedido-list td,
-#adicional-list th, #adicional-list td,
-#tamanho-list th, #tamanho-list td {
-    padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #ccc;
-
+    font-size: 0.88rem;
 }
 
-#usuarios-list th,
-#pedido-list th,
-#adicional-list th,
-#tamanho-list th {
-    background-color: #230033;
-    color: white;
+.admin-table-clean thead th {
+    background: #FAF8F6;
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 14px;
+    border-bottom: 1.5px solid var(--border-light);
 }
 
-#usuarios-list td,
-#pedido-list td,
-#adicional-list td,
-#tamanho-list td {
-    background-color: #F8F9FA;
+.admin-table-clean thead th:first-child {
+    border-top-left-radius: var(--radius-sm);
+    border-bottom-left-radius: var(--radius-sm);
 }
 
-.content-area .btn-default {
-    margin-top: 20px;
-    margin-bottom: 20px;
+.admin-table-clean thead th:last-child {
+    border-top-right-radius: var(--radius-sm);
+    border-bottom-right-radius: var(--radius-sm);
 }
-.content-area table .acoes {
-    text-align: left !important;
-    justify-content: flex-start !important;
+
+.admin-table-clean tbody tr {
+    border-bottom: 1px solid var(--border-light);
+    transition: background 0.15s ease;
 }
-.content-area .btn-editar, .content-area .btn-remover {
-    color: white; padding: 6px 12px; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; font-size: 0.9em; font-family: inherit; transition: background-color 0.3s ease;
+
+.admin-table-clean tbody tr:hover {
+    background: #FFFAF8;
 }
-.content-area .btn-editar { background-color: #679F3A; }
-.content-area .btn-remover { background-color: #FF0000; margin-left: 5px; }
-.content-area .btn-editar:hover { background-color: #7CB852; }
-.content-area .btn-remover:hover { background-color: #c9302c; }
 
-#usuarios-list, #pedido-list, #adicional-list, #tamanho-list, .table-responsive { scrollbar-width: thin; scrollbar-color: rgba(35, 0, 51, 0.4) transparent; }
-#usuarios-list::-webkit-scrollbar, #pedido-list::-webkit-scrollbar, #adicional-list::-webkit-scrollbar, #tamanho-list::-webkit-scrollbar, .table-responsive::-webkit-scrollbar { width: 6px; height: 6px; }
-#usuarios-list::-webkit-scrollbar-track, #pedido-list::-webkit-scrollbar-track, #adicional-list::-webkit-scrollbar-track, #tamanho-list::-webkit-scrollbar-track, .table-responsive::-webkit-scrollbar-track { background: transparent; }
-#usuarios-list::-webkit-scrollbar-thumb, #pedido-list::-webkit-scrollbar-thumb, #adicional-list::-webkit-scrollbar-thumb, #tamanho-list::-webkit-scrollbar-thumb, .table-responsive::-webkit-scrollbar-thumb { background-color: rgba(35, 0, 51, 0.4); border-radius: 10px; }
-#usuarios-list::-webkit-scrollbar-thumb:hover, #pedido-list::-webkit-scrollbar-thumb:hover, #adicional-list::-webkit-scrollbar-thumb:hover, #tamanho-list::-webkit-scrollbar-thumb:hover, .table-responsive::-webkit-scrollbar-thumb:hover { background-color: rgba(35, 0, 51, 0.6); }
+.admin-table-clean tbody td {
+    padding: 14px;
+    color: var(--text-body);
+    vertical-align: middle;
+}
 
-@media (max-width: 768px) {
-    .dashboard-wrapper { flex-direction: column; align-items: center; }
-    .dashboard-box { flex-direction: column; width: 100%; min-height: auto; }
-    .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 10px; }
-    .sidebar button { flex: 1 1 45%; text-align: center; }
-    .main-content { width: 100%; padding: 10px; }
-    .stats { flex-direction: column; gap: 10px; }
-    .stats button { padding: 40px; font-size: 1em; }
-    .main-content, #content-area { min-height: 0; }
+.admin-table-clean tbody td strong {
+    color: var(--text-title);
+}
 
-    #usuarios-list,
-    #pedido-list,
-    #adicional-list,
-    #tamanho-list {
-        display: grid;
-        grid-template-rows: auto 1fr;
-        flex: 1;
-        overflow: hidden;
-        max-height: none;
+/* Badges de Status dos Pedidos */
+.badge-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.badge-status.em-preparo {
+    background: var(--color-yellow-soft);
+    color: var(--color-yellow);
+    border: 1px solid var(--color-yellow-border);
+}
+
+.badge-status.entregue {
+    background: var(--color-green-soft);
+    color: var(--color-green);
+    border: 1px solid var(--color-green-border);
+}
+
+.badge-status.cancelado {
+    background: #FEE2E2;
+    color: #DC2626;
+    border: 1px solid #FECACA;
+}
+
+/* Badges de Tipo de Usuário */
+.badge-user-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+}
+
+.badge-user-type.admin {
+    background: var(--color-purple-soft);
+    color: var(--color-purple);
+    border: 1px solid var(--color-purple-border);
+}
+
+.badge-user-type.cliente {
+    background: var(--bg-surface-soft);
+    color: var(--text-muted);
+    border: 1px solid var(--border-medium);
+}
+
+/* Botões de Ações em Tabelas */
+.table-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-table-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border-medium);
+    background: #FFFFFF;
+    color: var(--text-title);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.btn-table-icon.btn-edit:hover {
+    border-color: var(--color-blue);
+    color: var(--color-blue);
+    background: var(--color-blue-soft);
+}
+
+.btn-table-icon.btn-delete:hover {
+    border-color: #DC2626;
+    color: #DC2626;
+    background: #FEE2E2;
+}
+
+.btn-table-icon.btn-promote:hover {
+    border-color: var(--color-purple);
+    color: var(--color-purple);
+    background: var(--color-purple-soft);
+}
+
+.btn-finish-order {
+    background: var(--color-green);
+    color: #FFFFFF;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: var(--transition);
+}
+
+.btn-finish-order:hover {
+    background: #3c6519;
+    transform: translateY(-1px);
+}
+
+/* Miniatura de Produto e Badge de Volume na Tabela Admin */
+.admin-product-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm, 8px);
+    object-fit: cover;
+    border: 1.5px solid var(--border-medium);
+    background: #FFFFFF;
+    display: block;
+    box-shadow: 0 2px 6px rgba(102, 2, 60, 0.05);
+}
+
+.badge-volume {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-purple);
+    background: var(--color-purple-soft);
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-top: 3px;
+    border: 1px solid var(--color-purple-border);
+}
+
+/* Regras padrão (Desktop) para classes das tabelas */
+.cell-status-mobile {
+    display: none;
+}
+
+.user-status-tag-mobile {
+    display: none;
+}
+
+.cell-status-desktop {
+    display: table-cell;
+}
+
+.price-val {
+    font-weight: 700;
+    color: var(--color-purple);
+    white-space: nowrap;
+}
+
+.price-val-green {
+    font-weight: 600;
+    color: var(--color-green);
+    white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVIDADE: TELAS MÉDIAS (<= 900px)
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 900px) {
+    .admin-dashboard-container {
+        padding: 20px 14px 40px 14px;
+        gap: 20px;
     }
 
-    .content-area .btn-editar,
-        .content-area .btn-remover {
-            display: block;
-            width: 100%;
-            text-align: center;
-        }
+    .admin-two-cols-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
-        .content-area .btn-editar {
-            margin-bottom: 5px;
-        }
+/* --------------------------------------------------------------------------
+   RESPONSIVIDADE: MOBILE E TELAS MENORES (<= 768px)
+   TRANSFORMAÇÃO DAS 4 TABELAS EM CARDS VERTICAIS SEM SCROLL LATERAL
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 768px) {
+    /* Eliminar barra de rolagem horizontal */
+    .table-responsive-clean {
+        overflow-x: visible !important;
+    }
 
-        .content-area .btn-remover {
-            margin-left: 0;
-        }
+    .admin-card-section {
+        padding: 18px 14px;
+        border-radius: var(--radius-md);
+    }
+
+    .admin-table-clean {
+        display: block;
+        width: 100%;
+        border-collapse: separate;
+    }
+
+    /* Ocultar cabeçalho das tabelas no mobile */
+    .admin-table-clean thead {
+        display: none !important;
+    }
+
+    .admin-table-clean tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: 100%;
+    }
+
+    /* Cada linha vira um Card estilizado com sombra suave e borda */
+    .admin-table-clean tbody tr.table-row-card {
+        display: flex;
+        flex-direction: column;
+        background: #FFFFFF;
+        border: 1.5px solid var(--border-medium);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        gap: 10px;
+        box-shadow: 0 3px 12px rgba(102, 2, 60, 0.04);
+        transition: var(--transition);
+    }
+
+    .admin-table-clean tbody tr.table-row-card:hover {
+        border-color: var(--color-purple-border);
+        box-shadow: 0 4px 16px rgba(102, 2, 60, 0.08);
+    }
+
+    .admin-table-clean tbody tr.table-row-card td {
+        padding: 0 !important;
+        border: none !important;
+        width: 100% !important;
+        display: block;
+    }
+
+    /* Controle de visibilidade Desktop vs Mobile */
+    .cell-status-desktop {
+        display: none !important;
+    }
+
+    .cell-status-mobile {
+        display: inline-flex !important;
+    }
+
+    .user-status-tag-mobile {
+        display: inline-flex !important;
+    }
+
+    /* Linhas de estado vazio ou carregando */
+    .admin-table-clean tbody tr:not(.table-row-card) {
+        display: block;
+        width: 100%;
+    }
+
+    .admin-table-clean tbody tr:not(.table-row-card) td {
+        display: block;
+        width: 100%;
+        padding: 24px 12px !important;
+    }
+
+    /* ======================================================================
+       1. BOX: PEDIDOS DA AÇAITERIA (Card do Pedido)
+       ====================================================================== */
+    .admin-table-clean tbody tr.card-pedido {
+        position: relative;
+    }
+
+    /* Topo do card: Data na esquerda e Badge de Status na direita */
+    .admin-table-clean tbody tr.card-pedido .col-date {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        border-bottom: 1px dashed var(--border-light) !important;
+        padding-bottom: 8px !important;
+    }
+
+    .admin-table-clean tbody tr.card-pedido .col-client {
+        font-size: 0.95rem;
+    }
+
+    .admin-table-clean tbody tr.card-pedido .col-items {
+        background: #FAF8F6;
+        border: 1px solid var(--border-light) !important;
+        border-radius: var(--radius-sm);
+        padding: 10px 12px !important;
+        font-size: 0.85rem;
+    }
+
+    .admin-table-clean tbody tr.card-pedido .col-total {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 2px;
+    }
+
+    .admin-table-clean tbody tr.card-pedido .col-total::before {
+        content: "Total do Pedido:";
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+    .admin-table-clean tbody tr.card-pedido .col-total .price-val {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: var(--color-purple);
+    }
+
+    .admin-table-clean tbody tr.card-pedido .col-actions {
+        padding-top: 8px !important;
+        border-top: 1px dashed var(--border-light) !important;
+    }
+
+    .admin-table-clean tbody tr.card-pedido .col-actions .btn-finish-order {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 16px;
+        font-size: 0.88rem;
+    }
+
+    /* ======================================================================
+       2. BOX: PRODUTOS DO CARDÁPIO (Card do Produto com Miniatura e Ações)
+       ====================================================================== */
+    .admin-table-clean tbody tr.card-produto {
+        display: grid !important;
+        grid-template-columns: 52px 1fr auto;
+        grid-template-rows: auto auto;
+        column-gap: 12px;
+        row-gap: 4px;
+        align-items: center;
+    }
+
+    .admin-table-clean tbody tr.card-produto .col-thumb {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        width: auto !important;
+    }
+
+    .admin-table-clean tbody tr.card-produto .admin-product-thumb {
+        width: 52px !important;
+        height: 52px !important;
+        border-radius: var(--radius-sm);
+    }
+
+    .admin-table-clean tbody tr.card-produto .col-prod-info {
+        grid-column: 2;
+        grid-row: 1;
+        font-size: 0.95rem;
+    }
+
+    .admin-table-clean tbody tr.card-produto .col-prod-price {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .admin-table-clean tbody tr.card-produto .col-prod-price .price-val {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--color-purple);
+    }
+
+    .admin-table-clean tbody tr.card-produto .col-actions {
+        grid-column: 3;
+        grid-row: 1 / span 2;
+        width: auto !important;
+    }
+
+    /* ======================================================================
+       3. BOX: ACOMPANHAMENTOS (Card do Adicional com Preço em Destaque)
+       ====================================================================== */
+    .admin-table-clean tbody tr.card-adicional {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .admin-table-clean tbody tr.card-adicional .col-topping-info {
+        flex: 1 1 auto;
+        width: auto !important;
+        font-size: 0.95rem;
+    }
+
+    .admin-table-clean tbody tr.card-adicional .col-topping-price {
+        flex: 0 0 auto;
+        width: auto !important;
+    }
+
+    .admin-table-clean tbody tr.card-adicional .col-topping-price .price-val-green {
+        font-weight: 800;
+        font-size: 0.92rem;
+        color: var(--color-green);
+        background: var(--color-green-soft);
+        border: 1px solid var(--color-green-border);
+        padding: 4px 10px;
+        border-radius: 999px;
+    }
+
+    .admin-table-clean tbody tr.card-adicional .col-actions {
+        flex: 0 0 auto;
+        width: auto !important;
+    }
+
+    /* ======================================================================
+       4. BOX: USUÁRIOS DO SISTEMA (Card de Usuário com Tipo e Ações)
+       ====================================================================== */
+    .admin-table-clean tbody tr.card-usuario {
+        gap: 8px;
+    }
+
+    .admin-table-clean tbody tr.card-usuario .col-user-name {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1rem;
+    }
+
+    .admin-table-clean tbody tr.card-usuario .col-user-email {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        word-break: break-all;
+    }
+
+    .admin-table-clean tbody tr.card-usuario .col-user-status {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.84rem;
+    }
+
+    .admin-table-clean tbody tr.card-usuario .col-user-status::before {
+        content: "Status da Conta:";
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .admin-table-clean tbody tr.card-usuario .col-actions {
+        border-top: 1px dashed var(--border-light) !important;
+        padding-top: 8px !important;
+    }
+
+    .admin-table-clean tbody tr.card-usuario .table-actions-row {
+        justify-content: flex-end;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .admin-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-header-actions {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-admin-refresh,
+    .btn-admin-store {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   MODAIS ADMINISTRATIVOS FLUTUANTES (PADRÃO MONTE SEU AÇAÍ)
+   ========================================================================== */
+.sb-admin-modal-box {
+    max-width: 620px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sb-admin-modal-box > form {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.sb-admin-modal-box .sb-modal-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 22px 28px;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Scrollbar visível e elegante para o corpo do modal */
+.sb-admin-modal-box .sb-modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sb-admin-modal-box .sb-modal-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sb-admin-modal-box .sb-modal-body::-webkit-scrollbar-thumb {
+    background: #D8C2DF;
+    border-radius: 999px;
+}
+
+.sb-admin-modal-box .sb-modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--color-acai, #26051E);
+}
+
+.sb-admin-modal-box .image-presets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+    gap: 8px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+}
+
+.sb-admin-modal-box .image-preset-option img {
+    height: 58px;
+}
+
+.sb-admin-form-group {
+    margin-bottom: 18px;
+}
+
+.sb-admin-form-group label {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--color-acai, #26051E);
+    margin-bottom: 6px;
+}
+
+.sb-admin-form-group .form-help {
+    font-size: 0.78rem;
+    color: var(--text-muted, #7D6476);
+    margin-top: 4px;
+    display: block;
+}
+
+.sb-admin-input,
+.sb-admin-textarea {
+    width: 100%;
+    padding: 11px 16px;
+    border: 1.5px solid var(--border-medium, #DFD5D1);
+    border-radius: 14px;
+    font-size: 0.92rem;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-title, #26051E);
+    background: #FAF6F0;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.sb-admin-input:focus,
+.sb-admin-textarea:focus {
+    outline: none;
+    border-color: var(--color-acai, #26051E);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(38, 5, 30, 0.1);
+}
+
+.sb-admin-two-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.sb-admin-modal-footer {
+    flex: 0 0 auto;
+    padding: 16px 28px 20px 28px;
+    border-top: 1px solid var(--border-subtle, #EFE4F2);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    background: #FCF9FC;
+}
+
+.btn-modal-cancel {
+    background: transparent;
+    border: 1.5px solid var(--border-medium, #DFD5D1);
+    color: var(--text-title, #26051E);
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-modal-cancel:hover {
+    background: #EFE4F2;
+    border-color: #26051E;
+}
+
+.btn-modal-save {
+    background: var(--color-acai, #26051E);
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 6px 18px rgba(38, 5, 30, 0.22);
+    transition: all 0.2s ease;
+}
+
+.btn-modal-save:hover {
+    background: #3A0B2E;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(38, 5, 30, 0.32);
+}
+
+/* Garante estilo dos botões add-tab nas abas rápidas */
+button.admin-tab-pill {
+    cursor: pointer;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+}
+button.admin-tab-pill.add-tab {
+    background: #26051E;
+    color: #FFFFFF;
+    border: 1.5px solid #26051E;
+}
+button.admin-tab-pill.add-tab:hover {
+    background: #3A0B2E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(38, 5, 30, 0.25);
+}
+
+button.btn-admin-action-add {
+    cursor: pointer;
+    border: none;
+    font-family: 'Outfit', sans-serif;
 }

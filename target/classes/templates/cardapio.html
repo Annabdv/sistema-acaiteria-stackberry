@@ -1,250 +1,644 @@
 <!DOCTYPE html>
-<html lang="pt-br"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cardápio - Monte seu Açaí</title>
-    <th:block layout:fragment="page-css">
-        <link rel="stylesheet" th:href="@{/styles/menu.css}">
-    </th:block>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StackBerry - O Puro Açaí Artesanal</title>
+
+    <!-- Google Fonts: Outfit (Títulos & Destaques) e Poppins (Textos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <!-- Folha de Estilos Exclusiva da Vitrine Artesanal -->
+    <link rel="stylesheet" th:href="@{/styles/vitrine_artesanal.css}">
 </head>
-<body>
-<main layout:fragment="content">
-    <div class="order-wrapper">
-        <!-- Header da Página -->
-        <div class="order-header">
-            <span class="badge-pill">✨ 100% Personalizado • Ingredientes Selecionados</span>
-            <h1>Monte o seu Açaí Perfeito</h1>
-            <p>Selecione o tamanho ideal, adicione seus acompanhamentos prediletos e aproveite a energia que só o StackBerry tem!</p>
+<body class="sb-storefront-body">
+
+    <!-- ======================================================================
+         1. NAVBAR FIXA NO TOPO
+         ====================================================================== -->
+    <header class="sb-top-navbar" id="top-navbar">
+        <div class="sb-navbar-container">
+            <!-- Marca & Logo (Apenas o Ícone Ampliado, sem texto) -->
+            <a href="/cardapio" class="sb-navbar-brand" title="StackBerry">
+                <img src="/images/StackBerry_OnlyLogo.png" alt="StackBerry Logo" class="sb-header-logo-icon">
+            </a>
+
+            <!-- Links Centrais de Navegação (Centralizados) -->
+            <nav class="sb-nav-links">
+                <a href="#hero" class="sb-nav-link active">Início</a>
+                <a href="#cardapio-vitrine" class="sb-nav-link">Cardápio</a>
+                <a href="/meus-pedidos" class="sb-nav-link" th:if="${usuario != null and usuario.tipoDeUsuario.name() == 'CLIENTE'}">
+                    <i class="fa-regular fa-bookmark"></i> Meus Pedidos
+                </a>
+                <a href="/admin/dashboard_admin" class="sb-nav-link" th:if="${usuario != null and usuario.tipoDeUsuario.name() == 'ADMINISTRADOR'}">
+                    <i class="fa-solid fa-chart-pie"></i> Painel Admin
+                </a>
+            </nav>
+
+            <!-- Ações Direitas: Usuário & Sacola Slide-Over -->
+            <div class="sb-navbar-actions">
+                <!-- Se Usuário Logado: Botão Inteiro Clicável para Sair -->
+                <a href="/logout" class="sb-user-profile-badge" th:if="${usuario != null}" title="Clique para sair da conta" aria-label="Sair da conta">
+                    <i class="fa-regular fa-circle-user"></i>
+                    <span th:text="${usuario.nome}">Cliente</span>
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </a>
+
+                <!-- Se Visitante / Não Logado: SOMENTE O ÍCONE -->
+                <a href="/login" class="sb-btn-login-icon" th:if="${usuario == null}" title="Entrar na conta" aria-label="Entrar">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                </a>
+
+                <!-- Botão da Sacola com Contador e Valor -->
+                <button type="button" class="sb-navbar-cart-trigger" onclick="toggleCartDrawer(true)" aria-label="Abrir sacola de pedidos">
+                    <div class="cart-icon-bubble">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="cart-badge-count" id="cart-nav-badge" th:text="${(carrinho != null ? carrinho.totalItens : (session.carrinho != null ? session.carrinho.totalItens : 0))}">0</span>
+                    </div>
+                    <span class="cart-btn-price" th:text="${(carrinho != null ? #numbers.formatCurrency(carrinho.total) : (session.carrinho != null ? #numbers.formatCurrency(session.carrinho.total) : 'R$ 0,00'))}">R$ 0,00</span>
+                </button>
+            </div>
         </div>
 
-        <form th:action="@{/carrinho/adicionar}" method="post" id="form-pedido">
-            <div class="order-grid">
-                <!-- Coluna Principal com os Passos -->
-                <div class="order-steps-column">
-                    
-                    <!-- Passo 1: Tamanho -->
-                    <div class="step-card">
-                        <div class="step-title">
-                            <span class="step-number">1</span>
-                            <div>
-                                <h2>Escolha o Tamanho da Tigela</h2>
-                                <p>Selecione a porção ideal para matar a sua vontade</p>
-                            </div>
+        <!-- Ondinha Orgânica no Fundo do Header -->
+        <div class="navbar-wave-bottom" aria-hidden="true">
+            <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+                <path d="M0,0 L0,10 C150,22 350,2 500,16 C650,26 900,4 1200,14 L1200,0 Z" class="navbar-wave-fill"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- ======================================================================
+         2. SECÇÃO HERO EDITORIAL MINIMALISTA (ESTILO STACKBERRY.)
+         ====================================================================== -->
+    <section id="hero" class="sb-hero-editorial-section">
+        <div class="sb-hero-editorial-container">
+            <!-- Título Principal Editorial Superior: stackberry. -->
+            <h1 class="hero-brand-title">stackberry.</h1>
+
+            <!-- Produto Central: Tigela de Açaí em PNG com Frutas Flutuantes -->
+            <div class="hero-center-bowl-wrap">
+                <img src="/images/fotoprincipal.png" 
+                     alt="Tigela de Açaí StackBerry com Frutas Frescas" 
+                     class="hero-editorial-bowl-img">
+            </div>
+
+            <!-- Botão de Ação Inferior: Pílula Escura Centralizada -->
+            <div class="hero-editorial-cta-wrap">
+                <a href="#cardapio-vitrine" class="btn-hero-pill-action">
+                    Pedir agora <span class="arrow-symbol">&rarr;</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Curva Orgânica em SVG Conectando o Hero à Vitrine -->
+        <div class="hero-organic-wave-divider">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0 C150,90 350,-40 500,45 C650,130 900,10 1200,50 L1200,120 L0,120 Z" class="wave-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         3. VITRINE E CARDÁPIO DE COMPRA (INSPIRADA NO ESTILO 'TREATO')
+         ====================================================================== -->
+    <section id="cardapio-vitrine" class="sb-vitrine-section">
+        <div class="sb-vitrine-container">
+            <!-- Cabeçalho da Seção -->
+            <div class="vitrine-header">
+                <span class="vitrine-badge-pill">
+                    <i class="fa-solid fa-sparkles"></i> Cardápio de Compra Direta
+                </span>
+                <h2 class="vitrine-title">Escolha Sua Opção Favorita</h2>
+                <p class="vitrine-subtitle">
+                    Clique no botão circular <strong>(+)</strong> de qualquer item para adicionar à sua sacola ou personalizar com seus acompanhamentos prediletos.
+                </p>
+            </div>
+
+            <!-- Barra de Pesquisa e Filtros -->
+            <div class="vitrine-search-bar-wrap">
+                <div class="vitrine-search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" 
+                           id="input-pesquisa" 
+                           class="vitrine-search-input" 
+                           placeholder="Buscar por tamanho ou produto..." 
+                           onkeyup="filtrarProdutosVitrine()">
+                </div>
+                <button type="button" class="btn-filter-icon" onclick="resetarFiltrosVitrine()" title="Limpar Filtros">
+                    <i class="fa-solid fa-sliders"></i>
+                </button>
+            </div>
+
+            <!-- Carrossel de Categorias com Botões Circulares -->
+            <div class="categories-carousel-row" id="categories-bar">
+                <button type="button" class="cat-carousel-btn active" data-cat="todos" onclick="filtrarCategoria('todos', this)">
+                    <div class="cat-icon-circle"><i class="fa-solid fa-bowl-food"></i></div>
+                    <span>Todos</span>
+                </button>
+                <button type="button" class="cat-carousel-btn" data-cat="tigelas" onclick="filtrarCategoria('tigelas', this)">
+                    <div class="cat-icon-circle"><i class="fa-solid fa-spoon"></i></div>
+                    <span>Tigelas</span>
+                </button>
+                <button type="button" class="cat-carousel-btn" data-cat="copos" onclick="filtrarCategoria('copos', this)">
+                    <div class="cat-icon-circle"><i class="fa-solid fa-wine-glass"></i></div>
+                    <span>Copos</span>
+                </button>
+                <button type="button" class="cat-carousel-btn" data-cat="combos" onclick="filtrarCategoria('combos', this)">
+                    <div class="cat-icon-circle"><i class="fa-solid fa-fire"></i></div>
+                    <span>Combos</span>
+                </button>
+                <button type="button" class="cat-carousel-btn" data-cat="adicionais" onclick="filtrarCategoria('adicionais', this)">
+                    <div class="cat-icon-circle"><i class="fa-solid fa-apple-whole"></i></div>
+                    <span>Frutas &amp; Adicionais</span>
+                </button>
+            </div>
+
+            <!-- Grelha de Cards de Produtos Treato -->
+            <div class="products-grid-treato" id="vitrine-products-grid">
+                <!-- Renderiza cada produto vindo do TamanhoService -->
+                <div class="sb-product-card" 
+                     th:each="p, iter : ${tamanhos}"
+                     th:data-nome="${p.nome}"
+                     th:data-categoria="${#strings.containsIgnoreCase(p.nome, 'tigela') ? 'tigelas' : (#strings.containsIgnoreCase(p.nome, 'combo') ? 'combos' : 'copos')}"
+                     th:data-id="${p.id}"
+                     th:data-preco="${p.preco}"
+                     th:data-volume="${p.volume}"
+                     th:data-imagem="${p.imagem != null and !p.imagem.empty ? p.imagem : '/images/fotoprincipal.png'}">
+
+                    <!-- Top Badges -->
+                    <div class="card-top-badges">
+                        <span class="card-tag-nature" th:if="${iter.index % 2 == 0}">
+                            <i class="fa-solid fa-leaf"></i> 100% Puro
+                        </span>
+                        <span class="card-tag-popular" th:if="${iter.index % 2 != 0}">
+                            <i class="fa-solid fa-star"></i> Mais Pedido
+                        </span>
+
+                        <span class="card-volume-indicator" th:text="${p.volume}">500ml</span>
+                    </div>
+
+                    <!-- Imagem Centralizada com Transparência e Drop-Shadow -->
+                    <div class="card-image-display">
+                        <img th:src="${p.imagem != null and !p.imagem.empty ? p.imagem : '/images/fotoprincipal.png'}" 
+                             th:alt="${p.nome}"
+                             onerror="this.src='/images/fotoprincipal.png'">
+                    </div>
+
+                    <!-- Conteúdo Textual -->
+                    <div class="card-content-area">
+                        <h3 class="card-product-title" th:text="${p.nome}">Copo Especial Médio</h3>
+                        <p class="card-product-desc" th:text="${p.descricao}">
+                            Açaí batido na textura ideal com frutas frescas e acompanhamentos crocantes.
+                        </p>
+                    </div>
+
+                    <!-- Rodapé com Preço e Botão Circular de Adição Rápida (+) -->
+                    <div class="card-footer-action-row">
+                        <div class="card-price-display">
+                            <span class="card-price-label">Preço</span>
+                            <span class="card-price-val" th:text="${#numbers.formatCurrency(p.preco)}">R$ 12,00</span>
                         </div>
 
-                        <div class="sizes-grid">
-                            <label class="size-option" th:each="t, iter : ${tamanhos}">
-                                <input type="radio" 
-                                       name="tamanhoId" 
-                                       th:value="${t.id}"
-                                       th:id="${'tamanho-' + t.id}"
-                                       th:checked="${iter.first}"
-                                       th:data-preco="${t.preco}"
-                                       th:data-nome="${t.nome}"
-                                       required
-                                       onchange="atualizarResumo()">
-                                <div class="size-card">
-                                    <div class="size-thumb">
-                                        <img src="/images/acai_copo_tampa.png" alt="Açaí Pequeno" th:if="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180')}">
-                                        <img src="/images/acai_copo_camadas.png" alt="Açaí Médio" th:if="${(#strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '300')) and !#strings.containsIgnoreCase(t.nome, 'pequeno')}">
-                                        <img src="/images/acai_copo_especial.png" alt="Açaí Especial" th:unless="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio')}">
-                                    </div>
-                                    <span class="size-name" th:text="${t.nome}">Médio</span>
-                                    <span class="size-price-tag" th:text="${#numbers.formatCurrency(t.preco)}">R$ 0,00</span>
-                                </div>
-                            </label>
+                        <!-- Botão Circular (+) que abre o Modal de Personalização -->
+                        <button type="button" 
+                                class="btn-quick-add-plus" 
+                                title="Adicionar e personalizar este açaí" 
+                                th:data-id="${p.id}"
+                                th:data-nome="${p.nome}"
+                                th:data-volume="${p.volume}"
+                                th:data-preco="${p.preco}"
+                                th:data-imagem="${p.imagem != null and !p.imagem.empty ? p.imagem : '/images/fotoprincipal.png'}"
+                                onclick="abrirModalPersonalizar(this)">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         4. MODAL DE SELEÇÃO DE ACOMPANHAMENTOS & PERSONALIZAÇÃO
+         ====================================================================== -->
+    <div class="sb-modal-overlay" id="modal-personalizacao" onclick="fecharModalFora(event)">
+        <div class="sb-modal-box">
+            <!-- Cabeçalho do Modal -->
+            <div class="sb-modal-header">
+                <h3>Monte Seu Açaí</h3>
+                <button type="button" class="btn-modal-close" onclick="fecharModalPersonalizar()" aria-label="Fechar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Formulário de Envio para /carrinho/adicionar -->
+            <form action="/carrinho/adicionar" method="post" id="form-adicionar-carrinho">
+                <input type="hidden" name="tamanhoId" id="modal-input-tamanho-id">
+                <input type="hidden" name="quantidade" id="modal-input-quantidade" value="1">
+
+                <div class="sb-modal-body">
+                    <!-- Resumo do Produto Selecionado -->
+                    <div class="modal-product-summary">
+                        <img id="modal-thumb-img" src="/images/fotoprincipal.png" alt="Produto">
+                        <div class="modal-product-details">
+                            <strong id="modal-product-name">Nome do Produto</strong>
+                            <span id="modal-product-volume">Volume</span>
+                            <div>
+                                <span class="modal-base-price-badge" id="modal-base-price-tag">R$ 0,00</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Passo 2: Adicionais -->
-                    <div class="step-card">
-                        <div class="step-title">
-                            <span class="step-number">2</span>
-                            <div>
-                                <h2>Adicione seus Acompanhamentos</h2>
-                                <p>Incremente com frutas, chocolates, cremes e coberturas</p>
-                            </div>
-                        </div>
+                    <!-- Lista de Acompanhamentos Interativos -->
+                    <h4 class="modal-toppings-title">
+                        <i class="fa-solid fa-sparkles" style="color: var(--color-pink);"></i>
+                        Escolha seus Acompanhamentos:
+                    </h4>
 
-                        <div class="adicionais-grid">
-                            <label class="adicional-option" th:each="adicional : ${adicionais}">
-                                <input type="checkbox"
-                                       name="adicionaisIds"
-                                       th:value="${adicional.id}"
-                                       th:id="${'adicional-' + adicional.id}"
-                                       th:data-preco="${adicional.preco}"
-                                       th:data-nome="${adicional.nome}"
-                                       onchange="atualizarResumo()">
-                                <div class="adicional-chip">
-                                    <div class="adicional-info">
-                                        <span class="adicional-title" th:text="${adicional.nome}">Morango</span>
-                                        <span class="adicional-cost" th:text="'+ ' + ${#numbers.formatCurrency(adicional.preco)}">+ R$ 0,00</span>
-                                    </div>
-                                    <div class="adicional-check-indicator">
-                                        <i class="fa-solid fa-check"></i>
-                                    </div>
+                    <div class="modal-toppings-grid" th:if="${adicionais != null and !adicionais.empty}">
+                        <label class="modal-topping-chip" th:each="a : ${adicionais}">
+                            <input type="checkbox" 
+                                   name="adicionaisIds" 
+                                   th:value="${a.id}" 
+                                   th:data-preco="${a.preco}" 
+                                   onchange="calcularTotalModal()">
+                            <div class="modal-chip-content">
+                                <div class="chip-name-side">
+                                    <i class="fa-solid fa-check chip-check-icon"></i>
+                                    <span th:text="${a.nome}">Morango</span>
                                 </div>
-                            </label>
-                        </div>
+                                <span class="chip-price-badge" th:text="'+' + ${#numbers.formatCurrency(a.preco)}">+R$ 1,50</span>
+                            </div>
+                        </label>
                     </div>
 
-                    <!-- Passo 3: Quantidade -->
-                    <div class="step-card">
-                        <div class="step-title">
-                            <span class="step-number">3</span>
-                            <div>
-                                <h2>Quantidade de Tigelas</h2>
-                                <p>Quantas unidades iguais a essa você deseja?</p>
-                            </div>
-                        </div>
-
-                        <div class="stepper-control">
-                            <button type="button" class="stepper-btn" onclick="alterarQtd(-1)" aria-label="Diminuir quantidade">
+                    <!-- Seletor de Quantidade -->
+                    <div class="modal-stepper-wrap">
+                        <span class="modal-stepper-label">Quantidade:</span>
+                        <div class="stepper-controls">
+                            <button type="button" class="btn-stepper" onclick="alterarQtdModal(-1)">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
-                            <input type="number" 
-                                   min="1" 
-                                   max="50" 
-                                   value="1" 
-                                   name="quantidade" 
-                                   id="quantidade" 
-                                   class="stepper-input" 
-                                   required 
-                                   oninput="atualizarResumo()"/>
-                            <button type="button" class="stepper-btn" onclick="alterarQtd(1)" aria-label="Aumentar quantidade">
+                            <span class="stepper-qty-val" id="modal-qty-display">1</span>
+                            <button type="button" class="btn-stepper" onclick="alterarQtdModal(1)">
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </div>
                     </div>
-
                 </div>
 
-                <!-- Coluna Lateral de Resumo em Tempo Real -->
-                <aside class="order-summary-card">
-                    <div class="summary-header">
-                        <h3><i class="fa-solid fa-receipt"></i> Resumo do Pedido</h3>
-                    </div>
-
-                    <div class="summary-item-row">
-                        <span class="summary-label">Tamanho Base:</span>
-                        <span class="summary-value" id="resumo-tamanho-nome">-</span>
-                    </div>
-
-                    <div class="summary-item-row">
-                        <span class="summary-label">Preço Base:</span>
-                        <span class="summary-value" id="resumo-tamanho-preco">R$ 0,00</span>
-                    </div>
-
-                    <div class="summary-divider"></div>
-
-                    <div class="summary-item-row">
-                        <span class="summary-label">Acompanhamentos (<span id="resumo-adicionais-count">0</span>):</span>
-                        <span class="summary-value" id="resumo-adicionais-total">+ R$ 0,00</span>
-                    </div>
-
-                    <div class="selected-tags-container" id="resumo-adicionais-tags">
-                        <span style="font-size: 0.8rem; color: var(--text-subtle);">Nenhum acompanhamento adicionado</span>
-                    </div>
-
-                    <div class="summary-divider"></div>
-
-                    <div class="summary-item-row">
-                        <span class="summary-label">Quantidade:</span>
-                        <span class="summary-value" id="resumo-quantidade">1x</span>
-                    </div>
-
-                    <div class="summary-total-row">
-                        <span class="summary-total-label">Total Estimado:</span>
-                        <span class="summary-total-price" id="resumo-total">R$ 0,00</span>
-                    </div>
-
-                    <button type="submit" class="btn-default btn-add-cart">
-                        <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                <!-- Rodapé do Modal com Botão Confirmar -->
+                <div class="sb-modal-footer">
+                    <button type="submit" class="btn-modal-confirm-add" id="btn-submit-modal">
+                        <span><i class="fa-solid fa-bag-shopping"></i> Adicionar à Sacola</span>
+                        <span id="modal-total-display">R$ 0,00</span>
                     </button>
-
-                    <a href="/carrinho" class="btn-outline-glass btn-view-cart">
-                        <i class="fa-solid fa-basket-shopping"></i> Ver Carrinho Atual
-                    </a>
-                </aside>
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
-</main>
 
-<th:block layout:fragment="page-script">
-<script>
-    function alterarQtd(delta) {
-        const input = document.getElementById('quantidade');
-        let val = parseInt(input.value) || 1;
-        val += delta;
-        if (val < 1) val = 1;
-        if (val > 50) val = 50;
-        input.value = val;
-        atualizarResumo();
-    }
+    <!-- ======================================================================
+         5. SACOLA E RESUMO DE PEDIDO (SLIDE-OVER DRAWER)
+         ====================================================================== -->
+    <!-- Backdrop escuro -->
+    <div class="sb-cart-drawer-backdrop" id="cart-drawer-backdrop" onclick="toggleCartDrawer(false)"></div>
 
-    function formatarMoeda(valor) {
-        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
-    }
+    <!-- Painel Lateral Deslizante -->
+    <aside class="sb-cart-slideover-drawer" id="cart-slideover-drawer">
+        <!-- Cabeçalho do Drawer -->
+        <div class="drawer-header">
+            <div class="drawer-title-wrap">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <h3>Sua Sacola</h3>
+                <span class="drawer-count-badge" th:text="${(carrinho != null ? carrinho.totalItens : (session.carrinho != null ? session.carrinho.totalItens : 0))}">0</span>
+            </div>
+            <button type="button" class="btn-drawer-close" onclick="toggleCartDrawer(false)" aria-label="Fechar Sacola">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
 
-    function atualizarResumo() {
-        // 1. Obter tamanho selecionado
-        const radioChecked = document.querySelector('input[name="tamanhoId"]:checked');
-        let precoTamanho = 0;
-        let nomeTamanho = 'Nenhum selecionado';
+        <!-- Corpo do Drawer: Itens -->
+        <div class="drawer-body">
+            <!-- Se houver itens no carrinho -->
+            <div class="drawer-items-list" th:if="${(carrinho != null and !carrinho.itensNoCarrinho.empty) or (session.carrinho != null and !session.carrinho.itensNoCarrinho.empty)}">
+                <div class="drawer-cart-item" th:each="item : ${(carrinho != null ? carrinho.itensNoCarrinho : session.carrinho.itensNoCarrinho)}">
+                    <div class="drawer-item-top">
+                        <div class="drawer-item-info">
+                            <strong th:text="${item.acai.tamanho.nome}">Copo Médio</strong>
+                            <!-- Acompanhamentos Escolhidos -->
+                            <div class="drawer-item-toppings" th:if="${item.acai.adicionais != null and !item.acai.adicionais.empty}">
+                                <span class="topping-tag-pill" th:each="adic : ${item.acai.adicionais}" th:text="${adic.nome}">Morango</span>
+                            </div>
+                        </div>
 
-        if (radioChecked) {
-            precoTamanho = parseFloat(radioChecked.getAttribute('data-preco')) || 0;
-            nomeTamanho = radioChecked.getAttribute('data-nome') || '';
+                        <!-- Botão de Remover Item -->
+                        <form th:action="@{/carrinho/remover}" method="post" style="display:inline;">
+                            <input type="hidden" name="itemId" th:value="${item.id}">
+                            <button type="submit" class="btn-remove-item-trash" title="Remover este item">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="drawer-item-bottom">
+                        <!-- Ajuste de Quantidade -->
+                        <div class="drawer-item-stepper">
+                            <form th:action="@{/carrinho/atualizar}" method="post" style="display:inline;">
+                                <input type="hidden" name="itemId" th:value="${item.id}">
+                                <input type="hidden" name="quantidade" th:value="${item.quantidade - 1}">
+                                <button type="submit" aria-label="Diminuir">-</button>
+                            </form>
+                            <span th:text="${item.quantidade}">1</span>
+                            <form th:action="@{/carrinho/atualizar}" method="post" style="display:inline;">
+                                <input type="hidden" name="itemId" th:value="${item.id}">
+                                <input type="hidden" name="quantidade" th:value="${item.quantidade + 1}">
+                                <button type="submit" aria-label="Aumentar">+</button>
+                            </form>
+                        </div>
+
+                        <!-- Preço do Item -->
+                        <div class="drawer-item-price" th:text="${#numbers.formatCurrency(item.subTotal())}">R$ 14,00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estado Vazio (Sem Itens) -->
+            <div class="drawer-empty-state" th:if="${(carrinho == null or carrinho.itensNoCarrinho.empty) and (session.carrinho == null or session.carrinho.itensNoCarrinho.empty)}">
+                <div class="empty-cart-icon-circle">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                </div>
+                <h4>Sua sacola está vazia</h4>
+                <p>Nenhuma tigela ou copo adicionado ainda. Escolha sua opção favorita no cardápio!</p>
+                <a href="#cardapio-vitrine" class="btn-drawer-explore" onclick="toggleCartDrawer(false)">
+                    <i class="fa-solid fa-utensils"></i> Explorar Cardápio
+                </a>
+            </div>
+        </div>
+
+        <!-- Rodapé do Drawer: Totais e Checkout -->
+        <div class="drawer-footer" th:if="${(carrinho != null and !carrinho.itensNoCarrinho.empty) or (session.carrinho != null and !session.carrinho.itensNoCarrinho.empty)}">
+            <div class="drawer-summary-row">
+                <span>Subtotal:</span>
+                <strong th:text="${#numbers.formatCurrency(carrinho != null ? carrinho.total : session.carrinho.total)}">R$ 0,00</strong>
+            </div>
+            <div class="drawer-summary-row">
+                <span>Taxa de Entrega:</span>
+                <strong style="color: var(--color-green);">Grátis / Retirada</strong>
+            </div>
+
+            <div class="drawer-summary-total">
+                <span>Total:</span>
+                <span class="drawer-grand-total" th:text="${#numbers.formatCurrency(carrinho != null ? carrinho.total : session.carrinho.total)}">R$ 0,00</span>
+            </div>
+
+            <!-- Botão Finalizar Compra -->
+            <a href="/carrinho/finalizar" class="btn-drawer-checkout">
+                <span>Finalizar Pedido</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+            <a href="/carrinho" class="drawer-secondary-link">
+                Ver página completa da sacola
+            </a>
+        </div>
+    </aside>
+
+    <!-- ======================================================================
+         6. FOOTER ARTESANAL DA STACKBERRY
+         ====================================================================== -->
+    <footer class="sb-footer">
+        <!-- Ondinha Orgânica no Topo do Footer (mesmo formato da seção do cardápio) -->
+        <div class="footer-wave-top" aria-hidden="true">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0 C150,90 350,-40 500,45 C650,130 900,10 1200,50 L1200,120 L0,120 Z" class="footer-wave-fill"></path>
+            </svg>
+        </div>
+
+        <div class="sb-footer-container">
+            <!-- Coluna Marca -->
+            <div class="footer-brand-col">
+                <img src="/images/StackBerry_OnlyLogo.png" alt="StackBerry Logo">
+                <h4>StackBerry</h4>
+                <p>
+                    Açaiteria artesanal dedicada a oferecer o sabor puro, saudável e autêntico da floresta amazônica. Cremosidade sem igual e ingredientes de altíssima pureza.
+                </p>
+            </div>
+
+            <!-- Coluna Navegação -->
+            <div class="footer-col">
+                <h5>Navegação</h5>
+                <ul class="footer-links-list">
+                    <li><a href="#hero">Início</a></li>
+                    <li><a href="#cardapio-vitrine">Cardápio Completo</a></li>
+                    <li><a href="/carrinho">Minha Sacola</a></li>
+                    <li><a href="/meus-pedidos">Meus Pedidos</a></li>
+                    <li><a href="/login">Acessar Conta</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna Horário & Atendimento -->
+            <div class="footer-col">
+                <h5>Atendimento</h5>
+                <ul class="footer-links-list">
+                    <li>Segunda a Sexta: 12h às 22h</li>
+                    <li>Sábados e Domingos: 13h às 23h</li>
+                    <li>Entregas Rápidas no Bairro</li>
+                    <li>Retirada no Balcão</li>
+                </ul>
+            </div>
+
+            <!-- Coluna Contato -->
+            <div class="footer-col">
+                <h5>Fale Conosco</h5>
+                <div class="footer-contact-item">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>(81) 99379-7546<br>Pedidos via WhatsApp</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>StackBerry Artesanal<br>Recife - PE</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sb-footer-bottom">
+            <span>&copy; 2026 StackBerry Açaiteria Artesanal &bull; Todos os direitos reservados.</span>
+            <span>Design Editorial &amp; Artesanal com Amor pelo Açaí.</span>
+        </div>
+    </footer>
+
+    <!-- ======================================================================
+         7. SCRIPTS DE INTERATIVIDADE, FILTRO, MODAL E SLIDE-OVER DRAWER
+         ====================================================================== -->
+    <script>
+        // Variáveis de Estado do Modal
+        let precoBaseAtual = 0;
+        let quantidadeAtual = 1;
+
+        // Controle da Navbar ao rolar a página
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('top-navbar');
+            if (window.scrollY > 40) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Abrir / Fechar Drawer da Sacola
+        function toggleCartDrawer(abrir) {
+            const drawer = document.getElementById('cart-slideover-drawer');
+            const backdrop = document.getElementById('cart-drawer-backdrop');
+            if (abrir) {
+                drawer.classList.add('active');
+                backdrop.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                drawer.classList.remove('active');
+                backdrop.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         }
 
-        document.getElementById('resumo-tamanho-nome').textContent = nomeTamanho;
-        document.getElementById('resumo-tamanho-preco').textContent = formatarMoeda(precoTamanho);
+        // Abrir Modal de Personalização a partir do botão (+)
+        function abrirModalPersonalizar(btn) {
+            const id = btn.getAttribute('data-id');
+            const nome = btn.getAttribute('data-nome');
+            const volume = btn.getAttribute('data-volume');
+            const preco = parseFloat(btn.getAttribute('data-preco')) || 0;
+            const imagem = btn.getAttribute('data-imagem') || '/images/fotoprincipal.png';
 
-        // 2. Obter adicionais selecionados
-        const checkboxes = document.querySelectorAll('input[name="adicionaisIds"]:checked');
-        let totalAdicionais = 0;
-        const tagsContainer = document.getElementById('resumo-adicionais-tags');
-        tagsContainer.innerHTML = '';
+            precoBaseAtual = preco;
+            quantidadeAtual = 1;
 
-        if (checkboxes.length === 0) {
-            tagsContainer.innerHTML = '<span style="font-size: 0.8rem; color: var(--text-subtle);">Nenhum acompanhamento adicionado</span>';
-        } else {
+            // Preenche dados no modal
+            document.getElementById('modal-input-tamanho-id').value = id;
+            document.getElementById('modal-input-quantidade').value = 1;
+            document.getElementById('modal-qty-display').innerText = '1';
+            document.getElementById('modal-product-name').innerText = nome;
+            document.getElementById('modal-product-volume').innerText = volume;
+            document.getElementById('modal-thumb-img').src = imagem;
+            document.getElementById('modal-base-price-tag').innerText = formatarDinheiro(preco);
+
+            // Desmarca todos os adicionais
+            const checkboxes = document.querySelectorAll('#modal-personalizacao input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = false);
+
+            calcularTotalModal();
+
+            // Exibe o modal
+            const modal = document.getElementById('modal-personalizacao');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharModalPersonalizar() {
+            const modal = document.getElementById('modal-personalizacao');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function fecharModalFora(e) {
+            if (e.target.id === 'modal-personalizacao') {
+                fecharModalPersonalizar();
+            }
+        }
+
+        // Alterar quantidade no modal
+        function alterarQtdModal(delta) {
+            quantidadeAtual += delta;
+            if (quantidadeAtual < 1) quantidadeAtual = 1;
+            if (quantidadeAtual > 30) quantidadeAtual = 30;
+            document.getElementById('modal-qty-display').innerText = quantidadeAtual;
+            document.getElementById('modal-input-quantidade').value = quantidadeAtual;
+            calcularTotalModal();
+        }
+
+        // Recalcular valor total dentro do modal
+        function calcularTotalModal() {
+            let totalUnitario = precoBaseAtual;
+            const checkboxes = document.querySelectorAll('#modal-personalizacao input[type="checkbox"]:checked');
             checkboxes.forEach(cb => {
-                const preco = parseFloat(cb.getAttribute('data-preco')) || 0;
-                const nome = cb.getAttribute('data-nome') || '';
-                totalAdicionais += preco;
+                totalUnitario += parseFloat(cb.getAttribute('data-preco')) || 0;
+            });
 
-                const tag = document.createElement('span');
-                tag.className = 'topping-badge-item';
-                tag.textContent = nome;
-                tagsContainer.appendChild(tag);
+            const totalGeral = totalUnitario * quantidadeAtual;
+            document.getElementById('modal-total-display').innerText = formatarDinheiro(totalGeral);
+        }
+
+        // Formatação de Dinheiro em BRL
+        function formatarDinheiro(valor) {
+            return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        // Filtro em tempo real de produtos da vitrine
+        function filtrarProdutosVitrine() {
+            const termo = document.getElementById('input-pesquisa').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.sb-product-card');
+
+            cards.forEach(card => {
+                const nome = (card.getAttribute('data-nome') || '').toLowerCase();
+                const categoria = (card.getAttribute('data-categoria') || '').toLowerCase();
+                const volume = (card.getAttribute('data-volume') || '').toLowerCase();
+
+                if (nome.includes(termo) || categoria.includes(termo) || volume.includes(termo)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
             });
         }
 
-        document.getElementById('resumo-adicionais-count').textContent = checkboxes.length;
-        document.getElementById('resumo-adicionais-total').textContent = '+ ' + formatarMoeda(totalAdicionais);
+        function resetarFiltrosVitrine() {
+            document.getElementById('input-pesquisa').value = '';
+            filtrarCategoria('todos', document.querySelector('.cat-carousel-btn[data-cat="todos"]'));
+        }
 
-        // 3. Quantidade
-        const inputQtd = document.getElementById('quantidade');
-        const quantidade = parseInt(inputQtd.value) || 1;
-        document.getElementById('resumo-quantidade').textContent = quantidade + 'x';
+        // Pesquisa rápida por ingrediente através dos chips
+        function pesquisarIngrediente(ingrediente) {
+            const input = document.getElementById('input-pesquisa');
+            input.value = ingrediente;
+            filtrarProdutosVitrine();
+            const vitrineSec = document.getElementById('cardapio-vitrine');
+            if (vitrineSec) {
+                vitrineSec.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
-        // 4. Total Final
-        const precoUnitario = precoTamanho + totalAdicionais;
-        const totalFinal = precoUnitario * quantidade;
+        // Filtro por categoria do carrossel
+        function filtrarCategoria(categoria, btn) {
+            // Atualiza classe ativa nos botões
+            document.querySelectorAll('.cat-carousel-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
 
-        document.getElementById('resumo-total').textContent = formatarMoeda(totalFinal);
-    }
+            const cards = document.querySelectorAll('.sb-product-card');
+            cards.forEach(card => {
+                const cardCat = (card.getAttribute('data-categoria') || '').toLowerCase();
+                if (categoria === 'todos' || cardCat.includes(categoria)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
 
-    // Inicializa o resumo no carregamento
-    document.addEventListener('DOMContentLoaded', function() {
-        atualizarResumo();
-    });
-</script>
-</th:block>
+        // Abre a sacola automaticamente se a URL tiver ?abrirSacola=true
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('abrirSacola') === 'true' || window.location.hash === '#sacola') {
+                toggleCartDrawer(true);
+            }
+        });
+    </script>
 </body>
 </html>

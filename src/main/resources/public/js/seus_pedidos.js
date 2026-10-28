@@ -50,13 +50,15 @@ async function carregarPedidos() {
                         break;
                 }
 
+                const acaoCellComLabel = acaoCell ? acaoCell.replace('<td>', '<td data-label="Ação">') : '<td></td>';
+
                 const linha = `
                     <tr>
-                        <td>${pedido.dataHoraFormatada}</td>
-                        <td>${itensFormatados}</td>
-                        <td>${valorFormatado}</td>
-                        <td>${statusBadge}</td>
-                        ${acaoCell}
+                        <td data-label="Data/Hora">${pedido.dataHoraFormatada}</td>
+                        <td data-label="Itens">${itensFormatados}</td>
+                        <td data-label="Valor Total"><strong style="color: var(--color-purple, #3A0B2E);">${valorFormatado}</strong></td>
+                        <td data-label="Status">${statusBadge}</td>
+                        ${acaoCellComLabel}
                     </tr>
                 `;
                 tabelaBody.innerHTML += linha;

@@ -2,39 +2,219 @@
 <html lang="pt-br"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout.html}">
+      layout:decorate="~{layout}">
 <head>
-    <title>Editar Tamanho</title>
+    <meta charset="UTF-8">
+    <title>Editar Produto</title>
     <th:block layout:fragment="page-css">
         <link rel="stylesheet" th:href="@{/styles/formulario.css}">
     </th:block>
 </head>
 <body>
 
-<section layout:fragment="content">
+<main layout:fragment="content">
     <div class="form-wrapper">
-        <h1>Editar Tamanho</h1>
+        <div class="form-wrapper-header">
+            <h1><i class="fa-solid fa-pen-to-square" style="margin-right: 8px; color: var(--color-purple, #66023C);"></i> Editar Produto</h1>
+            <a href="/admin/dashboard_admin" class="btn-modal-close" title="Fechar e voltar ao Painel" aria-label="Fechar">
+                <i class="fa-solid fa-xmark"></i>
+            </a>
+        </div>
 
-        <form th:action="@{/admin/tamanhos/atualizar}" method="post">
+        <form th:action="@{/admin/tamanhos/atualizar}" method="post" enctype="multipart/form-data" id="form-editar-produto">
             <input type="hidden" name="id" th:value="${tamanho.id}" />
 
+            <!-- Nome do Produto -->
             <div class="form-group">
-                <label for="nome">Nome do Tamanho:</label>
-                <input type="text" class="form-control" id="nome" name="nome" th:value="${tamanho.nome}" required>
+                <label for="nome">Nome do Produto:</label>
+                <input type="text" class="form-control" id="nome" name="nome" th:value="${tamanho.nome}" required autofocus>
+                <span class="form-help">Nome exibido em destaque no cardápio e no carrinho.</span>
             </div>
 
+            <!-- Tamanho / Volume -->
             <div class="form-group">
-                <label for="preco">Preço:</label>
-                <input type="number" class="form-control" id="preco" name="preco" th:value="${tamanho.preco}" step="0.01" required>
+                <label for="volume">Tamanho / Especificação:</label>
+                <input type="text" class="form-control" id="volume" name="volume" th:value="${tamanho.volume}" placeholder="Ex: 500ml (ou 300ml, 700ml, Barca 1L)">
+                <span class="form-help">Etiqueta/badge colorida exibida em cima da foto do produto.</span>
             </div>
 
+            <!-- Preço Base -->
+            <div class="form-group">
+                <label for="preco">Preço Base (R$):</label>
+                <input type="number" class="form-control" id="preco" name="preco" th:value="${tamanho.preco}" step="0.01" min="0" required>
+            </div>
+
+            <!-- Descrição do Produto -->
+            <div class="form-group">
+                <label for="descricao">Descrição do Produto:</label>
+                <textarea class="form-control" id="descricao" name="descricao" th:text="${tamanho.descricao}" placeholder="Conte aos clientes sobre a textura do açaí, cremosidade, ingredientes especiais..."></textarea>
+            </div>
+
+            <!-- Foto do Produto: Upload ou Galeria -->
+            <div class="form-group">
+                <label>Foto do Produto:</label>
+
+                <!-- Dropzone para Upload do Computador -->
+                <label for="fotoArquivo" class="file-upload-dropzone" id="drop-area">
+                    <i class="fa-solid fa-cloud-arrow-up file-upload-icon"></i>
+                    <strong class="file-upload-title" id="file-upload-title">Clique para trocar a foto enviando do seu computador</strong>
+                    <span class="file-upload-sub" id="file-upload-sub">Formatos suportados: PNG, JPG, JPEG ou WEBP (ou arraste e solte aqui)</span>
+                    <input type="file" id="fotoArquivo" name="fotoArquivo" accept="image/png, image/jpeg, image/jpg, image/webp" style="display:none;" onchange="lidarComUploadLocal(this)">
+                </label>
+
+                <div class="upload-divider">
+                    <span>ou selecione uma foto da galeria StackBerry</span>
+                </div>
+
+                <!-- Galeria Rápida de Presets -->
+                <div class="image-presets-grid" id="image-presets">
+                    <div class="image-preset-option" data-img="/images/acai_copo_perfeito.jpg" onclick="selecionarPreset(this)">
+                        <img src="/images/acai_copo_perfeito.jpg" alt="Copo Clássico">
+                        <span>Copo Clássico</span>
+                    </div>
+                    <div class="image-preset-option" data-img="/images/acai_copo_camadas.png" onclick="selecionarPreset(this)">
+                        <img src="/images/acai_copo_camadas.png" alt="Copo Camadas">
+                        <span>Em Camadas</span>
+                    </div>
+                    <div class="image-preset-option" data-img="/images/acai_copo_tampa.png" onclick="selecionarPreset(this)">
+                        <img src="/images/acai_copo_tampa.png" alt="Copo Tampa">
+                        <span>Tampa Bolha</span>
+                    </div>
+                    <div class="image-preset-option" data-img="/images/acai_tigela_branca_frutas.jpg" onclick="selecionarPreset(this)">
+                        <img src="/images/acai_tigela_branca_frutas.jpg" alt="Tigela com Frutas">
+                        <span>Tigela Frutas</span>
+                    </div>
+                    <div class="image-preset-option" data-img="/images/acai_tigela_palmeira_roxo.jpg" onclick="selecionarPreset(this)">
+                        <img src="/images/acai_tigela_palmeira_roxo.jpg" alt="Tigela Tropical">
+                        <span>Tropical</span>
+                    </div>
+                    <div class="image-preset-option" data-img="/images/acai_topdown_folhas_monstera.jpg" onclick="selecionarPreset(this)">
+                        <img src="/images/acai_topdown_folhas_monstera.jpg" alt="Tigela Gourmet">
+                        <span>Gourmet</span>
+                    </div>
+                </div>
+
+                <input type="hidden" id="imagem" name="imagem" th:value="${tamanho.imagem}">
+
+                <!-- Preview da Imagem Atual / Selecionada -->
+                <div class="image-preview-wrapper">
+                    <img th:src="${tamanho.imagem != null and !tamanho.imagem.empty ? tamanho.imagem : '/images/acai_copo_perfeito.jpg'}" alt="Preview" class="image-preview-thumb" id="img-preview" onerror="this.src='/images/acai_copo_perfeito.jpg'">
+                    <div class="image-preview-label">
+                        <strong>Foto atual do produto</strong>
+                        <span id="img-preview-text" th:text="${tamanho.imagem != null and !tamanho.imagem.empty ? tamanho.imagem : '/images/acai_copo_perfeito.jpg'}">/images/acai_copo_perfeito.jpg</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botões de Ação -->
             <div class="form-actions">
-                <a th:href="@{/admin/dashboard_admin}" class="btn-cancel">Cancelar</a>
-                <button type="submit" class="btn-default">Salvar Alterações</button>
+                <a th:href="@{/admin/dashboard_admin}" class="btn-cancel">
+                    <i class="fa-solid fa-arrow-left" style="margin-right: 6px;"></i> Cancelar
+                </a>
+                <button type="submit" class="btn-default" id="btn-submit">
+                    <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
+                </button>
             </div>
         </form>
     </div>
-</section>
+</main>
+
+<th:block layout:fragment="page-script">
+    <script>
+        function selecionarPreset(element) {
+            document.querySelectorAll('.image-preset-option').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            const imgPath = element.getAttribute('data-img');
+            document.getElementById('imagem').value = imgPath;
+
+            // Limpar o input de arquivo local caso estivesse selecionado
+            document.getElementById('fotoArquivo').value = '';
+            document.getElementById('file-upload-title').textContent = 'Clique para trocar a foto enviando do seu computador';
+            document.getElementById('file-upload-sub').textContent = 'Formatos suportados: PNG, JPG, JPEG ou WEBP';
+
+            atualizarPreview(imgPath);
+        }
+
+        function atualizarPreview(url) {
+            const img = document.getElementById('img-preview');
+            const text = document.getElementById('img-preview-text');
+            const val = (url || '').trim() || '/images/acai_copo_perfeito.jpg';
+            img.src = val;
+            text.textContent = val.startsWith('data:') ? 'Nova foto carregada do seu computador' : val;
+        }
+
+        function lidarComUploadLocal(input) {
+            const file = input.files && input.files[0];
+            if (!file) return;
+
+            document.getElementById('file-upload-title').textContent = 'Arquivo selecionado: ' + file.name;
+            document.getElementById('file-upload-sub').textContent = (file.size / 1024).toFixed(1) + ' KB - Pronto para salvar';
+
+            // Desmarcar presets visuais
+            document.querySelectorAll('.image-preset-option').forEach(el => el.classList.remove('selected'));
+
+            // Preview local imediato
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                atualizarPreview(e.target.result);
+            };
+            reader.readAsDataURL(file);
+
+            // Upload assíncrono em background
+            const formData = new FormData();
+            formData.append('fotoArquivo', file);
+            fetch('/admin/api/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.url) {
+                    document.getElementById('imagem').value = data.url;
+                    document.getElementById('img-preview-text').textContent = data.url;
+                }
+            })
+            .catch(err => console.log('Envio assíncrono será concluído no submit:', err));
+        }
+
+        // Suporte a Drag & Drop
+        const dropArea = document.getElementById('drop-area');
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, e => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropArea.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, e => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropArea.classList.remove('dragover');
+            }, false);
+        });
+
+        dropArea.addEventListener('drop', e => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files && files.length > 0) {
+                const fileInput = document.getElementById('fotoArquivo');
+                fileInput.files = files;
+                lidarComUploadLocal(fileInput);
+            }
+        }, false);
+
+        // Marcar preset correspondente à imagem salva se existir
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentImg = document.getElementById('imagem').value;
+            if (currentImg) {
+                const match = document.querySelector(`.image-preset-option[data-img="${currentImg}"]`);
+                if (match) match.classList.add('selected');
+            }
+        });
+    </script>
+</th:block>
 
 </body>
 </html>

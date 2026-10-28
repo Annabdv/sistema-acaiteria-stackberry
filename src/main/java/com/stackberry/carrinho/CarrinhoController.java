@@ -88,7 +88,12 @@ public class CarrinhoController {
 
         ctx.sessionAttribute("carrinho", carrinho);
 
-        ctx.redirect("/carrinho");
+        String referer = ctx.header("Referer");
+        if (referer != null && referer.contains("/cardapio")) {
+            ctx.redirect("/cardapio?abrirSacola=true");
+        } else {
+            ctx.redirect("/carrinho");
+        }
     }
 
     private Tamanho mapToTamanho(String id) {
@@ -126,7 +131,12 @@ public class CarrinhoController {
             carrinho.removeItemDoCarrinhoPeloId(itemId);
             ctx.sessionAttribute("carrinho", carrinho);
         }
-        ctx.redirect("/carrinho");
+        String referer = ctx.header("Referer");
+        if (referer != null && referer.contains("/cardapio")) {
+            ctx.redirect("/cardapio?abrirSacola=true");
+        } else {
+            ctx.redirect("/carrinho");
+        }
     }
 
     public void atualizarQuantidade(Context ctx) {
@@ -145,7 +155,12 @@ public class CarrinhoController {
             carrinho.atualizaQuantidade(itemId, quantidade);
             ctx.sessionAttribute("carrinho", carrinho);
         }
-        ctx.redirect("/carrinho");
+        String referer = ctx.header("Referer");
+        if (referer != null && referer.contains("/cardapio")) {
+            ctx.redirect("/cardapio?abrirSacola=true");
+        } else {
+            ctx.redirect("/carrinho");
+        }
     }
 
     // finalização de compra
@@ -155,11 +170,12 @@ public class CarrinhoController {
         Usuario usuario = ctx.sessionAttribute("usuarioLogado");
 
         if (usuario == null) {
+            ctx.sessionAttribute("redirectPosLogin", "/carrinho/finalizar");
             ctx.redirect("/login");
             return;
         }
         if (carrinho == null || carrinho.getItensNoCarrinho().isEmpty()) {
-            ctx.status(400).result("Carrinho vazio");
+            ctx.redirect("/cardapio");
             return;
         }
 
@@ -172,8 +188,8 @@ public class CarrinhoController {
         try {
             ctx.redirect("/pedido/sucesso?pedidoId=" + pedido.getId());
         } catch (Exception e) {
-            System.err.println("Erro ao codificar a URL do WhatsApp: " + e.getMessage());
-            throw new RuntimeException("Não foi possível gerar o link do WhatsApp. Por favor, tente novamente.", e);
+            System.err.println("Erro ao finalizar pedido: " + e.getMessage());
+            throw new RuntimeException("Não foi possível processar o pedido. Por favor, tente novamente.", e);
         }
     }
 

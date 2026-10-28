@@ -1,10 +1,13 @@
 package com.stackberry.carrinho;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ItemCarrinho implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -51,6 +54,16 @@ public class ItemCarrinho implements Serializable {
 
     public BigDecimal subTotal(){
         return precoUnitario.multiply(java.math.BigDecimal.valueOf(quantidade));
+    }
+
+    @JsonIgnore
+    public BigDecimal getSubTotal() {
+        return subTotal();
+    }
+
+    @JsonIgnore
+    public BigDecimal getPrecoTotal() {
+        return subTotal();
     }
 
     public boolean mesmoProduto(ItemCarrinho outro){

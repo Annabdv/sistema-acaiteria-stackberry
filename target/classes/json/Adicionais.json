@@ -1,11 +1,19 @@
 [ {
-  "nome" : "Cobertura Morango",
-  "id" : "c6cc5146-74ad-49e8-b885-690168db500c",
-  "preco" : 0.30
+  "nome" : "Kiwi",
+  "id" : "bba22564-d105-4ef8-9913-bd3b7cd66794",
+  "preco" : 0
+}, {
+  "nome" : "Granola",
+  "id" : "17699deb-8d10-4f1a-b3c3-6a9ccb7b5ef8",
+  "preco" : 0
 }, {
   "nome" : "Banana",
   "id" : "3216d965-3d25-4781-9c8a-648f5495d352",
   "preco" : 0.50
+}, {
+  "nome" : "Leite em pó",
+  "id" : "3edc0670-8bd4-4ba0-9ab5-0ccf3e8b4411",
+  "preco" : 0
 }, {
   "nome" : "Morango",
   "id" : "db86d050-4ead-4da5-80c5-4b67280b5378",

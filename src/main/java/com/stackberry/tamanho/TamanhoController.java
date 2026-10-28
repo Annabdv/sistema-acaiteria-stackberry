@@ -3,6 +3,11 @@ package com.stackberry.tamanho;
 import com.stackberry.exception.ValidacaoException;
 import io.javalin.http.Context;
 
+import io.javalin.http.UploadedFile;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.UUID;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -24,14 +29,42 @@ public class TamanhoController {
 
     public void cadastrarTamanhoView(Context ctx){
         String nome = ctx.formParam("nome");
-        BigDecimal preco = new BigDecimal(ctx.formParam("preco"));
+        String precoStr = ctx.formParam("preco");
+        BigDecimal preco = (precoStr != null && !precoStr.trim().isEmpty()) ? new BigDecimal(precoStr.trim()) : BigDecimal.ZERO;
+        String volume = ctx.formParam("volume");
+        String descricao = ctx.formParam("descricao");
+        String imagem = ctx.formParam("imagem");
 
-        Tamanho tamanhoDoFormulario = new Tamanho(nome, preco);
+        UploadedFile arquivo = ctx.uploadedFile("fotoArquivo");
+        if (arquivo != null && arquivo.size() > 0) {
+            try {
+                String ext = arquivo.extension();
+                if (ext == null || ext.isEmpty()) ext = ".jpg";
+                if (!ext.startsWith(".")) ext = "." + ext;
+
+                String nomeArquivo = "prod_" + System.currentTimeMillis() + "_" + UUID.randomUUID().toString().substring(0, 8) + ext;
+
+                File dir = new File("uploads");
+                if (!dir.exists()) dir.mkdirs();
+
+                File destino = new File(dir, nomeArquivo);
+                try (InputStream in = arquivo.content();
+                     FileOutputStream out = new FileOutputStream(destino)) {
+                    in.transferTo(out);
+                }
+
+                imagem = "/uploads/" + nomeArquivo;
+            } catch (Exception e) {
+                System.err.println("Erro ao salvar foto de upload: " + e.getMessage());
+            }
+        }
+
+        Tamanho tamanhoDoFormulario = new Tamanho(nome, preco, volume, descricao, imagem);
 
         try {
             tamanhoService.cadastrarTamanho(tamanhoDoFormulario);
             ctx.redirect("/admin/dashboard_admin");
-        }catch (ValidacaoException e) {
+        } catch (ValidacaoException e) {
             ctx.status(400).result("Erro de validação: " + e.getMessage());
         }
     }
@@ -66,12 +99,40 @@ public class TamanhoController {
    }
 
    public void atualizarTamanho(Context ctx){
-        // TODO: Blindar com verificações de segurança
         String id = ctx.formParam("id");
         String nome = ctx.formParam("nome");
-        BigDecimal preco = new BigDecimal(ctx.formParam("preco"));
+        String precoStr = ctx.formParam("preco");
+        BigDecimal preco = (precoStr != null && !precoStr.trim().isEmpty()) ? new BigDecimal(precoStr.trim()) : BigDecimal.ZERO;
+        String volume = ctx.formParam("volume");
+        String descricao = ctx.formParam("descricao");
+        String imagem = ctx.formParam("imagem");
 
-        Tamanho tamanhoAtualizado = new Tamanho(nome, preco);
+        UploadedFile arquivo = ctx.uploadedFile("fotoArquivo");
+        if (arquivo != null && arquivo.size() > 0) {
+            try {
+                String ext = arquivo.extension();
+                if (ext == null || ext.isEmpty()) ext = ".jpg";
+                if (!ext.startsWith(".")) ext = "." + ext;
+
+                String nomeArquivo = "prod_" + System.currentTimeMillis() + "_" + UUID.randomUUID().toString().substring(0, 8) + ext;
+
+                File dir = new File("uploads");
+                if (!dir.exists()) dir.mkdirs();
+
+                File destino = new File(dir, nomeArquivo);
+                try (InputStream in = arquivo.content();
+                     FileOutputStream out = new FileOutputStream(destino)) {
+                    in.transferTo(out);
+                }
+
+                imagem = "/uploads/" + nomeArquivo;
+            } catch (Exception e) {
+                System.err.println("Erro ao salvar foto atualizada de upload: " + e.getMessage());
+            }
+        }
+
+        Tamanho tamanhoAtualizado = new Tamanho(nome, preco, volume, descricao, imagem);
+        tamanhoAtualizado.setId(id);
         tamanhoService.atualizarTamanho(id, tamanhoAtualizado);
         ctx.redirect("/admin/dashboard_admin");
    }

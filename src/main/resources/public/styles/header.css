@@ -1,4 +1,4 @@
-header {
+header.legacy-site-header {
     width: 100%;
     padding: 14px 6%;
     position: sticky;
@@ -21,7 +21,7 @@ header {
 }
 
 #navbar img {
-    height: 40px;
+    height: 48px;
     width: auto;
     object-fit: contain;
     transition: transform 0.25s ease;
@@ -57,13 +57,13 @@ header {
     left: 0;
     width: 0%;
     height: 2.5px;
-    background: var(--primary-berry);
+    background: var(--color-purple, #3A0B2E);
     border-radius: 2px;
     transition: width 0.25s ease;
 }
 
 .nav-item a:hover {
-    color: var(--primary-berry);
+    color: var(--color-purple, #3A0B2E);
 }
 
 .nav-item a:hover::after,
@@ -72,7 +72,7 @@ header {
 }
 
 .nav-item.active a {
-    color: var(--primary-berry);
+    color: var(--color-purple, #3A0B2E);
     font-weight: 600;
 }
 
@@ -94,7 +94,7 @@ header {
     display: none;
     border: 1px solid var(--border-medium);
     background: #FFFFFF;
-    color: var(--primary-berry);
+    color: var(--color-purple, #3A0B2E);
     width: 42px;
     height: 42px;
     border-radius: 10px;
@@ -106,7 +106,7 @@ header {
 }
 
 #mobile_btn:hover {
-    background: var(--primary-berry-soft);
+    background: var(--color-purple-soft, #EDE1EF);
 }
 
 #mobile_menu {

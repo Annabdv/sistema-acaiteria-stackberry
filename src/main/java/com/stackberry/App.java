@@ -15,6 +15,14 @@ import io.javalin.rendering.template.JavalinThymeleaf;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import io.javalin.http.UploadedFile;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.util.UUID;
+import java.util.Map;
 import java.util.List;
 
 
@@ -39,7 +47,13 @@ public class App {
     }
 
     private void configurarPaginasDeErro(Javalin app) {
-        app.error(404, ctx -> ctx.render("erro_404.html"));
+        app.error(404, ctx -> {
+            String path = ctx.path();
+            if (path.startsWith("/admin/api") || path.startsWith("/api")) {
+                return;
+            }
+            ctx.render("erro_404.html");
+        });
         app.error(500, ctx -> ctx.render("erro_500.html"));
     }
 
@@ -98,29 +112,87 @@ public class App {
                 "/carrinho/adicionar", 
                 "/carrinho/remover", 
                 "/carrinho/atualizar", 
+                "/carrinho/finalizar",
+                "/carrinho/finalizarCompra",
+                "/pedido/sucesso",
                 "/login", 
                 "/cadastrar", 
-                "/usuarios/cadastrar"
+                "/usuarios/cadastrar",
+                "/logout"
             );
 
-            if (!rotasPublicas.contains(path) && !path.startsWith("/styles") && !path.startsWith("/js") && !path.startsWith("/images")) {
+            // Permite arquivos estáticos e rotas públicas sem restrição
+            if (path.startsWith("/styles") || path.startsWith("/js") || path.startsWith("/images") || path.startsWith("/uploads") || path.startsWith("/favicon") || rotasPublicas.contains(path)) {
+                return;
+            }
 
+            // Exige administrador para o painel admin
+            if (path.startsWith("/admin")) {
                 if (usuarioLogado == null) {
                     ctx.redirect("/login");
                     return;
                 }
-
-                if (path.startsWith("/admin") && usuarioLogado.getTipoDeUsuario() != TipoDeUsuario.ADMINISTRADOR) {
+                if (usuarioLogado.getTipoDeUsuario() != TipoDeUsuario.ADMINISTRADOR) {
                     ctx.redirect("/cardapio");
+                    return;
+                }
+            } else if (path.startsWith("/meus-pedidos") || path.startsWith("/api/meus-pedidos") || path.startsWith("/api/pedidos")) {
+                // Rotas privadas do cliente
+                if (usuarioLogado == null) {
+                    ctx.redirect("/login");
                     return;
                 }
             }
         });
 
-        // Rota de teste para a página inicial
-        app.get("/", ctx -> {
-            ctx.render("index.html"); // Renderiza o templates/index.html
+        // Servir imagens enviadas por upload
+        app.get("/uploads/{filename}", ctx -> {
+            String filename = ctx.pathParam("filename");
+            File file = new File("uploads/" + filename);
+            if (file.exists() && file.isFile()) {
+                String mime = Files.probeContentType(file.toPath());
+                if (mime == null) {
+                    if (filename.toLowerCase().endsWith(".png")) mime = "image/png";
+                    else if (filename.toLowerCase().endsWith(".webp")) mime = "image/webp";
+                    else mime = "image/jpeg";
+                }
+                ctx.contentType(mime);
+                ctx.result(new FileInputStream(file));
+            } else {
+                ctx.status(404).result("Imagem não encontrada");
+            }
         });
+
+        // API para upload assíncrono de fotos no painel administrativo
+        app.post("/admin/api/upload", ctx -> {
+            UploadedFile arquivo = ctx.uploadedFile("fotoArquivo");
+            if (arquivo == null || arquivo.size() == 0) {
+                ctx.status(400).json(Map.of("erro", "Nenhum arquivo enviado"));
+                return;
+            }
+
+            String ext = arquivo.extension();
+            if (ext == null || ext.isEmpty()) ext = ".jpg";
+            if (!ext.startsWith(".")) ext = "." + ext;
+
+            String nomeArquivo = "prod_" + System.currentTimeMillis() + "_" + UUID.randomUUID().toString().substring(0, 8) + ext;
+
+            File dir = new File("uploads");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            File destino = new File(dir, nomeArquivo);
+            try (InputStream in = arquivo.content();
+                 FileOutputStream out = new FileOutputStream(destino)) {
+                in.transferTo(out);
+            }
+
+            ctx.json(Map.of("url", "/uploads/" + nomeArquivo));
+        });
+
+        // Página inicial da loja
+        app.get("/", cardapioController::mostrarCardapio);
 
         // Rota temporária para testar o erro 500
         app.get("/testar-erro", ctx -> {
@@ -180,6 +252,9 @@ public class App {
         app.get("/admin/dashboard_admin", dashboardController:: exibirDashboard);
 
         // pedido
+        app.get("/carrinho/finalizar", carrinhoController::finalizarCompra);
+        app.post("/carrinho/finalizar", carrinhoController::finalizarCompra);
+        app.get("/carrinho/finalizarCompra", carrinhoController::finalizarCompra);
         app.post("/carrinho/finalizarCompra", carrinhoController::finalizarCompra);
 
         app.get("/pedido/sucesso", carrinhoController::verSucesso);

@@ -1,501 +1,1092 @@
-/* Estilos Claros e Sutis do Cardápio - Cítrico & Púrpura */
+/* ==========================================================================
+   STACKBERRY - ESTILOS DO CARDÁPIO & STOREFRONT (Purr'Coffee Layout)
+   Cores Oficiais: Roxo (#66023C), Verde (#4E8221), Rosa (#D81B60),
+                   Azul (#2563EB), Amarelo (#F59E0B)
+   ========================================================================== */
 
-.order-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 16px 80px 16px;
+.pos-catalog-layout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    background: var(--bg-main, #F4EBF7);
+    overflow: hidden;
 }
 
-.order-header {
-    text-align: center;
-    margin-bottom: 34px;
+/* --------------------------------------------------------------------------
+   COLUNA CENTRAL: VITRINE / CATÁLOGO DE PRODUTOS (Scroll Independente)
+   -------------------------------------------------------------------------- */
+.catalog-main-panel {
+    flex: 1;
+    height: 100%;
+    padding: 28px 36px 40px 36px;
+    overflow-y: auto;
+    background: var(--bg-main, #F4EBF7);
+    min-width: 0;
 }
 
-.order-header .badge-pill {
-    margin-bottom: 12px;
+/* Barra Superior: Busca & Filtro */
+.catalog-top-bar {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 24px;
 }
 
-.order-header h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 8px;
-    color: var(--text-title);
-}
-
-.order-header p {
-    color: var(--text-muted);
-    font-size: 1.02rem;
-    max-width: 580px;
-    margin: 0 auto;
-}
-
-/* Layout em Grid Principal */
-.order-grid {
-    display: grid;
-    grid-template-columns: 1fr 360px;
-    gap: 28px;
-    align-items: start;
-}
-
-/* Passos do Pedido */
-.step-card {
-    background: #FFFFFF;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-xl);
-    padding: 26px 24px;
-    margin-bottom: 22px;
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition);
-}
-
-.step-card:hover {
-    border-color: var(--border-medium);
-    box-shadow: var(--shadow-md);
-}
-
-.step-title {
+.search-box-pill {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 20px;
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-lavender, #E4D5E9);
+    border-radius: 999px;
+    padding: 11px 20px;
+    flex: 1;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(58, 11, 46, 0.03);
 }
 
-.step-number {
+.search-box-pill:focus-within {
+    border-color: var(--color-purple, #3A0B2E);
+    background: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(58, 11, 46, 0.10);
+}
+
+.search-box-pill i {
+    color: var(--color-purple, #3A0B2E);
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+
+.search-box-pill input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.92rem;
+    color: var(--color-purple, #3A0B2E);
+    width: 100%;
+}
+
+.search-box-pill input::placeholder {
+    color: var(--text-muted, #7A6573);
+}
+
+.btn-filter-pill {
+    background: var(--color-accent-orange, #E65100);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 999px;
+    padding: 11px 22px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 14px rgba(230, 81, 0, 0.28);
+}
+
+.btn-filter-pill:hover {
+    background: var(--color-accent-orange-hover, #BF360C);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(230, 81, 0, 0.38);
+}
+
+/* Abas de Categorias / Pills */
+.category-pills-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.cat-pill {
+    border-radius: 999px;
+    padding: 8px 22px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-medium, #DCD0CD);
+    color: var(--text-body, #4A3543);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+/* Categorias inativas com contornos coloridos sutis da paleta natural */
+.cat-pill.cat-pill-todos {
+    border-color: #3A0B2E;
+    color: #3A0B2E;
+    background: #FFFFFF;
+}
+.cat-pill.cat-pill-todos:hover {
+    background: var(--color-purple-soft, #EDE1EF);
+}
+
+.cat-pill.cat-pill-copos {
+    border-color: var(--color-blue, #1565C0);
+    color: var(--color-blue, #1565C0);
+    background: #FFFFFF;
+}
+.cat-pill.cat-pill-copos:hover {
+    background: var(--color-blue-soft, #E3F2FD);
+}
+
+.cat-pill.cat-pill-populares {
+    border-color: var(--color-pink, #AD1457);
+    color: var(--color-pink, #AD1457);
+    background: #FFFFFF;
+}
+.cat-pill.cat-pill-populares:hover {
+    background: var(--color-pink-soft, #FCE4EC);
+}
+
+.cat-pill.cat-pill-adicionais {
+    border-color: var(--color-green, #2E7D32);
+    color: var(--color-green, #2E7D32);
+    background: #FFFFFF;
+}
+.cat-pill.cat-pill-adicionais:hover {
+    background: var(--color-green-soft, #E8F5E9);
+}
+
+/* Categoria Selecionada: Fundo #3A0B2E e texto branco */
+.cat-pill.active {
+    background: #3A0B2E !important;
+    border-color: #3A0B2E !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(58, 11, 46, 0.25);
+}
+
+/* Cabeçalho da Seção */
+.catalog-section-header {
+    margin-bottom: 22px;
+}
+
+.section-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+}
+
+.catalog-section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--text-title);
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.badge-fresh-harvest {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
-    background: var(--primary-berry);
-    color: #ffffff;
+    gap: 6px;
+    background: var(--color-green-soft);
+    color: var(--color-green);
+    border: 1px solid var(--color-green-border);
+    font-size: 0.75rem;
     font-weight: 700;
-    font-size: 0.95rem;
-    box-shadow: 0 3px 8px rgba(102, 2, 60, 0.2);
+    padding: 3px 12px;
+    border-radius: 999px;
 }
 
-.step-title h2 {
-    font-size: 1.25rem;
+.badge-fresh-harvest.pill-yellow {
+    background: var(--color-yellow-soft);
+    color: var(--color-yellow);
+    border-color: var(--color-yellow-border);
+}
+
+.catalog-section-sub {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   GRADE DE PRODUTOS / TAMANHOS (Vitrine Estilo Purr'Coffee)
+   -------------------------------------------------------------------------- */
+.pos-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 22px;
+    margin-bottom: 32px;
+}
+
+.pos-product-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-light, #E8DFDC);
+    border-radius: var(--radius-lg, 18px);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+    box-shadow: 0 4px 16px rgba(58, 11, 46, 0.06);
+}
+
+.pos-product-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-purple-border, #E0CBE4);
+    box-shadow: 0 8px 24px rgba(58, 11, 46, 0.12);
+}
+
+.card-product-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Mídia do Card */
+.pos-card-media-wrapper {
+    height: 150px;
+    background: #FAF7FB;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.pos-card-media-wrapper img,
+.pos-card-media-wrapper img.img-crop-cover {
+    max-height: 130px;
+    max-width: 85%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    border-radius: var(--radius-sm);
+    transition: transform 0.25s ease;
+}
+
+.pos-product-card:hover .pos-card-media-wrapper img {
+    transform: scale(1.05);
+}
+
+/* Badges Coloridas de Volume no Card (Azul, Amarelo, Verde, Roxo) */
+.card-volume-pill {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.card-volume-pill.pill-blue {
+    background: var(--color-blue-soft);
+    color: var(--color-blue);
+    border: 1px solid var(--color-blue-border);
+}
+
+.card-volume-pill.pill-yellow {
+    background: var(--color-yellow-soft);
+    color: var(--color-yellow);
+    border: 1px solid var(--color-yellow-border);
+}
+
+.card-volume-pill.pill-green {
+    background: var(--color-green-soft);
+    color: var(--color-green);
+    border: 1px solid var(--color-green-border);
+}
+
+.card-volume-pill.pill-purple {
+    background: var(--color-purple-soft);
+    color: var(--color-purple);
+    border: 1px solid var(--color-purple-border);
+}
+
+/* Corpo do Card */
+.pos-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.pos-card-header-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.pos-card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
     font-weight: 700;
     color: var(--text-title);
     margin: 0;
 }
 
-.step-title p {
-    font-size: 0.85rem;
+.pos-card-price {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-purple);
+}
+
+.pos-card-desc {
+    font-size: 0.8rem;
     color: var(--text-muted);
-    margin: 2px 0 0 0;
+    line-height: 1.45;
+    margin: 0 0 12px 0;
+    flex: 1;
 }
 
-/* 1. Grade de Tamanhos com Imagens */
-.sizes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
+/* Adicionais Integrados Dentro do Próprio Card */
+.pos-card-toppings-section {
+    margin-bottom: 14px;
+    background: #FAF8F6;
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    border: 1px solid var(--border-light);
 }
 
-.size-option {
-    position: relative;
-    cursor: pointer;
-    display: block;
-}
-
-.size-option input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.size-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 20px 14px;
-    background: #FFFFFF;
-    border: 2px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    transition: all 0.22s ease;
-    height: 100%;
-}
-
-.size-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--primary-berry-border);
-    box-shadow: var(--shadow-md);
-}
-
-.size-thumb {
-    width: 90px;
-    height: 90px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.size-thumb img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
-}
-
-.size-name {
+.toppings-section-title {
+    font-size: 0.72rem;
     font-weight: 700;
-    font-size: 1.05rem;
-    color: var(--text-title);
-    margin-bottom: 8px;
-}
-
-.size-price-tag {
-    display: inline-block;
-    background: var(--accent-citric-soft);
-    border: 1px solid var(--accent-citric-border);
-    color: var(--accent-citric-dark);
-    font-weight: 700;
-    font-size: 0.95rem;
-    padding: 4px 12px;
-    border-radius: 20px;
-}
-
-/* Tamanho Selecionado */
-.size-option input[type="radio"]:checked + .size-card {
-    border-color: var(--primary-berry);
-    background: var(--primary-berry-soft);
-    box-shadow: 0 4px 16px rgba(102, 2, 60, 0.12);
-    transform: translateY(-2px);
-}
-
-.size-option input[type="radio"]:checked + .size-card .size-price-tag {
-    background: var(--primary-berry);
-    color: #ffffff;
-    border-color: var(--primary-berry);
-}
-
-/* 2. Grade de Adicionais */
-.adicionais-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 12px;
-}
-
-.adicional-option {
-    position: relative;
-    cursor: pointer;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     display: block;
+    margin-bottom: 6px;
 }
 
-.adicional-option input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.adicional-chip {
+.card-toppings-chips {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 12px 14px;
-    background: #FFFFFF;
-    border: 1.5px solid var(--border-light);
-    border-radius: var(--radius-md);
-    transition: all 0.2s ease;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.card-topping-chip {
+    cursor: pointer;
     user-select: none;
 }
 
-.adicional-chip:hover {
-    background: var(--primary-berry-soft);
-    border-color: var(--primary-berry-border);
+.card-topping-chip input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
-.adicional-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.adicional-title {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-title);
-}
-
-.adicional-cost {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--primary-berry);
-}
-
-.adicional-check-indicator {
-    width: 20px;
-    height: 20px;
-    border-radius: 6px;
-    border: 1.5px solid var(--border-medium);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: transparent;
-    font-size: 0.72rem;
-    background: #FFFFFF;
-    flex-shrink: 0;
-    transition: all 0.2s ease;
-}
-
-/* Adicional Selecionado */
-.adicional-option input[type="checkbox"]:checked + .adicional-chip {
-    background: var(--primary-berry-soft);
-    border-color: var(--primary-berry);
-}
-
-.adicional-option input[type="checkbox"]:checked + .adicional-chip .adicional-check-indicator {
-    background: var(--primary-berry);
-    border-color: var(--primary-berry);
-    color: #ffffff;
-}
-
-/* 3. Seletor de Quantidade */
-.stepper-control {
+.chip-inner {
     display: inline-flex;
     align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
     background: #FFFFFF;
-    border: 1.5px solid var(--border-medium);
-    border-radius: var(--radius-md);
-    padding: 4px;
-    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-medium);
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--text-body);
+    transition: var(--transition);
+}
+
+.card-topping-chip:hover .chip-inner {
+    border-color: var(--color-pink);
+    color: var(--color-pink);
+}
+
+.card-topping-chip.selected .chip-inner,
+.card-topping-chip input[type="checkbox"]:checked + .chip-inner {
+    background: var(--color-green-soft, #E8F5E9);
+    border-color: var(--color-green, #2E7D32);
+    color: var(--color-green, #2E7D32);
+    font-weight: 700;
+}
+
+.chip-icon {
+    font-size: 0.65rem;
+}
+
+.chip-price {
+    font-size: 0.68rem;
+    opacity: 0.85;
+}
+
+/* Rodapé do Card: Stepper e Botão Adicionar */
+.pos-card-action-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+}
+
+.card-stepper {
+    display: inline-flex;
+    align-items: center;
+    background: #F4EBF7;
+    border: 1.5px solid var(--border-lavender, #E4D5E9);
+    border-radius: 999px;
+    padding: 2px 4px;
 }
 
 .stepper-btn {
-    width: 38px;
-    height: 38px;
-    border: none;
-    background: var(--bg-surface-soft);
-    color: var(--text-title);
-    font-size: 1.1rem;
-    font-weight: 600;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border-medium, #DCD0CD);
+    background: #FFFFFF;
+    color: #3A0B2E;
     cursor: pointer;
-    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.75rem;
     transition: var(--transition);
 }
 
 .stepper-btn:hover {
-    background: var(--primary-berry-soft);
-    color: var(--primary-berry);
+    background: #3A0B2E;
+    color: #FFFFFF;
+    border-color: #3A0B2E;
 }
 
 .stepper-input {
-    width: 56px;
-    text-align: center;
-    background: transparent;
+    width: 32px;
     border: none;
-    color: var(--text-title);
-    font-size: 1.15rem;
+    background: transparent;
+    text-align: center;
     font-weight: 700;
+    font-size: 0.92rem;
+    color: #3A0B2E;
     outline: none;
 }
 
-/* 4. Resumo Lateral do Pedido */
-.order-summary-card {
-    position: sticky;
-    top: 90px;
-    background: #FFFFFF;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-xl);
-    padding: 24px;
-    box-shadow: var(--shadow-lg);
-}
-
-.summary-header {
-    border-bottom: 1px solid var(--border-light);
-    padding-bottom: 14px;
-    margin-bottom: 18px;
-}
-
-.summary-header h3 {
-    font-size: 1.25rem;
+/* Botão Adicionar no Card (#3A0B2E sólido) */
+.btn-card-add {
+    flex: 1;
+    background: #3A0B2E;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 999px;
+    padding: 9px 14px;
     font-weight: 700;
-    color: var(--text-title);
+    font-size: 0.85rem;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 14px rgba(58, 11, 46, 0.25);
+}
+
+.btn-card-add:hover {
+    background: #26051E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(58, 11, 46, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   GUIA DE ACOMPANHAMENTOS FRESCOS
+   -------------------------------------------------------------------------- */
+.toppings-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.topping-showcase-item {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: var(--transition);
+}
+
+.topping-showcase-item:hover {
+    border-color: var(--color-purple-border);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.topping-icon-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+}
+
+.topping-icon-badge.badge-pink {
+    background: var(--color-pink-soft);
+    color: var(--color-pink);
+}
+
+.topping-icon-badge.badge-yellow {
+    background: var(--color-yellow-soft);
+    color: var(--color-yellow);
+}
+
+.topping-icon-badge.badge-green {
+    background: var(--color-green-soft);
+    color: var(--color-green);
+}
+
+.topping-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.topping-info strong {
+    font-size: 0.88rem;
+    color: var(--text-title);
+}
+
+.topping-info span {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-purple);
+}
+
+/* --------------------------------------------------------------------------
+   COLUNA DIREITA: RESUMO DO PEDIDO / CARRINHO (Full-Height 100vh com border-l)
+   -------------------------------------------------------------------------- */
+.pos-cart-panel {
+    width: 370px;
+    height: 100vh;
+    height: 100dvh;
+    background: var(--bg-panel-secondary, #F4EBF7);
+    border-left: 1.5px solid var(--border-lavender, #E4D5E9);
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.pos-cart-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.pos-cart-title-row h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--color-purple, #3A0B2E);
     margin: 0;
 }
 
-.summary-header h3 i {
-    color: var(--primary-berry);
+.pos-cart-count-pill {
+    background: var(--color-purple-soft, #EDE1EF);
+    color: var(--color-purple, #3A0B2E);
+    border: 1px solid var(--color-purple-border, #E0CBE4);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
 }
 
-.summary-item-row {
+/* Abas de Atendimento (Delivery / No Local / Retirada) */
+.pos-order-type-tabs {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    font-size: 0.92rem;
-}
-
-.summary-label {
-    color: var(--text-muted);
-}
-
-.summary-value {
-    font-weight: 600;
-    color: var(--text-title);
-}
-
-.selected-tags-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin: 6px 0 14px 0;
-    max-height: 110px;
-    overflow-y: auto;
-}
-
-.topping-badge-item {
-    font-size: 0.75rem;
-    background: var(--primary-berry-soft);
-    border: 1px solid var(--primary-berry-border);
-    color: var(--primary-berry);
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: 10px;
-}
-
-.summary-divider {
-    height: 1px;
-    background: var(--border-light);
-    margin: 16px 0;
-}
-
-.summary-total-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-lavender, #E4D5E9);
+    border-radius: 999px;
+    padding: 3px;
     margin-bottom: 20px;
 }
 
-.summary-total-label {
-    font-size: 1.05rem;
+.order-type-btn {
+    border: none;
+    background: transparent;
+    padding: 7px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border-radius: 999px;
+    cursor: pointer;
+    color: var(--text-muted, #7A6573);
+    flex: 1;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.order-type-btn.active {
+    background: var(--color-purple, #3A0B2E);
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(58, 11, 46, 0.25);
+}
+
+/* Lista de Itens do Carrinho */
+.pos-cart-items-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+    margin-bottom: 12px;
+}
+
+/* Área da Sacola Vazia (Fundo #F4EBF7 consistente com a coluna) */
+.pos-cart-empty {
+    text-align: center;
+    padding: 40px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-panel-secondary, #F4EBF7);
+}
+
+.empty-icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-lavender, #E4D5E9);
+    color: var(--color-purple, #3A0B2E);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 12px rgba(58, 11, 46, 0.05);
+}
+
+.pos-cart-empty h4 {
+    font-size: 1.1rem;
     font-weight: 700;
+    color: var(--color-purple, #3A0B2E);
+    margin: 0 0 6px 0;
+}
+
+.pos-cart-empty p {
+    font-size: 0.84rem;
+    color: var(--text-muted, #7A6573);
+    line-height: 1.5;
+    margin: 0 auto;
+    max-width: 250px;
+    text-align: center;
+}
+
+/* Linha de Item do Carrinho */
+.pos-cart-item-row {
+    background: #FFFFFF;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: var(--transition);
+}
+
+.pos-cart-item-row:hover {
+    border-color: var(--color-purple-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.cart-item-thumb {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.cart-item-thumb img {
+    max-width: 42px;
+    max-height: 42px;
+    object-fit: contain;
+}
+
+.cart-item-info-col {
+    flex: 1;
+    min-width: 0;
+}
+
+.cart-item-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.cart-item-top h5 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-title);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cart-item-price-val {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--color-purple);
+    flex-shrink: 0;
+}
+
+.cart-item-toppings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.topping-tag {
+    font-size: 0.68rem;
+    background: var(--color-pink-soft);
+    color: var(--color-pink);
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 999px;
+}
+
+.cart-item-stepper-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.unit-qty {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.btn-remove-cart-item {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.btn-remove-cart-item:hover {
+    color: #DC2626;
+    background: #FEE2E2;
+}
+
+/* Caixa de Total & Botão Finalizar Pedido */
+.pos-cart-checkout-box {
+    border-top: 1px solid var(--border-light);
+    padding-top: 18px;
+}
+
+.checkout-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.checkout-summary-row strong {
     color: var(--text-title);
 }
 
-.summary-total-price {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: var(--primary-berry);
+.checkout-summary-row .text-green {
+    color: var(--color-green);
+    font-weight: 700;
 }
 
-.btn-add-cart {
+.checkout-summary-row.total-highlight {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-title);
+    padding-top: 8px;
+    border-top: 1.5px dashed var(--border-light);
+    margin-top: 10px;
+    margin-bottom: 16px;
+}
+
+.grand-total-val {
+    font-size: 1.35rem;
+    color: var(--color-purple);
+    font-weight: 800;
+}
+
+/* Botão Finalizar Pedido (Roxo StackBerry) */
+.btn-place-order {
+    background: var(--color-purple);
+    color: #FFFFFF !important;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     width: 100%;
     padding: 14px 20px;
-    font-size: 1rem;
-    border-radius: var(--radius-md);
-    margin-bottom: 10px;
-    background: var(--primary-berry);
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 16px rgba(102, 2, 60, 0.28);
 }
 
-.btn-add-cart:hover {
-    background: var(--primary-berry-hover);
+.btn-place-order:hover {
+    background: var(--color-purple-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 2, 60, 0.38);
 }
 
-.btn-view-cart {
-    width: 100%;
+.btn-place-order.disabled {
+    background: var(--border-medium);
+    color: var(--text-muted) !important;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   BOTÃO FLUTUANTE (FAB) E BACKDROP PARA O RESUMO NO MOBILE
+   -------------------------------------------------------------------------- */
+.mobile-cart-fab {
+    display: none;
+}
+
+.mobile-cart-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(18, 5, 12, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-cart-backdrop.open {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.btn-close-cart-mobile {
+    display: none;
+    background: #F3F4F6;
+    border: 1px solid var(--border-medium);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    color: var(--text-body);
+    font-size: 0.95rem;
+    align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-/* ==============================================
-   RESPONSIVIDADE MOBILE APRIMORADA
-   ============================================== */
-@media screen and (max-width: 991px) {
-    .order-wrapper {
-        padding: 16px 12px 60px 12px;
+.btn-close-cart-mobile:hover {
+    background: #E5E7EB;
+    color: #111;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVIDADE MOBILE / TELAS MENORES
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 992px) {
+    .btn-close-cart-mobile {
+        display: inline-flex;
     }
 
-    .order-header h1 {
-        font-size: 2rem;
+    /* O resumo do pedido NÃO fica fixo no final da página: vira um drawer deslizante */
+    .pos-cart-panel {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100% !important;
+        max-width: 100vw;
+        max-height: 85vh;
+        background: var(--bg-panel-secondary, #F4EBF7);
+        border-radius: 24px 24px 0 0;
+        box-shadow: 0 -12px 36px rgba(58, 11, 46, 0.22);
+        border-top: 2.5px solid var(--border-lavender, #E4D5E9);
+        border-left: none;
+        padding: 20px 20px 28px 20px;
+        z-index: 1200;
+        display: flex;
+        flex-direction: column;
+        transform: translateY(105%);
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow-y: auto;
     }
 
-    .order-header p {
-        font-size: 0.95rem;
+    .pos-cart-panel.open {
+        transform: translateY(0);
     }
 
-    .order-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+    .pos-cart-items-list {
+        max-height: 40vh;
+        overflow-y: auto;
     }
 
-    .order-summary-card {
+    /* Botão flutuante de cestinha para abrir o resumo */
+    .mobile-cart-fab {
+        display: flex;
+        position: fixed;
+        bottom: 24px;
+        right: 20px;
+        z-index: 1050;
+        background: linear-gradient(135deg, #3A0B2E 0%, #521242 100%);
+        color: #FFFFFF;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        padding: 12px 22px;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 8px 24px rgba(58, 11, 46, 0.45), 0 2px 6px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .mobile-cart-fab:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 12px 28px rgba(58, 11, 46, 0.55);
+    }
+
+    .mobile-cart-fab:active {
+        transform: scale(0.96);
+    }
+
+    .mobile-cart-fab-icon {
         position: relative;
-        top: 0;
-        margin-top: 10px;
-        box-shadow: var(--shadow-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+    }
+
+    .mobile-cart-fab-badge {
+        position: absolute;
+        top: -8px;
+        right: -10px;
+        background: var(--color-accent-orange, #E65100);
+        color: #FFFFFF;
+        font-size: 0.72rem;
+        font-weight: 800;
+        border-radius: 999px;
+        min-width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 5px;
+        border: 2px solid #3A0B2E;
+    }
+
+    .mobile-cart-fab-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 1.2;
+    }
+
+    .mobile-cart-fab-label {
+        font-size: 0.74rem;
+        font-weight: 700;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .mobile-cart-fab-total {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #FFFFFF;
     }
 }
 
-@media screen and (max-width: 600px) {
-    .step-card {
-        padding: 18px 14px;
-        border-radius: var(--radius-lg);
+@media screen and (max-width: 640px) {
+    .catalog-main-panel {
+        padding: 18px 12px;
     }
 
-    .step-title h2 {
-        font-size: 1.1rem;
+    .pos-products-grid {
+        grid-template-columns: 1fr;
     }
+}
 
-    .sizes-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
+/* --------------------------------------------------------------------------
+   RODAPÉ DA VITRINE AO FINAL DA ROLAGEM
+   -------------------------------------------------------------------------- */
+.catalog-end-footer {
+    text-align: center;
+    padding: 36px 16px 20px 16px;
+    color: var(--text-muted, #7A6573);
+    font-size: 0.82rem;
+    font-weight: 500;
+}
 
-    .size-card {
-        padding: 14px 8px;
-    }
+.catalog-end-footer p {
+    margin: 0;
+}
 
-    .size-thumb {
-        width: 70px;
-        height: 70px;
-        margin-bottom: 8px;
-    }
+/* Scrollbars Sutis e Modernos */
+.catalog-main-panel::-webkit-scrollbar,
+.pos-cart-items-list::-webkit-scrollbar,
+.pos-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
 
-    .size-name {
-        font-size: 0.92rem;
-    }
+.catalog-main-panel::-webkit-scrollbar-track,
+.pos-cart-items-list::-webkit-scrollbar-track,
+.pos-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
 
-    .size-price-tag {
-        font-size: 0.85rem;
-        padding: 3px 8px;
-    }
+.catalog-main-panel::-webkit-scrollbar-thumb,
+.pos-cart-items-list::-webkit-scrollbar-thumb,
+.pos-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(58, 11, 46, 0.14);
+    border-radius: 999px;
+}
 
-    .adicionais-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-
-    .adicional-chip {
-        padding: 10px 8px;
-    }
-
-    .adicional-title {
-        font-size: 0.82rem;
-    }
-
-    .adicional-cost {
-        font-size: 0.74rem;
-    }
-
-    .order-summary-card {
-        padding: 18px 14px;
-    }
-
-    .summary-total-price {
-        font-size: 1.5rem;
-    }
+.catalog-main-panel::-webkit-scrollbar-thumb:hover,
+.pos-cart-items-list::-webkit-scrollbar-thumb:hover,
+.pos-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(58, 11, 46, 0.28);
 }
