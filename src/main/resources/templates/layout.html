@@ -141,11 +141,11 @@
                 <h5>Fale Conosco</h5>
                 <div class="footer-contact-item">
                     <i class="fa-brands fa-whatsapp"></i>
-                    <span>(81) 99379-7546<br>Pedidos via WhatsApp</span>
+                    <span>4002-8922<br>Pedidos via WhatsApp</span>
                 </div>
                 <div class="footer-contact-item">
                     <i class="fa-solid fa-location-dot"></i>
-                    <span>StackBerry Artesanal<br>Recife - PE</span>
+                    <span>StackBerry Artesanal<br>Rio Tinto - PB</span>
                 </div>
             </div>
         </div>
@@ -183,8 +183,8 @@
             }
 
             // Controle de Exibição do Rodapé (Completo vs Simples)
-            // Em login, cadastro, pedido finalizado, acompanhar pedido e admin: footer simples.
-            // O footer completo (com mapa de navegação e contatos) permanece no cardápio e na sacola.
+            // Em login, cadastro, pedido finalizado, acompanhar pedido, sacola e admin: footer simples.
+            // O footer completo (com mapa de navegação e contatos) permanece no cardápio inicial.
             const isSimpleFooterPage = path.includes('/login') || 
                 path.includes('/cadastrar') || 
                 path.includes('/signup') || 
@@ -192,6 +192,7 @@
                 path.includes('/pedido') || 
                 path.includes('/meus-pedidos') || 
                 path.includes('/pedidos') || 
+                path.includes('/carrinho') || 
                 path.includes('/admin');
 
             const fRich = document.getElementById('sb-footer-rich');

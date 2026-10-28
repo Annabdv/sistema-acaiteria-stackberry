@@ -572,3 +572,22 @@ h1, h2, h3, h4, h5, h6, .brand-font {
 .pos-global-footer p {
     margin: 0;
 }
+
+@media (max-width: 768px) {
+    .sb-layout-main {
+        padding-top: 76px;
+        min-height: calc(100vh - 76px);
+    }
+}
+
+@media (max-width: 480px) {
+    .sb-layout-main {
+        padding-top: 68px;
+        min-height: calc(100vh - 68px);
+    }
+
+    img, svg, picture, video {
+        max-width: 100%;
+        height: auto;
+    }
+}

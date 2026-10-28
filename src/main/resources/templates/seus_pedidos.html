@@ -2,33 +2,33 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>StackBerry - Página Meus Pedidos</title>
-    <link rel="stylesheet" th:href="@{/styles/seus_pedidos.css}">
-
-
+    <title>Meus Pedidos - StackBerry</title>
+    <th:block layout:fragment="page-css">
+        <link rel="stylesheet" th:href="@{/styles/seus_pedidos.css}">
+    </th:block>
 </head>
 <body>
 
 <section layout:fragment="content">
-    <div class="container mt-5">
-
-        <div class="text-center mb-4">
-            <h1>Meus Pedidos</h1>
+    <div class="orders-page-wrapper">
+        <div class="orders-header-section">
+            <span class="orders-badge-pill">
+                <i class="fa-solid fa-clock-rotate-left"></i> Acompanhamento em Tempo Real
+            </span>
+            <h1>Acompanhe seus Pedidos</h1>
+            <p>Veja o status de preparo e a entrega das suas tigelas de açaí artesanal</p>
         </div>
 
-        <div class="mobile-swipe-hint">
-            <i class="fa-solid fa-arrows-left-right"></i> Deslize para ver detalhes
-        </div>
-        <div id="pedidos-list" class="mb-4">
+        <div id="pedidos-list">
             <div class="table-responsive">
-                <table class="align-middle">
+                <table>
                     <thead>
                     <tr>
-                        <th scope="col">Data/Hora</th>
-                        <th scope="col">Itens</th>
+                        <th scope="col">Data &amp; Hora</th>
+                        <th scope="col">Itens do Pedido</th>
                         <th scope="col">Valor Total</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Ação</th>
+                        <th scope="col" style="text-align: right;">Ação</th>
                     </tr>
                     </thead>
                     <tbody id="tabela-pedidos-body">
@@ -37,17 +37,23 @@
             </div>
         </div>
 
+        <!-- Estado de Nenhum Pedido Encontrado -->
         <div id="mensagem-sem-pedidos" style="display: none;">
-            <p>Nenhum pedido por aqui ainda.</p>
-            <a href="/cardapio" class="btn btn-purple">Montar um Açaí</a>
+            <div class="orders-empty-icon">
+                <i class="fa-solid fa-bowl-food"></i>
+            </div>
+            <h2>Nenhum pedido realizado ainda</h2>
+            <p>Você ainda não fez nenhum pedido conosco. Que tal montar um açaí artesanal geladinho agora mesmo?</p>
+            <a href="/cardapio" class="btn-orders-primary">
+                <i class="fa-solid fa-plus"></i> Montar meu Açaí
+            </a>
         </div>
 
-        <hr class="separador-suave">
-
-        <div class="text-center mt-4">
-            <a href="/cardapio" class="btn btn-purple">Voltar para o Cardápio</a>
+        <div class="orders-back-container">
+            <a href="/cardapio" class="btn-orders-outline">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Cardápio
+            </a>
         </div>
-
     </div>
 
     <script th:src="@{/js/seus_pedidos.js}" defer></script>

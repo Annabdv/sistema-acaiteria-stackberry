@@ -67,19 +67,15 @@ body.sb-storefront-body {
     left: 0;
     right: 0;
     height: 90px;
-    background: #F6EEF8; /* Mesmo roxinho suave onde está a imagem */
+    background: rgba(250, 246, 240, 0); /* Base 100% transparente com o mesmo tom para transição pura sem cinza */
     z-index: 1000;
-    /* Sem nenhuma sombra no início: integra 100% liso ao fundo da seção */
-    filter: none;
     border-bottom: none;
-    transition: background 0.35s ease, filter 0.35s ease;
+    box-shadow: none;
+    transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), -webkit-backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: background, box-shadow;
 }
 
-.sb-top-navbar.scrolled {
-    background: #FAF6F0; /* Transiciona para o fundo creme ao navegar pelo cardápio */
-    filter: drop-shadow(0 4px 14px rgba(58, 11, 46, 0.08));
-}
-
+/* Ondinha na base do header com transição suave de opacidade (sem display:none para evitar pulo) */
 .navbar-wave-bottom {
     position: absolute;
     bottom: -16px;
@@ -89,6 +85,10 @@ body.sb-storefront-body {
     line-height: 0;
     pointer-events: none;
     overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity;
 }
 
 .navbar-wave-bottom svg {
@@ -98,12 +98,25 @@ body.sb-storefront-body {
 }
 
 .navbar-wave-fill {
-    fill: #F6EEF8; /* Acompanha o roxinho inicial */
-    transition: fill 0.35s ease;
+    fill: #FAF6F0; /* Tom creme artesanal padrão */
+    transition: fill 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estado ROLADO (.scrolled): ativado na rolagem do cardápio e estático nas outras telas */
+.sb-top-navbar.scrolled {
+    background: rgba(250, 246, 240, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 18px rgba(58, 11, 46, 0.07);
+}
+
+.sb-top-navbar.scrolled .navbar-wave-bottom {
+    opacity: 1;
+    visibility: visible;
 }
 
 .sb-top-navbar.scrolled .navbar-wave-fill {
-    fill: #FAF6F0; /* Transiciona para creme ao rolar */
+    fill: #FAF6F0;
 }
 
 .sb-navbar-container {
@@ -1779,7 +1792,7 @@ body.sb-storefront-body {
     }
 
     .hero-editorial-bowl-img {
-        max-width: min(680px, 92vw);
+        max-width: min(600px, 90vw);
         max-height: calc(100vh - 225px);
     }
 
@@ -1803,64 +1816,350 @@ body.sb-storefront-body {
 
 @media (max-width: 768px) {
     .sb-top-navbar {
-        height: 74px;
+        height: 70px;
+    }
+
+    .sb-navbar-container {
+        padding: 0 16px;
     }
 
     .sb-header-logo-icon {
-        height: 56px;
-        max-height: 56px;
+        height: 48px;
+        max-height: 48px;
     }
 
     .sb-nav-links {
         display: none;
-        /* Simplificado no mobile */
+    }
+
+    .sb-navbar-actions {
+        gap: 8px;
+    }
+
+    .sb-user-profile-badge {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        gap: 6px;
+    }
+
+    .sb-user-profile-badge span {
+        max-width: 80px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .sb-hero-editorial-section {
-        padding-top: 74px;
+        padding-top: 70px;
         padding-bottom: 0;
-        height: 100vh;
-        max-height: 100vh;
+        min-height: 100vh;
+        min-height: 100dvh;
+        height: auto;
     }
 
     .sb-hero-editorial-container {
-        height: calc(100vh - 74px);
-        max-height: calc(100vh - 74px);
-        padding: 4px 16px 14px 16px;
+        min-height: calc(100dvh - 70px);
+        height: auto;
+        padding: 8px 16px 20px 16px;
+        justify-content: space-around;
     }
 
     .hero-brand-title {
-        font-size: clamp(2.1rem, 9vw, 2.95rem);
-        margin: 16px 0 4px 0;
+        font-size: clamp(1.9rem, 8.5vw, 2.7rem);
+        margin: 10px 0 4px 0;
+        letter-spacing: 0.04em;
     }
 
     .hero-center-bowl-wrap {
         flex: 1 1 auto;
         min-height: 0;
-        margin: -8px auto 0 auto;
+        margin: 0 auto;
+        max-height: 48vh;
+        max-height: 48dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .hero-editorial-bowl-img {
-        max-width: min(440px, 92vw);
-        max-height: calc(100vh - 185px);
+        max-width: min(340px, 86vw);
+        max-height: 42vh;
+        max-height: 42dvh;
+        object-fit: contain;
     }
 
     .hero-editorial-cta-wrap {
-        margin-top: -4px;
-        margin-bottom: 26px;
+        margin-top: 6px;
+        margin-bottom: 22px;
     }
 
     .btn-hero-pill-action {
         font-size: 0.95rem;
-        padding: 10px 28px;
+        padding: 12px 28px;
+    }
+
+    .sb-vitrine-section {
+        padding: 36px 0 70px 0;
+    }
+
+    .sb-vitrine-container {
+        padding: 0 16px;
+    }
+
+    .vitrine-header {
+        margin-bottom: 28px;
+    }
+
+    .vitrine-title {
+        font-size: 1.8rem;
+    }
+
+    .vitrine-search-bar-wrap {
+        padding: 0 4px;
+        margin-bottom: 28px;
+    }
+
+    .categories-carousel-row {
+        justify-content: flex-start;
+        padding: 6px 4px 14px 4px;
+        margin-bottom: 32px;
+        gap: 10px;
+    }
+
+    .cat-carousel-btn {
+        flex-shrink: 0;
+        padding: 6px 16px 6px 10px;
+        font-size: 0.88rem;
+    }
+
+    .products-grid-treato {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .sb-product-card {
+        padding: 20px;
+        border-radius: 24px;
+    }
+
+    .card-image-display {
+        height: 160px;
+        margin: 8px 0 14px 0;
+    }
+
+    .card-image-display img {
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    .sb-modal-overlay {
+        padding: 12px;
+        align-items: flex-end;
+    }
+
+    .sb-modal-box {
+        width: 100%;
+        max-width: 100%;
+        max-height: 90vh;
+        max-height: 90dvh;
+        border-radius: 26px 26px 20px 20px;
+        margin: 0;
+    }
+
+    .sb-modal-header {
+        padding: 18px 20px;
+    }
+
+    .sb-modal-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .sb-modal-body {
+        padding: 16px 20px;
+    }
+
+    .modal-product-summary {
+        padding: 12px;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .modal-product-summary img {
+        width: 58px;
+        height: 58px;
     }
 
     .modal-toppings-grid {
         grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 18px;
+    }
+
+    .modal-chip-content {
+        padding: 10px 12px;
+    }
+
+    .modal-stepper-wrap {
+        padding: 10px 14px;
+    }
+
+    .sb-modal-footer {
+        padding: 14px 20px 22px 20px;
+    }
+
+    .btn-modal-confirm-add {
+        padding: 13px 20px;
+        font-size: 0.98rem;
+    }
+
+    .sb-footer {
+        padding: 48px 16px 28px 16px;
     }
 
     .sb-footer-container {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 28px;
+        margin-bottom: 30px;
+    }
+
+    .sb-footer-bottom {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sb-top-navbar {
+        height: 64px;
+    }
+
+    .sb-header-logo-icon {
+        height: 42px;
+        max-height: 42px;
+    }
+
+    .cart-btn-price {
+        display: none;
+    }
+
+    .sb-navbar-cart-trigger {
+        padding: 6px;
+        width: 40px;
+        height: 40px;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .sb-navbar-cart-trigger .cart-icon-bubble {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+    }
+
+    .hero-brand-title {
+        font-size: clamp(1.75rem, 8vw, 2.3rem);
+    }
+
+    .hero-editorial-bowl-img {
+        max-width: min(290px, 82vw);
+        max-height: 38vh;
+        max-height: 38dvh;
+    }
+
+    .btn-hero-pill-action {
+        font-size: 0.9rem;
+        padding: 11px 24px;
+    }
+
+    .sb-cart-slideover-drawer {
+        width: 100%;
+        max-width: 100vw;
+    }
+
+    .drawer-header {
+        padding: 16px;
+    }
+
+    .drawer-body {
+        padding: 14px;
+    }
+
+    .drawer-footer {
+        padding: 16px 14px 24px 14px;
+    }
+
+    .btn-drawer-checkout {
+        padding: 14px 18px;
+        font-size: 0.98rem;
+    }
+
+    .sb-modal-overlay {
+        padding: 8px 6px;
+    }
+
+    .sb-modal-box {
+        border-radius: 22px;
+    }
+
+    .sb-modal-header {
+        padding: 14px 16px;
+    }
+
+    .sb-modal-body {
+        padding: 14px 16px;
+    }
+
+    .sb-navbar-container {
+        padding: 0 12px;
+    }
+
+    .sb-user-profile-badge {
+        padding: 4px 8px;
+        font-size: 0.76rem;
+        gap: 4px;
+    }
+
+    .sb-user-profile-badge span {
+        max-width: 55px;
+    }
+
+    .sb-modal-footer {
+        padding: 12px 16px 18px 16px;
+    }
+
+    .sb-product-card {
+        padding: 16px 14px;
+        border-radius: 20px;
+    }
+
+    .card-image-display {
+        height: 145px;
+        margin: 6px 0 12px 0;
+    }
+
+    .card-product-title {
+        font-size: 1.15rem;
+    }
+
+    .vitrine-title {
+        font-size: 1.55rem;
+    }
+
+    .vitrine-subtitle {
+        font-size: 0.88rem;
+    }
+
+    .sb-footer {
+        padding: 36px 14px 24px 14px;
+    }
+
+    .sb-footer-brand-h3 {
+        font-size: 1.4rem;
+    }
+
+    .sb-footer-bottom p {
+        font-size: 0.78rem;
     }
 }

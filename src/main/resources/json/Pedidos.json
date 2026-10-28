@@ -101,6 +101,96 @@
   "dataHora" : [ 2026, 10, 19, 12, 36, 22, 200070300 ],
   "dataHoraFormatada" : "19/10/2026 12:36"
 }, {
+  "id" : "70289bc6-7e80-4b73-b4ca-6b9136b52f5b",
+  "itens" : [ {
+    "id" : "1831564e-f5bc-4419-8e66-3cf68911e912",
+    "acai" : {
+      "tamanho" : {
+        "id" : "21e51885-0913-46ab-9821-27ec52180f2a",
+        "nome" : "Copo Tradicional Pequeno",
+        "preco" : 8,
+        "volume" : "300ml",
+        "descricao" : "Refrescância na medida certa para seu lanche ou sobremesa com pura polpa de açaí batida.",
+        "imagem" : "/images/acai_copo_tampa.png"
+      },
+      "preco" : 8,
+      "adicionais" : [ ]
+    },
+    "quantidade" : 1,
+    "precoUnitario" : 8
+  } ],
+  "valorTotal" : 8,
+  "usuarioId" : "4a353196-6001-419e-b9e2-ebf952b7fd35",
+  "usuarioNome" : "Anna",
+  "usuarioEmail" : "bea@email.com",
+  "status" : "EM_PREPARO",
+  "dataHora" : [ 2026, 10, 27, 11, 30, 1, 156440800 ],
+  "dataHoraFormatada" : "27/10/2026 11:30"
+}, {
+  "id" : "da779ca1-944f-4ab0-ace6-4e96235ae96b",
+  "itens" : [ {
+    "id" : "b7dea082-25cd-4ecf-b01c-340f8249ddcf",
+    "acai" : {
+      "tamanho" : {
+        "id" : "21e51885-0913-46ab-9821-27ec52180f2a",
+        "nome" : "Copo Tradicional Pequeno",
+        "preco" : 8,
+        "volume" : "300ml",
+        "descricao" : "Refrescância na medida certa para seu lanche ou sobremesa com pura polpa de açaí batida.",
+        "imagem" : "/images/acai_copo_tampa.png"
+      },
+      "preco" : 9.40,
+      "adicionais" : [ {
+        "nome" : "Banana",
+        "id" : "3216d965-3d25-4781-9c8a-648f5495d352",
+        "preco" : 0.50
+      }, {
+        "nome" : "Leite em pó",
+        "id" : "3edc0670-8bd4-4ba0-9ab5-0ccf3e8b4411",
+        "preco" : 0
+      }, {
+        "nome" : "Morango",
+        "id" : "db86d050-4ead-4da5-80c5-4b67280b5378",
+        "preco" : 0.9
+      } ]
+    },
+    "quantidade" : 2,
+    "precoUnitario" : 9.40
+  } ],
+  "valorTotal" : 18.80,
+  "usuarioId" : "4a353196-6001-419e-b9e2-ebf952b7fd35",
+  "usuarioNome" : "Anna",
+  "usuarioEmail" : "bea@email.com",
+  "status" : "EM_PREPARO",
+  "dataHora" : [ 2026, 10, 27, 10, 7, 36, 869561600 ],
+  "dataHoraFormatada" : "27/10/2026 10:07"
+}, {
+  "id" : "55a3b89e-5a21-450e-8c64-466267daa62d",
+  "itens" : [ {
+    "id" : "edd6978d-e5cf-41df-8976-0f26c129021c",
+    "acai" : {
+      "tamanho" : {
+        "id" : "fd253daa-764f-477a-97cd-3314a2b02078",
+        "nome" : "Combo StackBerry Tropical",
+        "preco" : 38.00,
+        "volume" : "Combo Família",
+        "descricao" : "Experiência completa com tigela especial, apresentação tropical e harmonização perfeita.",
+        "imagem" : "/images/fotoprincipal.png"
+      },
+      "preco" : 38.00,
+      "adicionais" : [ ]
+    },
+    "quantidade" : 1,
+    "precoUnitario" : 38.00
+  } ],
+  "valorTotal" : 38.00,
+  "usuarioId" : "4a353196-6001-419e-b9e2-ebf952b7fd35",
+  "usuarioNome" : "Anna",
+  "usuarioEmail" : "bea@email.com",
+  "status" : "EM_PREPARO",
+  "dataHora" : [ 2026, 10, 27, 10, 11, 4, 169358100 ],
+  "dataHoraFormatada" : "27/10/2026 10:11"
+}, {
   "id" : "15344492-e1bb-4681-ac5a-aebdb6f0b9c5",
   "itens" : [ {
     "id" : "9b503d79-ae89-429b-a4f2-09bcb8c1fe90",

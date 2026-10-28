@@ -462,11 +462,11 @@
                 <h5>Fale Conosco</h5>
                 <div class="footer-contact-item">
                     <i class="fa-brands fa-whatsapp"></i>
-                    <span>(81) 99379-7546<br>Pedidos via WhatsApp</span>
+                    <span>4002-8922<br>Pedidos via WhatsApp</span>
                 </div>
                 <div class="footer-contact-item">
                     <i class="fa-solid fa-location-dot"></i>
-                    <span>StackBerry Artesanal<br>Recife - PE</span>
+                    <span>StackBerry Artesanal<br>Rio Tinto - PB</span>
                 </div>
             </div>
         </div>
@@ -485,15 +485,31 @@
         let precoBaseAtual = 0;
         let quantidadeAtual = 1;
 
-        // Controle da Navbar ao rolar a página
-        window.addEventListener('scroll', function() {
+        // Controle da Navbar ao rolar a página com requestAnimationFrame e histerese
+        let ticking = false;
+        function checkNavbarScroll() {
             const navbar = document.getElementById('top-navbar');
-            if (window.scrollY > 40) {
+            if (!navbar) return;
+            const scrollPos = window.scrollY || window.pageYOffset || 0;
+            if (scrollPos > 45) {
                 navbar.classList.add('scrolled');
-            } else {
+            } else if (scrollPos < 15) {
                 navbar.classList.remove('scrolled');
             }
-        });
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    checkNavbarScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        window.addEventListener('DOMContentLoaded', checkNavbarScroll);
+        checkNavbarScroll();
 
         // Abrir / Fechar Drawer da Sacola
         function toggleCartDrawer(abrir) {

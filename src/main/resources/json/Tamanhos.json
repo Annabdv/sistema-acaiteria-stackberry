@@ -1,11 +1,4 @@
 [ {
-  "id" : "fd253daa-764f-477a-97cd-3314a2b02078",
-  "nome" : "Combo StackBerry Tropical",
-  "preco" : 38.00,
-  "volume" : "Combo Família",
-  "descricao" : "Experiência completa com tigela especial, apresentação tropical e harmonização perfeita.",
-  "imagem" : "/images/fotoprincipal.png"
-}, {
   "id" : "21e51885-0913-46ab-9821-27ec52180f2a",
   "nome" : "Copo Tradicional Pequeno",
   "preco" : 8,

@@ -2,28 +2,54 @@
    STACKBERRY - PÁGINA MEUS PEDIDOS (ARTESANAL & RESPONSIVO)
    ========================================================================== */
 
-.container {
-    max-width: 1040px;
+.orders-page-wrapper {
+    max-width: 1060px;
     margin: 40px auto 90px auto;
     padding: 0 20px;
     width: 100%;
     box-sizing: border-box;
 }
 
-.text-center h1 {
+.orders-header-section {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.orders-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-lavender, #F6EEF8);
+    color: var(--color-acai, #3A0B2E);
+    border: 1px solid var(--border-medium, #E2CFE8);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 5px 16px;
+    border-radius: 9999px;
+    margin-bottom: 12px;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+}
+
+.orders-header-section h1 {
     font-family: var(--font-heading, 'Outfit', sans-serif);
     font-size: 2.3rem;
     font-weight: 900;
     color: var(--text-title, #26051E);
-    margin-bottom: 28px;
+    margin: 0 0 8px 0;
     letter-spacing: -0.5px;
+}
+
+.orders-header-section p {
+    color: var(--text-muted, #7D6476);
+    font-size: 0.98rem;
+    margin: 0;
 }
 
 #pedidos-list {
     background: #FFFFFF;
-    border: 1.5px solid var(--border-light, #EFE4F2);
-    border-radius: 28px;
-    box-shadow: 0 14px 36px rgba(58, 11, 46, 0.08);
+    border: 1.5px solid var(--border-medium, #E2CFE8);
+    border-radius: 32px;
+    box-shadow: 0 16px 48px rgba(58, 11, 46, 0.07), 0 4px 16px rgba(58, 11, 46, 0.03);
     width: 100%;
     overflow: hidden;
 }
@@ -31,6 +57,7 @@
 .table-responsive {
     width: 100%;
     display: block;
+    overflow-x: auto;
 }
 
 #pedidos-list table {
@@ -39,22 +66,22 @@
 }
 
 #pedidos-list th {
-    background: #F6EEF8;
+    background: #F8F2F9;
     color: var(--text-title, #26051E);
     font-family: var(--font-heading, 'Outfit', sans-serif);
     font-weight: 800;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 18px 24px;
+    letter-spacing: 0.6px;
+    padding: 20px 24px;
     border-bottom: 1.5px solid var(--border-medium, #E2CFE8);
     text-align: left;
     white-space: nowrap;
 }
 
 #pedidos-list td {
-    padding: 18px 24px;
-    border-bottom: 1px solid var(--border-light, #EFE4F2);
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-subtle, #EFE4F2);
     color: var(--text-body, #4A3043);
     font-size: 0.94rem;
     vertical-align: middle;
@@ -68,11 +95,27 @@
     background: #FDF9FE;
 }
 
+.order-item-chip {
+    display: inline-block;
+    background: var(--bg-lavender, #F6EEF8);
+    border: 1px solid var(--border-subtle, #EFE4F2);
+    padding: 3px 10px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    font-size: 0.88rem;
+    color: var(--text-title, #26051E);
+}
+
+.order-item-chip strong {
+    font-weight: 700;
+    color: var(--color-acai, #3A0B2E);
+}
+
 /* Badges de Status do Pedido */
-.badge {
+.order-status-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
     padding: 6px 16px;
     border-radius: 9999px;
     font-family: var(--font-heading, 'Outfit', sans-serif);
@@ -81,109 +124,151 @@
     white-space: nowrap;
 }
 
-.bg-success {
-    background: #DCFCE7 !important;
+.order-status-badge.status-delivered {
+    background: #DCFCE7;
     border: 1.5px solid #86EFAC;
-    color: #166534 !important;
+    color: #166534;
 }
 
-.bg-warning {
-    background: #FEF3C7 !important;
+.order-status-badge.status-preparing {
+    background: #FEF3C7;
     border: 1.5px solid #FCD34D;
-    color: #92400E !important;
+    color: #92400E;
 }
 
-.bg-danger {
-    background: #FEE2E2 !important;
-    border: 1.5px solid #FCA5A5;
-    color: #991B1B !important;
-}
-
-#mensagem-sem-pedidos {
-    background: #FFFFFF;
-    border: 1.5px solid var(--border-light, #EFE4F2);
-    border-radius: 28px;
-    padding: 60px 24px;
-    text-align: center;
-    box-shadow: 0 14px 36px rgba(58, 11, 46, 0.08);
-}
-
-#mensagem-sem-pedidos p {
-    font-family: var(--font-heading, 'Outfit', sans-serif);
-    font-size: 1.3rem;
-    color: var(--text-title, #26051E);
-    font-weight: 800;
-    margin-bottom: 22px;
-}
-
-.btn-cancelar-pedido {
+.order-status-badge.status-cancelled {
     background: #FEE2E2;
-    border: 1px solid #FCA5A5;
+    border: 1.5px solid #FCA5A5;
+    color: #991B1B;
+}
+
+/* Botão Cancelar Pedido */
+.btn-cancelar-pedido {
+    background: #FFFFFF;
+    border: 1.5px solid #FCA5A5;
     color: #DC2626;
-    padding: 8px 18px;
+    padding: 7px 16px;
     border-radius: 9999px;
     cursor: pointer;
     font-family: var(--font-heading, 'Outfit', sans-serif);
-    font-size: 0.86rem;
+    font-size: 0.84rem;
     font-weight: 700;
     transition: all 0.2s ease;
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .btn-cancelar-pedido:hover {
-    background: #EF4444;
+    background: #DC2626;
     color: #FFFFFF;
-    border-color: #EF4444;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    border-color: #DC2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
 }
 
-.btn-purple {
-    background: #26051E !important;
+/* Estado de Nenhum Pedido */
+#mensagem-sem-pedidos {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-medium, #E2CFE8);
+    border-radius: 32px;
+    padding: 64px 28px;
+    text-align: center;
+    box-shadow: 0 16px 48px rgba(58, 11, 46, 0.07);
+}
+
+.orders-empty-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--bg-lavender, #F6EEF8);
+    border: 1.5px solid var(--border-medium, #E2CFE8);
+    color: var(--color-acai, #3A0B2E);
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+}
+
+#mensagem-sem-pedidos h2 {
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: 1.5rem;
+    color: var(--text-title, #26051E);
+    font-weight: 900;
+    margin: 0 0 10px 0;
+}
+
+#mensagem-sem-pedidos p {
+    color: var(--text-muted, #7D6476);
+    font-size: 0.96rem;
+    max-width: 440px;
+    margin: 0 auto 26px auto;
+    line-height: 1.55;
+}
+
+.btn-orders-primary {
+    background: linear-gradient(135deg, #3A0B2E 0%, #26051E 100%);
     color: #FFFFFF !important;
-    padding: 13px 32px;
+    padding: 14px 32px;
     border-radius: 9999px;
     font-family: var(--font-heading, 'Outfit', sans-serif);
     font-weight: 800;
-    font-size: 0.98rem;
+    font-size: 1rem;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     transition: all 0.25s ease;
     border: none;
-    box-shadow: 0 8px 24px rgba(38, 5, 30, 0.28);
+    box-shadow: 0 8px 24px rgba(38, 5, 30, 0.25);
 }
 
-.btn-purple:hover {
-    background: #3A0B2E !important;
+.btn-orders-primary:hover {
+    background: linear-gradient(135deg, #4A103B 0%, #2E0725 100%);
     transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(38, 5, 30, 0.38);
-    color: #FFFFFF !important;
+    box-shadow: 0 12px 30px rgba(38, 5, 30, 0.35);
 }
 
-hr.separador-suave {
-    border: none;
-    height: 1.5px;
-    background: var(--border-light, #EFE4F2);
-    margin: 40px auto;
+.orders-back-container {
+    text-align: center;
+    margin-top: 36px;
 }
 
-.mobile-swipe-hint {
-    display: none;
+.btn-orders-outline {
+    background: #FFFFFF;
+    color: var(--text-title, #26051E) !important;
+    border: 1.5px solid var(--border-medium, #E2CFE8);
+    padding: 12px 28px;
+    border-radius: 9999px;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+}
+
+.btn-orders-outline:hover {
+    border-color: var(--color-acai, #3A0B2E);
+    background: var(--bg-lavender, #F6EEF8);
+    transform: translateY(-2px);
 }
 
 /* ==========================================================================
    VISUALIZAÇÃO EM CARDS NO MOBILE
    ========================================================================== */
 @media screen and (max-width: 768px) {
-    .container {
+    .orders-page-wrapper {
         padding: 0 16px;
         margin: 24px auto 60px auto;
     }
 
-    .text-center h1 {
-        font-size: 1.9rem;
+    .orders-header-section h1 {
+        font-size: 1.85rem;
     }
 
     #pedidos-list {
@@ -217,9 +302,9 @@ hr.separador-suave {
         display: flex;
         flex-direction: column;
         background: #FFFFFF;
-        border: 1.5px solid var(--border-light, #EFE4F2);
-        border-radius: 22px;
-        padding: 20px;
+        border: 1.5px solid var(--border-medium, #E2CFE8);
+        border-radius: 26px;
+        padding: 22px 20px;
         box-shadow: 0 8px 24px rgba(58, 11, 46, 0.06);
         gap: 12px;
     }
@@ -229,7 +314,7 @@ hr.separador-suave {
         justify-content: space-between;
         align-items: center;
         padding: 8px 0;
-        border-bottom: 1px dashed var(--border-light, #EFE4F2);
+        border-bottom: 1px dashed var(--border-subtle, #EFE4F2);
         font-size: 0.92rem;
     }
 
@@ -238,17 +323,19 @@ hr.separador-suave {
         font-family: var(--font-heading, 'Outfit', sans-serif);
         font-weight: 800;
         color: var(--text-title, #26051E);
-        font-size: 0.85rem;
+        font-size: 0.82rem;
         text-transform: uppercase;
-        letter-spacing: 0.4px;
+        letter-spacing: 0.5px;
     }
 
+    #pedidos-list td[data-label="Itens do Pedido"],
     #pedidos-list td[data-label="Itens"] {
         flex-direction: column;
         align-items: flex-start;
         gap: 6px;
     }
 
+    #pedidos-list td[data-label="Itens do Pedido"]::before,
     #pedidos-list td[data-label="Itens"]::before {
         margin-bottom: 2px;
     }
@@ -261,5 +348,53 @@ hr.separador-suave {
 
     #pedidos-list td:empty {
         display: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .orders-page-wrapper {
+        padding: 0 10px;
+        margin: 16px auto 50px auto;
+    }
+
+    .orders-header-section {
+        margin-bottom: 20px;
+    }
+
+    .orders-header-section h1 {
+        font-size: 1.55rem;
+    }
+
+    .orders-header-section p {
+        font-size: 0.86rem;
+    }
+
+    #pedidos-list tr {
+        padding: 16px 12px;
+        border-radius: 18px;
+        gap: 10px;
+    }
+
+    #pedidos-list td {
+        font-size: 0.86rem;
+        padding: 6px 0;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .order-status-badge {
+        font-size: 0.76rem;
+        padding: 4px 12px;
+    }
+
+    .btn-cancelar-pedido {
+        width: 100%;
+        justify-content: center;
+        padding: 8px 14px;
+        font-size: 0.82rem;
+    }
+
+    #pedidos-list td[data-label="Ação"] {
+        justify-content: center;
     }
 }

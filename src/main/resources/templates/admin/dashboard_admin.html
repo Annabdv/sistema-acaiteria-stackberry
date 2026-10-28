@@ -20,7 +20,7 @@
         <div class="admin-dashboard-hero-title">
             <div class="admin-header-title-wrap">
                 <h1>Painel Administrativo</h1>
-                <p>Olá, <span class="admin-highlight-name" th:text="${usuario != null ? usuario.nome : 'Administrador'}">Admin</span>! Aqui está a visão completa e em tempo real da sua açaiteria.</p>
+                <p>Olá, <span class="admin-highlight-name" th:text="${usuario != null ? usuario.nome : 'Administrador'}">Admin</span>! Aqui está a visão em tempo real da sua açaiteria.</p>
             </div>
 
             <div class="admin-header-actions">
@@ -30,7 +30,7 @@
                 </button>
                 <a href="/cardapio" class="btn-admin-store">
                     <i class="fa-solid fa-store"></i>
-                    <span>Ver Loja ao Vivo</span>
+                    <span>Ver Loja</span>
                 </a>
             </div>
         </div>
@@ -38,13 +38,16 @@
         <!-- Abas de Navegação Rápida do Admin -->
         <div class="admin-quick-tabs">
             <a href="#secao-pedidos" class="admin-tab-pill active">
-                <i class="fa-solid fa-chart-pie"></i> Visão Geral &amp; Pedidos
+                <i class="fa-solid fa-chart-pie"></i> Visão Geral
             </a>
             <a href="#secao-produtos" class="admin-tab-pill">
-                <i class="fa-solid fa-bowl-food"></i> Produtos do Cardápio
+                <i class="fa-solid fa-bowl-food"></i> Cardápio
             </a>
             <a href="#secao-adicionais" class="admin-tab-pill">
-                <i class="fa-solid fa-seedling"></i> Acompanhamentos
+                <i class="fa-solid fa-seedling"></i> Adicionais
+            </a>
+            <a href="#secao-usuarios" class="admin-tab-pill">
+                <i class="fa-solid fa-users"></i> Usuários
             </a>
             <button type="button" onclick="abrirModalNovoProduto()" class="admin-tab-pill add-tab">
                 <i class="fa-solid fa-plus"></i> Novo Produto
