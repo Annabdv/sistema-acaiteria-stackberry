@@ -15,7 +15,7 @@
     <div class="pos-catalog-layout">
         
         <!-- ================================================================
-             COLUNA 2: CATÁLOGO CENTRAL (Inspirado no Purr'Coffee)
+             COLUNA CENTRAL: CATÁLOGO DE AÇAÍ (Purr'Coffee + StackBerry)
              ================================================================ -->
         <section class="catalog-main-panel">
             
@@ -23,7 +23,7 @@
             <div class="catalog-top-bar">
                 <div class="search-box-pill">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="input-busca" placeholder="Buscar açaí, tamanho ou acompanhamento..." onkeyup="filtrarCards()">
+                    <input type="text" id="input-busca" placeholder="Buscar açaí ou acompanhamento..." onkeyup="filtrarCards()">
                 </div>
                 <button type="button" class="btn-filter-pill" onclick="limparFiltro()">
                     <i class="fa-solid fa-sliders"></i>
@@ -33,155 +33,163 @@
 
             <!-- Abas de Categorias (Pills) -->
             <div class="category-pills-row">
-                <button type="button" class="cat-pill active" onclick="filtrarCategoria('todos')">Todos</button>
-                <button type="button" class="cat-pill" onclick="filtrarCategoria('copos')">Copos & Tigelas</button>
-                <button type="button" class="cat-pill" onclick="filtrarCategoria('adicionais')">Acompanhamentos</button>
+                <button type="button" class="cat-pill active" onclick="filtrarCategoria('todos', this)">Todos</button>
+                <button type="button" class="cat-pill" onclick="filtrarCategoria('copos', this)">Copos &amp; Tigelas</button>
+                <button type="button" class="cat-pill" onclick="filtrarCategoria('populares', this)">Mais Vendidos</button>
+                <button type="button" class="cat-pill" onclick="filtrarCategoria('adicionais', this)">Acompanhamentos</button>
             </div>
 
-            <!-- Formulário de Seleção e Montagem -->
-            <form th:action="@{/carrinho/adicionar}" method="post" id="form-pedido">
+            <!-- Cabeçalho do Cardápio -->
+            <div class="catalog-section-header" id="header-produtos">
+                <div class="section-title-wrap">
+                    <h2 class="catalog-section-title">Cardápio StackBerry</h2>
+                    <span class="badge-fresh-harvest"><i class="fa-solid fa-leaf"></i> 100% Puro &amp; Artesanal</span>
+                </div>
+                <p class="catalog-section-sub">Escolha seu tamanho favorito, adicione os acompanhamentos e peça diretamente no card!</p>
+            </div>
+
+            <!-- Grade de Cards de Produtos (Purr'Coffee Vitrine) -->
+            <div class="pos-products-grid" id="grid-produtos">
                 
-                <!-- Título da Seção de Tamanhos -->
-                <div class="catalog-section-header" id="secao-tamanhos">
-                    <h2 class="catalog-section-title">Cardápio de Açaí</h2>
-                    <p class="catalog-section-sub">Selecione o tamanho ideal e personalize com seus acompanhamentos prediletos</p>
-                </div>
-
-                <!-- Grade de Produtos / Tamanhos (Estilo Purr'Coffee Vitrine) -->
-                <div class="pos-products-grid">
-                    <label class="pos-card-option" th:each="t, iter : ${tamanhos}">
-                        <input type="radio" 
-                               name="tamanhoId" 
-                               th:value="${t.id}"
-                               th:id="${'tamanho-' + t.id}"
-                               th:checked="${iter.first}"
-                               th:data-preco="${t.preco}"
-                               th:data-nome="${t.nome}"
-                               required
-                               onchange="atualizarResumo()">
+                <!-- Card de Cada Tamanho com formulário próprio e quantidade integrada -->
+                <div class="pos-product-card" 
+                     th:each="t, iter : ${tamanhos}" 
+                     th:data-categoria="${iter.index == 1 ? 'copos populares' : 'copos'}"
+                     th:data-nome="${t.nome}">
+                     
+                    <form th:action="@{/carrinho/adicionar}" method="post" class="card-product-form">
+                        <input type="hidden" name="tamanhoId" th:value="${t.id}">
                         
-                        <div class="pos-card">
-                            <div class="pos-card-media">
-                                <!-- Imagens em container com fundo limpo -->
-                                <img src="/images/acai_copo_tampa.png" alt="Copo Pequeno" th:if="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300')}">
-                                <img src="/images/acai_copo_camadas.png" alt="Copo Médio" th:if="${(#strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500')) and !#strings.containsIgnoreCase(t.nome, 'pequeno')}">
-                                <img src="/images/acai_topdown_folhas_monstera.jpg" alt="Tigela Grande" class="img-crop-cover" th:if="${#strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
-                                <img src="/images/acai_copo_especial.png" alt="Açaí Especial" th:unless="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300') or #strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500') or #strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
-                            </div>
-
-                            <div class="pos-card-content">
-                                <div class="pos-card-header-info">
-                                    <h4 class="pos-card-title" th:text="${t.nome}">Copo Médio</h4>
-                                    <span class="pos-card-price" th:text="${#numbers.formatCurrency(t.preco)}">R$ 12,00</span>
-                                </div>
-
-                                <p class="pos-card-desc" th:if="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '300')}">
-                                    Refrescância na medida certa para seu dia a dia.
-                                </p>
-                                <p class="pos-card-desc" th:if="${(#strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500')) and !#strings.containsIgnoreCase(t.nome, 'pequeno')}">
-                                    O mais pedido! Combina açaí cremoso com várias camadas de sabor.
-                                </p>
-                                <p class="pos-card-desc" th:if="${#strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
-                                    Nossa tigela generosa e nutritiva para os verdadeiros apaixonados por açaí.
-                                </p>
-
-                                <div class="pos-card-tags">
-                                    <span class="pos-size-badge" th:if="${#strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300')}">300ml</span>
-                                    <span class="pos-size-badge" th:if="${#strings.containsIgnoreCase(t.nome, '500') or #strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio')}">500ml</span>
-                                    <span class="pos-size-badge" th:if="${#strings.containsIgnoreCase(t.nome, '700') or #strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela')}">700ml</span>
-                                    <span class="pos-size-badge tag-soft">100% Puro</span>
-                                </div>
-
-                                <div class="pos-card-selection-indicator">
-                                    <span class="radio-custom-indicator"></span>
-                                    <span class="select-label-text">Selecionar tamanho</span>
-                                </div>
-                            </div>
+                        <!-- Mídia do Card com Badges Coloridas StackBerry -->
+                        <div class="pos-card-media-wrapper">
+                            <!-- Badges de Volume nas 5 Cores da Marca -->
+                            <span class="card-volume-pill pill-blue" th:if="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300')}">
+                                <i class="fa-solid fa-droplet"></i> 300ml
+                            </span>
+                            <span class="card-volume-pill pill-yellow" th:if="${(#strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500')) and !#strings.containsIgnoreCase(t.nome, 'pequeno')}">
+                                <i class="fa-solid fa-star"></i> 500ml • Mais Pedido
+                            </span>
+                            <span class="card-volume-pill pill-green" th:if="${#strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
+                                <i class="fa-solid fa-bowl-food"></i> 700ml Farto
+                            </span>
+                            <span class="card-volume-pill pill-purple" th:unless="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300') or #strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500') or #strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
+                                Especial
+                            </span>
+                            
+                            <!-- Imagens dos Produtos -->
+                            <img src="/images/acai_copo_tampa.png" alt="Copo Pequeno" th:if="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300')}">
+                            <img src="/images/acai_copo_camadas.png" alt="Copo Médio" th:if="${(#strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500')) and !#strings.containsIgnoreCase(t.nome, 'pequeno')}">
+                            <img src="/images/acai_tigela_branca_frutas.jpg" alt="Tigela Grande" class="img-crop-cover" th:if="${#strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
+                            <img src="/images/acai_copo_especial.png" alt="Açaí Especial" th:unless="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '180') or #strings.containsIgnoreCase(t.nome, '300') or #strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500') or #strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
                         </div>
-                    </label>
+
+                        <!-- Corpo do Card -->
+                        <div class="pos-card-body">
+                            <div class="pos-card-header-row">
+                                <h4 class="pos-card-title" th:text="${t.nome}">Copo Médio</h4>
+                                <span class="pos-card-price" th:data-preco-base="${t.preco}" th:text="${#numbers.formatCurrency(t.preco)}">R$ 12,00</span>
+                            </div>
+
+                            <p class="pos-card-desc" th:if="${#strings.containsIgnoreCase(t.nome, 'pequeno') or #strings.containsIgnoreCase(t.nome, '300')}">
+                                Refrescância na medida certa para seu lanche ou sobremesa com pura polpa de açaí.
+                            </p>
+                            <p class="pos-card-desc" th:if="${(#strings.containsIgnoreCase(t.nome, 'medio') or #strings.containsIgnoreCase(t.nome, 'médio') or #strings.containsIgnoreCase(t.nome, '500')) and !#strings.containsIgnoreCase(t.nome, 'pequeno')}">
+                                O mais pedido da StackBerry! Muito açaí batido na cremosidade perfeita.
+                            </p>
+                            <p class="pos-card-desc" th:if="${#strings.containsIgnoreCase(t.nome, 'grande') or #strings.containsIgnoreCase(t.nome, 'tigela') or #strings.containsIgnoreCase(t.nome, '700')}">
+                                Para quem ama de verdade: tigela generosa e nutritiva com o melhor açaí do Norte.
+                            </p>
+
+                            <!-- Adicionais integrados no próprio card (sem box separado) -->
+                            <div class="pos-card-toppings-section" th:if="${adicionais != null and !adicionais.empty}">
+                                <span class="toppings-section-title">Acompanhamentos opcionais:</span>
+                                <div class="card-toppings-chips">
+                                    <label class="card-topping-chip" th:each="a : ${adicionais}">
+                                        <input type="checkbox" 
+                                               name="adicionaisIds" 
+                                               th:value="${a.id}" 
+                                               th:data-preco="${a.preco}" 
+                                               onchange="recalcularPrecoCard(this)">
+                                        <span class="chip-inner">
+                                            <i class="fa-solid fa-plus chip-icon"></i>
+                                            <span class="chip-name" th:text="${a.nome}">Morango</span>
+                                            <span class="chip-price" th:text="'+' + ${#numbers.formatCurrency(a.preco)}">+R$ 0,90</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Rodapé do Card: Quantidade Stepper + Botão Adicionar (Estilo Purr'Coffee) -->
+                            <div class="pos-card-action-footer">
+                                <div class="card-stepper">
+                                    <button type="button" class="stepper-btn minus" onclick="ajustarQtdCard(this, -1)" aria-label="Diminuir">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <input type="number" 
+                                           min="1" 
+                                           max="50" 
+                                           value="1" 
+                                           name="quantidade" 
+                                           class="stepper-input" 
+                                           onchange="recalcularPrecoCard(this)">
+                                    <button type="button" class="stepper-btn plus" onclick="ajustarQtdCard(this, 1)" aria-label="Aumentar">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+
+                                <button type="submit" class="btn-card-add" title="Adicionar ao Pedido">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>Adicionar</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
                 </div>
 
-                <!-- Seção de Acompanhamentos (Chips) -->
-                <div class="catalog-section-header" id="secao-adicionais" style="margin-top: 32px;">
+            </div>
+
+            <!-- Guia Visual de Acompanhamentos Frescos -->
+            <div class="catalog-section-header" id="secao-adicionais-guia" style="margin-top: 36px;">
+                <div class="section-title-wrap">
                     <h3 class="catalog-section-title" style="font-size: 1.35rem;">Acompanhamentos Selecionados</h3>
-                    <p class="catalog-section-sub">Escolha as frutas frescas e coberturas para enriquecer seu açaí</p>
+                    <span class="badge-fresh-harvest pill-yellow"><i class="fa-solid fa-wand-magic-sparkles"></i> Monte como quiser</span>
                 </div>
+                <p class="catalog-section-sub">Frutas frescas cortadas na hora e coberturas especiais para harmonizar com seu açaí</p>
+            </div>
 
-                <div class="pos-toppings-card">
-                    <div class="pos-toppings-grid">
-                        <label class="pos-topping-chip" th:each="adicional : ${adicionais}">
-                            <input type="checkbox"
-                                   name="adicionaisIds"
-                                   th:value="${adicional.id}"
-                                   th:id="${'adicional-' + adicional.id}"
-                                   th:data-preco="${adicional.preco}"
-                                   th:data-nome="${adicional.nome}"
-                                   onchange="atualizarResumo()">
-                            <div class="pos-topping-inner">
-                                <div class="pos-topping-info">
-                                    <span class="pos-topping-name" th:text="${adicional.nome}">Morango</span>
-                                    <span class="pos-topping-price" th:text="'+ ' + ${#numbers.formatCurrency(adicional.preco)}">+ R$ 0,00</span>
-                                </div>
-                                <div class="pos-topping-check">
-                                    <i class="fa-solid fa-check"></i>
-                                </div>
-                            </div>
-                        </label>
+            <div class="toppings-showcase-grid" id="grid-adicionais-guia">
+                <div class="topping-showcase-item" th:each="a : ${adicionais}">
+                    <div class="topping-icon-badge" th:classappend="${#strings.containsIgnoreCase(a.nome, 'morango') ? 'badge-pink' : (#strings.containsIgnoreCase(a.nome, 'banana') ? 'badge-yellow' : 'badge-green')}">
+                        <i class="fa-solid fa-strawberry" th:if="${#strings.containsIgnoreCase(a.nome, 'morango')}"></i>
+                        <i class="fa-solid fa-lemon" th:if="${#strings.containsIgnoreCase(a.nome, 'banana')}"></i>
+                        <i class="fa-solid fa-bottle-droplet" th:if="${#strings.containsIgnoreCase(a.nome, 'cobertura')}"></i>
+                        <i class="fa-solid fa-apple-whole" th:unless="${#strings.containsIgnoreCase(a.nome, 'morango') or #strings.containsIgnoreCase(a.nome, 'banana') or #strings.containsIgnoreCase(a.nome, 'cobertura')}"></i>
+                    </div>
+                    <div class="topping-info">
+                        <strong th:text="${a.nome}">Morango</strong>
+                        <span th:text="${#numbers.formatCurrency(a.preco)}">R$ 0,90</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Barra Inferior de Quantidade e Adição ao Pedido -->
-                <div class="pos-add-action-box">
-                    <div class="pos-action-left">
-                        <span class="pos-action-title">Quantidade:</span>
-                        <div class="pos-stepper">
-                            <button type="button" class="pos-stepper-btn" onclick="alterarQtd(-1)" aria-label="Diminuir">
-                                <i class="fa-solid fa-minus"></i>
-                            </button>
-                            <input type="number" 
-                                   min="1" 
-                                   max="50" 
-                                   value="1" 
-                                   name="quantidade" 
-                                   id="quantidade" 
-                                   class="pos-stepper-input" 
-                                   required 
-                                   oninput="atualizarResumo()"/>
-                            <button type="button" class="pos-stepper-btn" onclick="alterarQtd(1)" aria-label="Aumentar">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="pos-action-right">
-                        <div class="pos-item-subtotal">
-                            <span>Subtotal deste item:</span>
-                            <strong id="resumo-total">R$ 0,00</strong>
-                        </div>
-                        <button type="submit" class="btn-warm btn-add-cart-main">
-                            <i class="fa-solid fa-bag-shopping"></i> Adicionar ao Carrinho
-                        </button>
-                    </div>
-                </div>
-
-            </form>
         </section>
 
         <!-- ================================================================
-             COLUNA 3: CARRINHO LATERAL DIREITO (Purr'Coffee Cart Summary)
+             COLUNA DIREITA: RESUMO DO PEDIDO / CARRINHO (Purr'Coffee Style)
              ================================================================ -->
         <aside class="pos-cart-panel">
             <div class="pos-cart-header">
                 <div class="pos-cart-title-row">
-                    <h3>Carrinho</h3>
+                    <h3>Resumo do Pedido</h3>
                     <span class="pos-cart-count-pill" th:if="${session.carrinho != null}" th:text="${session.carrinho.totalItens + ' itens'}">0 itens</span>
                 </div>
 
-                <!-- Seletor de Tipo de Pedido (Delivery / Retirada / No Local) -->
+                <!-- Seletor de Tipo de Atendimento -->
                 <div class="pos-order-type-tabs">
                     <button type="button" class="order-type-btn active" onclick="selecionarTipo(this)">Delivery</button>
-                    <button type="button" class="order-type-btn" onclick="selecionarTipo(this)">Retirada</button>
                     <button type="button" class="order-type-btn" onclick="selecionarTipo(this)">No Local</button>
+                    <button type="button" class="order-type-btn" onclick="selecionarTipo(this)">Retirada</button>
                 </div>
             </div>
 
@@ -194,7 +202,7 @@
                         <i class="fa-solid fa-basket-shopping"></i>
                     </div>
                     <h4>Sua sacola está vazia</h4>
-                    <p>Selecione um tamanho e seus acompanhamentos ao lado para começar!</p>
+                    <p>Escolha um açaí delicioso ao lado para iniciar seu pedido na StackBerry!</p>
                 </div>
 
                 <!-- Itens Presentes no Carrinho -->
@@ -202,7 +210,7 @@
                     <div class="cart-item-thumb">
                         <img src="/images/acai_copo_tampa.png" alt="Açaí" th:if="${#strings.containsIgnoreCase(item.acai.tamanho.nome, 'pequeno') or #strings.containsIgnoreCase(item.acai.tamanho.nome, '300')}">
                         <img src="/images/acai_copo_camadas.png" alt="Açaí" th:if="${#strings.containsIgnoreCase(item.acai.tamanho.nome, 'medio') or #strings.containsIgnoreCase(item.acai.tamanho.nome, 'médio') or #strings.containsIgnoreCase(item.acai.tamanho.nome, '500')}">
-                        <img src="/images/acai_topdown_folhas_monstera.jpg" alt="Açaí" th:unless="${#strings.containsIgnoreCase(item.acai.tamanho.nome, 'pequeno') or #strings.containsIgnoreCase(item.acai.tamanho.nome, '300') or #strings.containsIgnoreCase(item.acai.tamanho.nome, 'medio') or #strings.containsIgnoreCase(item.acai.tamanho.nome, 'médio') or #strings.containsIgnoreCase(item.acai.tamanho.nome, '500')}">
+                        <img src="/images/acai_tigela_branca_frutas.jpg" alt="Açaí" th:unless="${#strings.containsIgnoreCase(item.acai.tamanho.nome, 'pequeno') or #strings.containsIgnoreCase(item.acai.tamanho.nome, '300') or #strings.containsIgnoreCase(item.acai.tamanho.nome, 'medio') or #strings.containsIgnoreCase(item.acai.tamanho.nome, 'médio') or #strings.containsIgnoreCase(item.acai.tamanho.nome, '500')}">
                     </div>
 
                     <div class="cart-item-info-col">
@@ -211,7 +219,7 @@
                             <span class="cart-item-price-val" th:text="${#numbers.formatCurrency(item.subTotal())}">R$ 12,00</span>
                         </div>
 
-                        <!-- Lista de adicionais do item -->
+                        <!-- Adicionais escolhidos para este açaí -->
                         <div class="cart-item-toppings" th:if="${!item.acai.adicionais.empty}">
                             <span class="topping-tag" th:each="a : ${item.acai.adicionais}" th:text="${a.nome}">Morango</span>
                         </div>
@@ -230,18 +238,18 @@
 
             </div>
 
-            <!-- Resumo Financeiro & Botão de Checkout -->
+            <!-- Resumo Financeiro & Finalizar Pedido -->
             <div class="pos-cart-checkout-box">
                 <div class="checkout-summary-row">
-                    <span>Itens:</span>
+                    <span>Subtotal:</span>
                     <strong th:text="${session.carrinho != null ? #numbers.formatCurrency(session.carrinho.total) : 'R$ 0,00'}">R$ 0,00</strong>
                 </div>
                 <div class="checkout-summary-row">
-                    <span>Entrega estimada:</span>
-                    <strong style="color: #15803D;">Grátis</strong>
+                    <span>Taxa de Entrega:</span>
+                    <strong class="text-green">Grátis</strong>
                 </div>
                 <div class="checkout-summary-row total-highlight">
-                    <span>Total:</span>
+                    <span>Total do Pedido:</span>
                     <span class="grand-total-val" th:text="${session.carrinho != null ? #numbers.formatCurrency(session.carrinho.total) : 'R$ 0,00'}">R$ 0,00</span>
                 </div>
 
@@ -262,44 +270,116 @@
 
 <th:block layout:fragment="page-script">
 <script>
+    // Formatar moeda brasileira
+    function formatarMoeda(valor) {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
+    }
+
+    // Ajustar quantidade diretamente no card de produto
+    function ajustarQtdCard(btn, delta) {
+        const stepper = btn.closest('.card-stepper');
+        const input = stepper.querySelector('.stepper-input');
+        let val = parseInt(input.value) || 1;
+        val += delta;
+        if (val < 1) val = 1;
+        if (val > 50) val = 50;
+        input.value = val;
+        recalcularPrecoCard(input);
+    }
+
+    // Recalcular preço unitário e total do card em tempo real
+    function recalcularPrecoCard(element) {
+        const card = element.closest('.pos-product-card');
+        if (!card) return;
+
+        const priceEl = card.querySelector('.pos-card-price');
+        const basePrice = parseFloat(priceEl.getAttribute('data-preco-base')) || 0;
+
+        // Somar adicionais marcados neste card
+        const checkedToppings = card.querySelectorAll('input[name="adicionaisIds"]:checked');
+        let totalAdicionais = 0;
+        checkedToppings.forEach(cb => {
+            const preco = parseFloat(cb.getAttribute('data-preco')) || 0;
+            totalAdicionais += preco;
+        });
+
+        // Quantidade deste card
+        const inputQtd = card.querySelector('.stepper-input');
+        const qtd = parseInt(inputQtd.value) || 1;
+
+        const precoFinal = (basePrice + totalAdicionais) * qtd;
+        priceEl.textContent = formatarMoeda(precoFinal);
+
+        // Atualizar ícone e classe visual do chip de adicional
+        card.querySelectorAll('.card-topping-chip').forEach(chip => {
+            const input = chip.querySelector('input[type="checkbox"]');
+            const icon = chip.querySelector('.chip-icon');
+            if (input.checked) {
+                chip.classList.add('selected');
+                if (icon) {
+                    icon.classList.remove('fa-plus');
+                    icon.classList.add('fa-check');
+                }
+            } else {
+                chip.classList.remove('selected');
+                if (icon) {
+                    icon.classList.remove('fa-check');
+                    icon.classList.add('fa-plus');
+                }
+            }
+        });
+    }
+
+    // Alternar tipo de pedido (Delivery, No Local, Retirada)
     function selecionarTipo(btn) {
         document.querySelectorAll('.order-type-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
     }
 
-    function filtrarCategoria(tipo) {
+    // Filtrar categorias
+    function filtrarCategoria(tipo, btn) {
         document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
+        btn.classList.add('active');
 
-        const secaoTamanhos = document.getElementById('secao-tamanhos');
-        const gridTamanhos = document.querySelector('.pos-products-grid');
-        const secaoAdicionais = document.getElementById('secao-adicionais');
-        const cardAdicionais = document.querySelector('.pos-toppings-card');
+        const cards = document.querySelectorAll('.pos-product-card');
+        const guiaSecao = document.getElementById('secao-adicionais-guia');
+        const guiaGrid = document.getElementById('grid-adicionais-guia');
+        const headerProd = document.getElementById('header-produtos');
 
-        if (tipo === 'copos') {
-            secaoTamanhos.style.display = 'block';
-            gridTamanhos.style.display = 'grid';
-            secaoAdicionais.style.display = 'none';
-            cardAdicionais.style.display = 'none';
+        if (tipo === 'todos') {
+            cards.forEach(c => c.style.display = 'block');
+            headerProd.style.display = 'block';
+            guiaSecao.style.display = 'block';
+            guiaGrid.style.display = 'grid';
+        } else if (tipo === 'copos') {
+            cards.forEach(c => c.style.display = 'block');
+            headerProd.style.display = 'block';
+            guiaSecao.style.display = 'none';
+            guiaGrid.style.display = 'none';
+        } else if (tipo === 'populares') {
+            cards.forEach(c => {
+                const cat = c.getAttribute('data-categoria') || '';
+                c.style.display = cat.includes('populares') ? 'block' : 'none';
+            });
+            headerProd.style.display = 'block';
+            guiaSecao.style.display = 'none';
+            guiaGrid.style.display = 'none';
         } else if (tipo === 'adicionais') {
-            secaoTamanhos.style.display = 'none';
-            gridTamanhos.style.display = 'none';
-            secaoAdicionais.style.display = 'block';
-            cardAdicionais.style.display = 'block';
-        } else {
-            secaoTamanhos.style.display = 'block';
-            gridTamanhos.style.display = 'grid';
-            secaoAdicionais.style.display = 'block';
-            cardAdicionais.style.display = 'block';
+            cards.forEach(c => c.style.display = 'none');
+            headerProd.style.display = 'none';
+            guiaSecao.style.display = 'block';
+            guiaGrid.style.display = 'grid';
         }
     }
 
+    // Busca rápida nos cards
     function filtrarCards() {
-        const query = document.getElementById('input-busca').value.toLowerCase();
-        const cards = document.querySelectorAll('.pos-card-option');
+        const query = document.getElementById('input-busca').value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.pos-product-card');
+        
         cards.forEach(card => {
-            const text = card.textContent.toLowerCase();
-            if (text.includes(query)) {
+            const nome = (card.getAttribute('data-nome') || card.textContent).toLowerCase();
+            if (!query || nome.includes(query)) {
                 card.style.display = 'block';
             } else {
                 card.style.display = 'none';
@@ -308,61 +388,140 @@
     }
 
     function limparFiltro() {
-        document.getElementById('input-busca').value = '';
+        const input = document.getElementById('input-busca');
+        if (input) input.value = '';
         filtrarCards();
     }
 
-    function alterarQtd(delta) {
-        const input = document.getElementById('quantidade');
-        let val = parseInt(input.value) || 1;
-        val += delta;
-        if (val < 1) val = 1;
-        if (val > 50) val = 50;
-        input.value = val;
-        atualizarResumo();
-    }
-
-    function formatarMoeda(valor) {
-        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
-    }
-
-    function atualizarResumo() {
-        // 1. Obter tamanho selecionado
-        const radioChecked = document.querySelector('input[name="tamanhoId"]:checked');
-        let precoTamanho = 0;
-
-        document.querySelectorAll('.pos-card').forEach(card => card.classList.remove('selected'));
-
-        if (radioChecked) {
-            precoTamanho = parseFloat(radioChecked.getAttribute('data-preco')) || 0;
-            const parentCard = radioChecked.closest('.pos-card-option').querySelector('.pos-card');
-            if (parentCard) parentCard.classList.add('selected');
-        }
-
-        // 2. Obter adicionais selecionados
-        const checkboxes = document.querySelectorAll('input[name="adicionaisIds"]:checked');
-        let totalAdicionais = 0;
-        checkboxes.forEach(cb => {
-            const preco = parseFloat(cb.getAttribute('data-preco')) || 0;
-            totalAdicionais += preco;
-        });
-
-        // 3. Quantidade
-        const inputQtd = document.getElementById('quantidade');
-        const quantidade = parseInt(inputQtd.value) || 1;
-
-        // 4. Total Final deste item
-        const precoUnitario = precoTamanho + totalAdicionais;
-        const totalFinal = precoUnitario * quantidade;
-
-        const elTotal = document.getElementById('resumo-total');
-        if (elTotal) {
-            elTotal.textContent = formatarMoeda(totalFinal);
-        }
-    }
-
+    // Interceptar submissão dos forms de cada card para atualizar carrinho ao vivo
     document.addEventListener('DOMContentLoaded', function() {
-        atualizarResumo();
+        function registrarFormsCards() {
+            document.querySelectorAll('.card-product-form').forEach(form => {
+                if (form.getAttribute('data-ajax-init')) return;
+                form.setAttribute('data-ajax-init', 'true');
+
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const submitBtn = form.querySelector('.btn-card-add');
+                    const originalContent = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                    submitBtn.disabled = true;
+
+                    try {
+                        const formData = new FormData(form);
+                        const params = new URLSearchParams();
+                        for (const [key, val] of formData.entries()) {
+                            params.append(key, val);
+                        }
+
+                        // Post para /carrinho/adicionar
+                        await fetch('/carrinho/adicionar', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: params.toString()
+                        });
+
+                        // Buscar /cardapio atualizado para sincronizar o carrinho lateral
+                        const res = await fetch('/cardapio');
+                        const html = await res.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        const newCart = doc.querySelector('.pos-cart-panel');
+                        const currentCart = document.querySelector('.pos-cart-panel');
+                        if (newCart && currentCart) {
+                            currentCart.innerHTML = newCart.innerHTML;
+                            registrarRemocaoCarrinho();
+                        }
+
+                        // Atualizar badge da sacola na sidebar
+                        const newBadge = doc.querySelector('.pos-nav-pill-badge');
+                        const cartNav = document.getElementById('nav-carrinho');
+                        if (cartNav) {
+                            let badge = cartNav.querySelector('.pos-nav-pill-badge');
+                            if (newBadge) {
+                                if (!badge) {
+                                    badge = document.createElement('span');
+                                    badge.className = 'pos-nav-pill-badge';
+                                    cartNav.appendChild(badge);
+                                }
+                                badge.textContent = newBadge.textContent;
+                            }
+                        }
+
+                        // Feedback visual de sucesso
+                        submitBtn.style.background = 'var(--color-green)';
+                        submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Adicionado!';
+                        setTimeout(() => {
+                            submitBtn.style.background = '';
+                            submitBtn.innerHTML = originalContent;
+                            submitBtn.disabled = false;
+                        }, 1200);
+
+                    } catch (err) {
+                        console.error('Erro ao adicionar item via AJAX:', err);
+                        form.submit();
+                    }
+                });
+            });
+        }
+
+        function registrarRemocaoCarrinho() {
+            const cartPanel = document.querySelector('.pos-cart-panel');
+            if (!cartPanel) return;
+
+            cartPanel.querySelectorAll('form[action*="/carrinho/remover"]').forEach(remForm => {
+                if (remForm.getAttribute('data-ajax-init')) return;
+                remForm.setAttribute('data-ajax-init', 'true');
+
+                remForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    try {
+                        const formData = new FormData(remForm);
+                        const params = new URLSearchParams();
+                        for (const [key, val] of formData.entries()) {
+                            params.append(key, val);
+                        }
+
+                        await fetch('/carrinho/remover', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: params.toString()
+                        });
+
+                        const res = await fetch('/cardapio');
+                        const html = await res.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        const newCart = doc.querySelector('.pos-cart-panel');
+                        const currentCart = document.querySelector('.pos-cart-panel');
+                        if (newCart && currentCart) {
+                            currentCart.innerHTML = newCart.innerHTML;
+                            registrarRemocaoCarrinho();
+                        }
+
+                        // Atualizar badge
+                        const newBadge = doc.querySelector('.pos-nav-pill-badge');
+                        const cartNav = document.getElementById('nav-carrinho');
+                        if (cartNav) {
+                            let badge = cartNav.querySelector('.pos-nav-pill-badge');
+                            if (newBadge) {
+                                if (badge) badge.textContent = newBadge.textContent;
+                            } else {
+                                if (badge) badge.remove();
+                            }
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        remForm.submit();
+                    }
+                });
+            });
+        }
+
+        registrarFormsCards();
+        registrarRemocaoCarrinho();
     });
 </script>
 </th:block>

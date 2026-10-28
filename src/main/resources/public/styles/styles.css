@@ -4,42 +4,60 @@
 @import url('menu.css');
 
 :root {
-    /* Paleta Inspirada nas Referências Purr'Coffee (Quente, Suave, Aconchegante & Minimalista) */
-    --bg-canvas: #F8F4EE;         /* Fundo canvas suave e arejado */
-    --bg-window: #FFFFFF;         /* Moldura da aplicação */
-    --bg-surface: #FFFFFF;        /* Superfície dos cartões */
-    --bg-surface-soft: #F5EFE7;   /* Fundos secundários suaves / busca */
+    /* ======================================================================
+       PALETA OFICIAL STACKBERRY (Roxo, Verde, Rosa, Azul, Amarelo)
+       ====================================================================== */
     
-    /* Cor de Destaque Quente / Terracotta Frutado (Idêntica aos botões do Purr'Coffee) */
-    --accent-warm: #DE753F;
-    --accent-warm-hover: #C6622E;
-    --accent-warm-soft: #FDF1EA;
-    --accent-warm-border: #F6D6C4;
+    /* 1. ROXO (Açaí Berry Principal) */
+    --color-purple: #66023C;
+    --color-purple-hover: #4F012E;
+    --color-purple-soft: #F8EDF4;
+    --color-purple-border: #F1D4E5;
     
-    /* Púrpura Nobre (StackBerry Açaí) */
-    --primary-berry: #66023C;
-    --primary-berry-hover: #4F012E;
-    --primary-berry-soft: #FAF0F6;
-    --primary-berry-border: #F3D2E3;
+    /* 2. VERDE (Cítrico / Kiwi) */
+    --color-green: #4E8221;
+    --color-green-soft: #F0F7EA;
+    --color-green-border: #C8E3B0;
     
-    /* Cítrico Suave */
-    --accent-citric: #CAD183;
-    --accent-citric-soft: #F6F8E9;
-    --accent-citric-dark: #465220;
+    /* 3. ROSA (Morango / Frutas Vermelhas) */
+    --color-pink: #D81B60;
+    --color-pink-hover: #B8144F;
+    --color-pink-soft: #FCE4EC;
+    --color-pink-border: #F8BBD0;
     
-    /* Tipografia e Textos Quentes */
-    --text-title: #2C211B;
-    --text-body: #5A4E45;
-    --text-muted: #8C7F75;
+    /* 4. AZUL (Mirtilo / Blueberry) */
+    --color-blue: #2563EB;
+    --color-blue-soft: #EFF6FF;
+    --color-blue-border: #BFDBFE;
+    
+    /* 5. AMARELO (Manga / Banana / Maracujá) */
+    --color-yellow: #D97706;
+    --color-yellow-bg: #F59E0B;
+    --color-yellow-soft: #FFFBEB;
+    --color-yellow-border: #FDE68A;
+    
+    /* Superfícies e Fundos Sutis */
+    --bg-canvas: #FAF7F5;
+    --bg-window: #FFFFFF;
+    --bg-surface: #FFFFFF;
+    --bg-surface-soft: #F7F3F0;
+    
+    /* Tipografia */
+    --font-title: 'Outfit', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+    
+    --text-title: #2B1822;
+    --text-body: #55444D;
+    --text-muted: #85747D;
     --text-light: #FFFFFF;
     
     /* Bordas e Sombras Suaves */
-    --border-light: #EDE6DC;
-    --border-medium: #DFD7CC;
-    --shadow-window: 0 16px 48px rgba(44, 33, 27, 0.06);
-    --shadow-sm: 0 2px 8px rgba(44, 33, 27, 0.04);
-    --shadow-md: 0 6px 20px rgba(44, 33, 27, 0.06);
-    --shadow-lg: 0 12px 32px rgba(44, 33, 27, 0.09);
+    --border-light: #EFE8E5;
+    --border-medium: #DFD5D1;
+    --shadow-window: 0 16px 48px rgba(102, 2, 60, 0.05);
+    --shadow-sm: 0 2px 8px rgba(102, 2, 60, 0.03);
+    --shadow-md: 0 6px 20px rgba(102, 2, 60, 0.06);
+    --shadow-lg: 0 12px 32px rgba(102, 2, 60, 0.09);
     
     --radius-sm: 8px;
     --radius-md: 14px;
@@ -81,7 +99,7 @@ h1, h2, h3, h4, h5, h6, .brand-font {
 }
 
 .pos-app-wrapper {
-    max-width: 1380px;
+    max-width: 1400px;
     margin: 0 auto;
     width: 100%;
 }
@@ -98,13 +116,13 @@ h1, h2, h3, h4, h5, h6, .brand-font {
 }
 
 /* --------------------------------------------------------------------------
-   COLUNA 1: SIDEBAR LATERAL ESQUERDA (Inspirado no Purr'Coffee)
+   COLUNA 1: SIDEBAR LATERAL ESQUERDA COM LOGO DA STACKBERRY
    -------------------------------------------------------------------------- */
 .pos-sidebar {
     width: 220px;
     background: #FFFFFF;
     border-right: 1px solid var(--border-light);
-    padding: 28px 18px;
+    padding: 26px 18px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -114,22 +132,20 @@ h1, h2, h3, h4, h5, h6, .brand-font {
 .pos-brand-link {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     text-decoration: none;
-    margin-bottom: 34px;
+    margin-bottom: 32px;
 }
 
-.pos-brand-logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: var(--accent-warm-soft);
-    color: var(--accent-warm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    flex-shrink: 0;
+.pos-brand-img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.25s ease;
+}
+
+.pos-brand-link:hover .pos-brand-img {
+    transform: scale(1.04);
 }
 
 .pos-brand-name {
@@ -139,16 +155,19 @@ h1, h2, h3, h4, h5, h6, .brand-font {
 
 .brand-title {
     font-family: 'Outfit', sans-serif;
-    font-weight: 800;
     font-size: 1.25rem;
-    color: var(--text-title);
+    font-weight: 800;
+    color: var(--color-purple);
     line-height: 1.1;
+    letter-spacing: -0.5px;
 }
 
 .brand-sub {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    font-weight: 500;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--color-green);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .pos-nav-menu {
@@ -181,27 +200,27 @@ h1, h2, h3, h4, h5, h6, .brand-font {
 }
 
 .pos-nav-link:hover {
-    background: var(--bg-surface-soft);
-    color: var(--accent-warm);
+    background: var(--color-purple-soft);
+    color: var(--color-purple);
 }
 
 .pos-nav-link:hover i {
-    color: var(--accent-warm);
+    color: var(--color-purple);
 }
 
-/* Item Ativo (Pill terracota/quente como na referência) */
+/* Item Ativo em Roxo Suave StackBerry */
 .pos-nav-link.active {
-    background: var(--accent-warm-soft);
-    color: var(--accent-warm);
+    background: var(--color-purple-soft);
+    color: var(--color-purple);
 }
 
 .pos-nav-link.active i {
-    color: var(--accent-warm);
+    color: var(--color-purple);
 }
 
 .pos-nav-pill-badge {
     margin-left: auto;
-    background: var(--accent-warm);
+    background: var(--color-pink);
     color: #FFFFFF;
     font-size: 0.72rem;
     font-weight: 800;
@@ -210,7 +229,7 @@ h1, h2, h3, h4, h5, h6, .brand-font {
 }
 
 .pos-sidebar-footer {
-    padding-top: 20px;
+    padding-top: 18px;
     border-top: 1px solid var(--border-light);
 }
 
@@ -224,11 +243,11 @@ h1, h2, h3, h4, h5, h6, .brand-font {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: var(--bg-surface-soft);
+    background: var(--color-purple-soft);
+    color: var(--color-purple);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-title);
     font-size: 0.95rem;
     flex-shrink: 0;
 }
@@ -270,11 +289,11 @@ h1, h2, h3, h4, h5, h6, .brand-font {
 }
 
 .login-link {
-    color: var(--accent-warm);
+    color: var(--color-purple);
 }
 
 .login-link i {
-    color: var(--accent-warm);
+    color: var(--color-purple);
 }
 
 /* ÁREA DE CONTEÚDO PRINCIPAL */
@@ -287,15 +306,15 @@ h1, h2, h3, h4, h5, h6, .brand-font {
     max-height: calc(100vh - 48px);
 }
 
-/* Botões Globais Harmonizados */
-.btn-warm {
-    background: var(--accent-warm);
+/* Botões Globais */
+.btn-purple {
+    background: var(--color-purple);
     color: #FFFFFF !important;
     border: none;
-    border-radius: var(--radius-md);
-    padding: 10px 20px;
-    font-weight: 600;
-    font-size: 0.92rem;
+    border-radius: 999px;
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 0.95rem;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -303,21 +322,21 @@ h1, h2, h3, h4, h5, h6, .brand-font {
     gap: 8px;
     text-decoration: none;
     transition: var(--transition);
-    box-shadow: 0 4px 12px rgba(222, 117, 63, 0.22);
+    box-shadow: 0 4px 14px rgba(102, 2, 60, 0.25);
 }
 
-.btn-warm:hover {
-    background: var(--accent-warm-hover);
+.btn-purple:hover {
+    background: var(--color-purple-hover);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(222, 117, 63, 0.32);
+    box-shadow: 0 6px 18px rgba(102, 2, 60, 0.35);
 }
 
-.btn-outline-warm {
+.btn-outline-glass {
     border: 1.5px solid var(--border-medium);
     background: #FFFFFF;
     color: var(--text-title) !important;
-    border-radius: var(--radius-md);
-    padding: 9px 18px;
+    border-radius: 999px;
+    padding: 10px 20px;
     font-weight: 600;
     font-size: 0.9rem;
     display: inline-flex;
@@ -328,10 +347,10 @@ h1, h2, h3, h4, h5, h6, .brand-font {
     transition: var(--transition);
 }
 
-.btn-outline-warm:hover {
-    border-color: var(--accent-warm);
-    color: var(--accent-warm) !important;
-    background: var(--accent-warm-soft);
+.btn-outline-glass:hover {
+    border-color: var(--color-purple);
+    color: var(--color-purple) !important;
+    background: var(--color-purple-soft);
 }
 
 /* Responsividade Mobile da Moldura */
@@ -350,7 +369,7 @@ h1, h2, h3, h4, h5, h6, .brand-font {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid var(--border-light);
-        padding: 16px;
+        padding: 14px 16px;
         flex-direction: row;
         align-items: center;
     }
